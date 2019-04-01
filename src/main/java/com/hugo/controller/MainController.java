@@ -30,4 +30,8 @@ public class MainController {
     public String Login(){
         return "login/login";
     }
+    @RequestMapping(value = "home", method = RequestMethod.GET)
+    public String home(){
+        return "home/home";
+    }
 }

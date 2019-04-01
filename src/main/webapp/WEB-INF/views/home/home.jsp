@@ -15,15 +15,14 @@
 </head>
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href=" ">Company name</ a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+            <a class="nav-link" href="#">Sign out</ a>
         </li>
     </ul>
 </nav>
-
 <div class="container-fluid">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -150,8 +149,8 @@
 <script src="./../../../js/popper/popper.min.js"></script>
 <script src="./../../../js/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 <!-- Icons -->
-<script src="/resources/js/feather-icons/feather.min.js"></script>
+<script src="/js/feather-icons/feather.min.js"></script>
 
 <!-- Graphs -->
-<script src="/resources/js/feather-icons/Chart.min.js"></script>
+<script src="/js/feather-icons/Chart.min.js"></script>
 </html>
