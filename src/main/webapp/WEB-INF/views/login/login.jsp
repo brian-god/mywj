@@ -32,7 +32,7 @@
 
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> 记住密码
+
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
