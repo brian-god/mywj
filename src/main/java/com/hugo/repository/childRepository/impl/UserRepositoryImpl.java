@@ -75,4 +75,11 @@ public class UserRepositoryImpl implements UserRepository {
     public void flush() {
 
     }
+
+    @Override
+    public User select(String username) {
+            return (User) getCurrentSession().load(User.class,username);
+    }
+
+
 }

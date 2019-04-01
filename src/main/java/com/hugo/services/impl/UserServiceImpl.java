@@ -1,6 +1,7 @@
 package com.hugo.services.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.hugo.entity.User;
 import com.hugo.repository.childRepository.UserRepository;
 import com.hugo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class UserServiceImpl  implements UserService {
     @Override
     public String getUserBuID(int id) {
         return JSON.toJSONString(userRepository.load(id));
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return  userRepository.select(username);
     }
 }
