@@ -53,5 +53,25 @@ public class UserController {
         return  JSON.toJSONString(user);
     }
 
+    @PostMapping("/register")
+    @ResponseBody
+    public String register(String username , String password,String email, HttpServletRequest request){
+        if (StringUtils.isEmpty(username)){
+            return "用户名为空";
+        }else if (StringUtils.isEmpty(password)){
+            return "密码为空";
+        }else if(StringUtils.isEmpty(email)){
+            return "邮箱地址为空";
+        }
+        User user = userService.getUserByUsername(username);
+        if(null != user){
+            return "该用户名已经被使用";
+        }
+        Integer integer = userService.addUser(username, password, email);
+        if (integer == -1){
+            return "注册失败";
+        }
+        return "注册成功";
+    }
 
 }
