@@ -8,9 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="icon" href="./../../../img/logo.ico">
-    <link rel="stylesheet" href="./../../../css/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./../../../css/bootstrap-4.0.0/css/floating-labels.css">
+    <link rel="icon" href="/img/logo.ico">
+    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/floating-labels.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <title>网上问卷后台管理</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</ a>
+            <a class="nav-link" href="#">Sign out</a>
         </li>
     </ul>
 </nav>
@@ -145,9 +146,9 @@
     </div>
 </div>
 </body>
-<script src="./../../../js/jQuery/jquery-3.3.1.min.js"></script>
-<script src="./../../../js/popper/popper.min.js"></script>
-<script src="./../../../js/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+<script src="/js/jQuery/jquery-3.3.1.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 <!-- Icons -->
 <script src="/js/feather-icons/feather.min.js"></script>
 

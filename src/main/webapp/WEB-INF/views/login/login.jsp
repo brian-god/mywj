@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="icon" href="/img/logo.ico">
-    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/floating-labels.css">
+    <link rel="icon" href="/resources/img/logo.ico">
+    <link rel="stylesheet" href="/resources/css/bootstrap-4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/css/bootstrap-4.0.0/css/floating-labels.css">
     <title>网上问卷调查系统</title>
 </head>
 <body>
@@ -32,7 +32,7 @@
         <p class="mt-5 mb-3 text-muted text-center">© 2018-刘勤敏</p>
     </form>
 </body>
-<script src="/js/jQuery/jquery-3.3.1.min.js" />
-<script src="/js/popper/popper.min.js" />
-<script src="/js/bootstrap-4.0.0/js/bootstrap.min.js" />
+<script src="/resources/js/jQuery/jquery-3.3.1.min.js" />
+<script src="/resources/js/popper/popper.min.js" />
+<script src="/resources/js/bootstrap-4.0.0/js/bootstrap.min.js" />
 </html>
