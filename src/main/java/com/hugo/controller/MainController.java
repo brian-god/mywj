@@ -26,4 +26,8 @@ public class MainController {
     public String springTest(){
         return test.test();
     }
+    @RequestMapping(value = "loginPage", method = RequestMethod.GET)
+    public String Login(){
+        return "login/login";
+    }
 }
