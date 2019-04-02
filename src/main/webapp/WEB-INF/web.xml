@@ -4,6 +4,21 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/resources/js/*</url-pattern>
+        <url-pattern>/resources/css/*</url-pattern>
+        <url-pattern>/resources/img/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>login.html</welcome-file>
+        <welcome-file>login.htm</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
     <!-- 地址为http://localhost:8080/  显示的默认网页-->
     <welcome-file-list>
         <welcome-file>/WEB-INF/views/login/login.jsp</welcome-file>

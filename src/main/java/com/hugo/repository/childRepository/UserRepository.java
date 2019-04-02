@@ -6,5 +6,9 @@ import com.hugo.repository.DomainRepository;
 /**
  * 用户数据库层实现
  */
-public interface UserRepository extends DomainRepository<User,Integer,String> {
+public interface UserRepository extends DomainRepository<User,Integer> {
+
+    User getUserByUsername(String username);
+
+    User  getUserByEmail(String email);
 }
