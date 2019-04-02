@@ -19,7 +19,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
             //RequestUtil.saveRequest();
         }
         System.out.println("preHandle...");
-        String username = (String) request.getSession().getAttribute("username");
+        String username = (String) request.getSession().getAttribute("user");
         if(null == username){
             // 跳转到登录页面
             request.getRequestDispatcher("/WEB-INF/views/login/login.jsp").forward(request, response);
