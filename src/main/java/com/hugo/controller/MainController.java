@@ -26,12 +26,31 @@ public class MainController {
     public String springTest(){
         return test.test();
     }
+
+    /**
+     * 登录页面
+     * @return
+     */
     @RequestMapping(value = "loginPage", method = RequestMethod.GET)
     public String Login(){
         return "login/login";
     }
+
+    /**
+     * 后台管理首页
+     * @return
+     */
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String home(){
         return "home/home";
+    }
+
+    /**
+     * z注册
+     * @return
+     */
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String register(){
+        return "register/register";
     }
 }
