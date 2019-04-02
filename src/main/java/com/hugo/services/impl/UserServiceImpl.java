@@ -29,7 +29,7 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public QAResult login(String username,String password) {
-        User userByUsername = getUserByUsername(username);
+        User userByUsername = getUserByUseremail(username);
         if (userByUsername != null){
             if (password.equals(userByUsername.getPassword())){
                 return QAResult.build(200,"登录成功",userByUsername);
@@ -79,6 +79,13 @@ public class UserServiceImpl  implements UserService {
 
     private User getUserByUsername(String username){
         User user = userRepository.getUserByUsername(username);
+        if (null == user){
+            return  null;
+        }
+        return  user;
+    }
+    private User getUserByUseremail(String email){
+        User user = userRepository.getUserByEmail(email);
         if (null == user){
             return  null;
         }
