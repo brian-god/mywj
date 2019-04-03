@@ -41,19 +41,25 @@ public class UserServiceImpl  implements UserService {
 
    @Override
     public QAResult register(String username,String  email,String mobile) {
-       User userByUsername = getUserByUsername(username);
-       if (userByUsername != null){
-            return QAResult.build(400,"该用户名已被使用");
+       if (username != null){
+           User userByUsername = getUserByUsername(username);
+           if(userByUsername != userByUsername) {
+               return QAResult.build(400, "该用户名已被使用");
+           }
         }
-       User userByEmail = userRepository.getUserByEmail(email);
-       if (userByEmail != null){
-           return QAResult.build(400,"该邮箱已被使用");
+       if (email != null) {
+           User userByEmail = userRepository.getUserByEmail(email);
+           if (userByEmail != null) {
+               return QAResult.build(400, "该邮箱已被使用");
+           }
        }
-       User userByMobile = userRepository.getUserByMobile(mobile);
-       if (userByMobile != null){
-           return QAResult.build(400,"该手机号码已被使用");
+       if (mobile != null) {
+           User userByMobile = userRepository.getUserByMobile(mobile);
+           if (userByMobile != null) {
+               return QAResult.build(400, "该手机号码已被使用");
+           }
        }
-       return QAResult.ok(200);
+       return QAResult.build(200, "ok");
     }
 
     @Override
@@ -81,7 +87,7 @@ public class UserServiceImpl  implements UserService {
 
 
     private User getUserByUsername(String username){
-        User user = userRepository.getUserByUsername(username);
+       User user = userRepository.getUserByUsername(username);
         if (null == user){
             return  null;
         }

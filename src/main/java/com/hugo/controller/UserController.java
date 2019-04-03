@@ -108,18 +108,14 @@ public class UserController {
         return  modelAndView;
     }
 
-    @RequestMapping(value = "checkMsg")
+    @PostMapping(value = "checkMsg")
     @ResponseBody
     public QAResult checkMsg(@RequestBody String data){
         JSONObject jsonObject = JSONObject.parseObject(data);
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String mobile = jsonObject.getString("mobile");
-        QAResult register = userService.register(username,email,mobile);
-        if(register.getStatus() != 200){
-            QAResult.build(400,register.getMsg());
-        }
-        return QAResult.ok(200);
+        return userService.register(username,email,mobile);
     }
 
 }

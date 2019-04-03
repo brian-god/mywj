@@ -30,11 +30,13 @@ function FormValidation() {
                         message: '用户名只能包含大写、小写、数字和下划线'
                     },
                     callback: {
-                        message: '该手机号已被注册',
+                        message: '用户名已被注册',
                         callback: function (value, validator) {
-                            //校验用户名是否使用过
-                            if (usernameChack(value)) {
-                                return false;
+                            if(value.length>5){
+                                //校验用户名是否使用过
+                                if (usernameChack(value)) {
+                                    return false;
+                                }
                             }
                             return true;
                         }
@@ -46,8 +48,9 @@ function FormValidation() {
                     notEmpty: {
                         message: '邮箱地址不能为空'
                     },
-                    emailAddress: {
-                        message: '邮箱地址格式有误'
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/,
+                        message: '邮箱格式不正确'
                     },
                     callback: {
                         message: '该邮箱已被注册',
@@ -118,13 +121,29 @@ function FormValidation() {
  * @constructor
  */
 function EmailChack(email) {
-    $.ajax({
-        url:"",
-        data:{"email":email},
-        success: function (data) {
-
-        }
-    });
+    //邮箱校验的正则表达式
+    var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+    if(myReg.test(email)){
+        var  data = {"email":email};
+        $.ajax({
+            url:"/checkMsg",
+            type:"POST",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            success: function (data) {
+                console.log(data)
+                var  status = data["status"];
+                if(200 == status){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            error:function () {
+                alert("请求异常")
+            }
+        });
+    }
     return false;
 }
 
@@ -133,12 +152,23 @@ function EmailChack(email) {
  * @param username
  */
 function usernameChack(username) {
+    var  data = {"username":username};
     $.ajax({
         url:"/checkMsg",
-        type:"GET",
-        data:{"username":username},
+        type:"POST",
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify(data),
         success: function (data) {
-            alert(data)
+            console.log(data)
+            var  status = data["status"];
+            if(200 == status){
+                return false;
+            }else{
+                return true;
+            }
+        },
+        error:function () {
+            alert("请求异常")
         }
     });
     return false;
@@ -149,12 +179,28 @@ function usernameChack(username) {
  * @param mobile
  */
 function mobileChack(mobile) {
-    $.ajax({
-        url:"",
-        data:{"mobile":mobile},
-        success: function (data) {
-
-        }
-    });
+    //手机号校验的正则
+    var myReg=/^1\d{10}$/
+    if(myReg.test(mobile)){
+        var  data = {"mobile":mobile};
+        $.ajax({
+            url:"/checkMsg",
+            type:"POST",
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            success: function (data) {
+                console.log(data)
+                var  status = data["status"];
+                if(200 == status){
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+            error:function () {
+                alert("请求异常")
+            }
+        });
+    }
     return false;
 }
