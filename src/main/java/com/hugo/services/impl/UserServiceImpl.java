@@ -57,17 +57,16 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public QAResult addUser(String username, String password, String email,String mobile) {
-        User user = new User();
+    public QAResult addUser(User user) {
         user.setId(null);
-        user.setUsername(username);
+        user.setUsername(user.getUsername());
         user.setNickname(null);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setMobile(mobile);
+        user.setPassword(user.getPassword());
+        user.setEmail(user.getEmail());
+        user.setMobile(user.getMobile());
         user.setAvatar(null);
         user.setGender(null);
-        user.setBirthday(null);
+        user.setBirthday(user.getBirthday());
         user.setJointime(DataUtils.getTodayTime());
         user.setCreatetime(DataUtils.getTodayTime());
         user.setUpdatetime(null);

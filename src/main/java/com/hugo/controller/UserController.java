@@ -1,6 +1,5 @@
 package com.hugo.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hugo.entity.User;
 import com.hugo.services.UserService;
 import com.hugo.utils.QAResult;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -74,19 +72,17 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseBody
-    public ModelAndView register(@RequestBody String data){
+    public ModelAndView register(User user){
         //创建一个数据模型
         ModelAndView modelAndView = new ModelAndView();
-        // 字符串转json对象
-        JSONObject jsonObject = JSONObject.parseObject(data);
         //获取登陆验证
-        String username = jsonObject.getString("username");
+        String username = user.getUsername();
         //获取密码
-        String password = jsonObject.getString("password");
+        String password = user.getPassword();
         //获取邮箱
-        String email = jsonObject.getString("email");
+        String email = user.getEmail();
         //获取手机号码
-        String mobile = jsonObject.getString("mobile");
+        String mobile = user.getMobile();
         //给定默认视图
         modelAndView.setViewName("register/register");
         if (StringUtils.isEmpty(username)){
@@ -103,7 +99,7 @@ public class UserController {
             modelAndView.addObject("responseData",register.getMsg());
             modelAndView.setViewName("login/login");
         }
-        QAResult qaResult = userService.addUser(username, password, email,mobile);
+        QAResult qaResult = userService.addUser(user);
         if (qaResult.getStatus() == 200){
             modelAndView.addObject("responseData", QAResult.build(200,"注册成功,请登录"));
             modelAndView.setViewName("login/login");
