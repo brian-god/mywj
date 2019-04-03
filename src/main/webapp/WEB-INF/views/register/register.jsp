@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">邮箱</label>
                     <div class="col-lg-8">
-                        <input type="email" class="form-control" name="email" placeholder="请输入邮箱"/>
+                        <input type="text" class="form-control" name="email" placeholder="请输入邮箱"/>
                     </div>
                 </div>
                 <div class="form-group">

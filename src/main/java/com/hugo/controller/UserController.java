@@ -108,7 +108,7 @@ public class UserController {
         return  modelAndView;
     }
 
-    @RequestMapping("checkMsg")
+    @RequestMapping(value = "checkMsg")
     @ResponseBody
     public QAResult checkMsg(@RequestBody String data){
         JSONObject jsonObject = JSONObject.parseObject(data);

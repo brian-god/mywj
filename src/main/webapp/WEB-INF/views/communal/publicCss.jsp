@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/wj.main.css">
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
 </head>
 </html>
 <body>
