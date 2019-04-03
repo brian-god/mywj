@@ -20,11 +20,21 @@
             QAResult qaResult = (QAResult)result;
             //获取错误信息
             String  msg =  qaResult.getMsg();
+            //获取状态
+            int status = qaResult.getStatus();
+            if(status==200){
+    %>
+    <div class="alert alert-success" style="position: fixed;top:40px;">
+        <strong>成功</strong> <%= msg%>
+    </div>
+    <%
+        }else {
     %>
     <div class="alert alert-danger" style="position: fixed;top:40px;">
         <strong>错误!</strong> <%= msg%>
     </div>
     <%
+            }
         }
     %>
     <form class="form-signin" rel="form" action="<%=basePath%>login" method="post">

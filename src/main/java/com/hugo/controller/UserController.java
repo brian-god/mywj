@@ -115,7 +115,7 @@ public class UserController {
         String username = jsonObject.getString("username");
         String email = jsonObject.getString("email");
         String mobile = jsonObject.getString("mobile");
-        return userService.register(username,email,mobile);
+        return userService.register(username,"1031132178@163.com",mobile);
     }
 
 }

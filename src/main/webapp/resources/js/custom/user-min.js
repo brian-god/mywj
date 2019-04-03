@@ -123,6 +123,7 @@ function FormValidation() {
 function EmailChack(email) {
     //邮箱校验的正则表达式
     var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+    var iserror = false;
     if(myReg.test(email)){
         var  data = {"email":email};
         $.ajax({
@@ -133,10 +134,8 @@ function EmailChack(email) {
             success: function (data) {
                 console.log(data)
                 var  status = data["status"];
-                if(200 == status){
-                    return false;
-                }else{
-                    return true;
+                if(400 == status){
+                    iserror = true;
                 }
             },
             error:function () {
@@ -144,7 +143,7 @@ function EmailChack(email) {
             }
         });
     }
-    return false;
+    return iserror;
 }
 
 /**
@@ -153,6 +152,7 @@ function EmailChack(email) {
  */
 function usernameChack(username) {
     var  data = {"username":username};
+    var iserror = false;
     $.ajax({
         url:"/checkMsg",
         type:"POST",
@@ -161,17 +161,15 @@ function usernameChack(username) {
         success: function (data) {
             console.log(data)
             var  status = data["status"];
-            if(200 == status){
-                return false;
-            }else{
-                return true;
+            if(400 == status){
+                iserror = true;
             }
         },
         error:function () {
             alert("请求异常")
         }
     });
-    return false;
+    return iserror;
 }
 
 /**
@@ -181,6 +179,7 @@ function usernameChack(username) {
 function mobileChack(mobile) {
     //手机号校验的正则
     var myReg=/^1\d{10}$/
+    var iserror = false;
     if(myReg.test(mobile)){
         var  data = {"mobile":mobile};
         $.ajax({
@@ -191,10 +190,9 @@ function mobileChack(mobile) {
             success: function (data) {
                 console.log(data)
                 var  status = data["status"];
-                if(200 == status){
-                    return false;
-                }else{
-                    return true;
+                if(400 == status){
+                    iserror = true;
+                    alert(status)
                 }
             },
             error:function () {
@@ -202,5 +200,5 @@ function mobileChack(mobile) {
             }
         });
     }
-    return false;
+    return iserror;
 }

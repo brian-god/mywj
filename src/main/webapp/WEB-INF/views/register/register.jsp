@@ -13,7 +13,7 @@
         <div class="col-md-4" style="background-color: #1c7430"></div>
         <div class="col-md-4  container-min" style="background-color: #eee">
             <h4 style="margin-bottom: 60px;">新用户注册</h4>
-            <form id="defaultForm" method="post" class="form-horizontal user-form" >
+            <form id="defaultForm" method="post" class="form-horizontal user-form" action="/register">
                 <div class="form-group">
                     <label class="col-lg-3 control-label">姓名</label>
                     <div class="col-lg-8">
@@ -70,8 +70,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input class="form-control btn btn-primary" id="submit"
-                           value="立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册" type="submit" name="submit">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">立&nbsp;&nbsp;即&nbsp;&nbsp;注&nbsp;&nbsp;册</button>
                 </div>
 
                 <div class="form-group">

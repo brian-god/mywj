@@ -64,19 +64,9 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public QAResult addUser(User user) {
-        user.setId(null);
-        user.setUsername(user.getUsername());
-        user.setNickname(null);
-        user.setPassword(user.getPassword());
-        user.setEmail(user.getEmail());
-        user.setMobile(user.getMobile());
-        user.setAvatar(null);
-        user.setGender(user.getGender());
-        user.setBirthday(user.getBirthday());
         user.setJointime(DataUtils.getTodayTime());
         user.setCreatetime(DataUtils.getTodayTime());
-        user.setUpdatetime(null);
-        user.setStatus(null);
+        user.setStatus(1);
         user.setDr(0);
         Integer save = userRepository.save(user);
         if (save  < 0){
