@@ -74,7 +74,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseBody
-    public ModelAndView register(@RequestBody String data, HttpServletRequest request){
+    public ModelAndView register(@RequestBody String data){
         //创建一个数据模型
         ModelAndView modelAndView = new ModelAndView();
         // 字符串转json对象
@@ -85,32 +85,30 @@ public class UserController {
         String password = jsonObject.getString("password");
         //获取邮箱
         String email = jsonObject.getString("email");
+        //获取手机号码
+        String mobile = jsonObject.getString("mobile");
         //给定默认视图
         modelAndView.setViewName("register/register");
         if (StringUtils.isEmpty(username)){
             modelAndView.addObject("responseData", QAResult.build(400,"用户名为空！！！"));
-            //return  QAResult.build(400,"用户名为空！！！");
         }else if (StringUtils.isEmpty(password)){
             modelAndView.addObject("responseData", QAResult.build(400,"密码为空！！！"));
-           // return  QAResult.build(400,"密码为空！！！");
         }else if(StringUtils.isEmpty(email)){
             modelAndView.addObject("responseData", QAResult.build(400,"邮箱地址为空！！！"));
-            //return  QAResult.build(400,"邮箱地址为空！！！");
+        }else if(StringUtils.isEmpty(mobile)){
+            modelAndView.addObject("responseData", QAResult.build(400,"手机号码为空！！！"));
         }
-        QAResult register = userService.register(username,email);
+        QAResult register = userService.register(username,email,mobile);
         if(register.getStatus() != 200){
             modelAndView.addObject("responseData",register.getMsg());
             modelAndView.setViewName("login/login");
-           // return  QAResult.build(400,register.getMsg());
         }
-        QAResult qaResult = userService.addUser(username, password, email);
+        QAResult qaResult = userService.addUser(username, password, email,mobile);
         if (qaResult.getStatus() == 200){
             modelAndView.addObject("responseData", QAResult.build(200,"注册成功,请登录"));
             modelAndView.setViewName("login/login");
-            //return  QAResult.build(200,"注册成功,请登录");
         }else {
             modelAndView.addObject("responseData",  QAResult.build(400,"注册失败"));
-           // return  QAResult.build(400,"注册失败");
         }
         return  modelAndView;
     }

@@ -11,4 +11,6 @@ public interface UserRepository extends DomainRepository<User,Integer> {
     User getUserByUsername(String username);
 
     User  getUserByEmail(String email);
+
+    User  getUserByMobile(String mobile);
 }

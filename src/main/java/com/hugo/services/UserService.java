@@ -5,6 +5,6 @@ import com.hugo.utils.QAResult;
 public interface UserService {
     String getUserBuID(int id);
     QAResult login(String username,String password);
-    QAResult register(String username,String email);
-    QAResult addUser(String username, String password, String email);
+    QAResult register(String username,String email,String mobile);
+    QAResult addUser(String username, String password, String email,String mobile);
 }

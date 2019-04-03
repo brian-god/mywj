@@ -96,4 +96,14 @@ public class UserRepositoryImpl implements UserRepository {
         User user = (User)query.uniqueResult();
         return user;
     }
+
+    @Override
+    public User getUserByMobile(String mobile) {
+        String  sql = "SELECT  * from fa_user where mobile= '"+ mobile+"'";
+        Session currentSession = sessionFactory.openSession();
+        SQLQuery query = currentSession.createSQLQuery(sql);
+        query.addEntity(User.class);
+        User user = (User)query.uniqueResult();
+        return user;
+    }
 }
