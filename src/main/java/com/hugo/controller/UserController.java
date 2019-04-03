@@ -1,5 +1,6 @@
 package com.hugo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hugo.entity.User;
 import com.hugo.services.UserService;
 import com.hugo.utils.QAResult;
@@ -8,9 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,11 +93,11 @@ public class UserController {
         }else if(StringUtils.isEmpty(mobile)){
             modelAndView.addObject("responseData", QAResult.build(400,"手机号码为空！！！"));
         }
-        QAResult register = userService.register(username,email,mobile);
+/*        QAResult register = userService.register(username,email,mobile);
         if(register.getStatus() != 200){
             modelAndView.addObject("responseData",register.getMsg());
             modelAndView.setViewName("login/login");
-        }
+        }*/
         QAResult qaResult = userService.addUser(user);
         if (qaResult.getStatus() == 200){
             modelAndView.addObject("responseData", QAResult.build(200,"注册成功,请登录"));
@@ -107,6 +106,20 @@ public class UserController {
             modelAndView.addObject("responseData",  QAResult.build(400,"注册失败"));
         }
         return  modelAndView;
+    }
+
+    @RequestMapping("checkMsg")
+    @ResponseBody
+    public QAResult checkMsg(@RequestBody String data){
+        JSONObject jsonObject = JSONObject.parseObject(data);
+        String username = jsonObject.getString("username");
+        String email = jsonObject.getString("email");
+        String mobile = jsonObject.getString("mobile");
+        QAResult register = userService.register(username,email,mobile);
+        if(register.getStatus() != 200){
+            QAResult.build(400,register.getMsg());
+        }
+        return QAResult.ok(200);
     }
 
 }

@@ -65,7 +65,7 @@ public class UserServiceImpl  implements UserService {
         user.setEmail(user.getEmail());
         user.setMobile(user.getMobile());
         user.setAvatar(null);
-        user.setGender(null);
+        user.setGender(user.getGender());
         user.setBirthday(user.getBirthday());
         user.setJointime(DataUtils.getTodayTime());
         user.setCreatetime(DataUtils.getTodayTime());
