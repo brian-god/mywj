@@ -35,16 +35,16 @@
 
         <div class="form-label-group">
             <input type="email" id="inputEmail" name="email" class="form-control" placeholder="请输入邮箱" required="" autofocus="">
-            <label for="inputEmail">Email address</label>
+            <label for="inputEmail">邮箱地址</label>
         </div>
 
         <div class="form-label-group">
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required="">
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword">密码</label>
         </div>
 
         <div class="checkbox mb-3" style="text-align:justify;">
-            <a><label>
+            <a href="<%=basePath%>register"><label>
                 注册用户
             </label></a>
             <a><label>忘记密码</label></a>

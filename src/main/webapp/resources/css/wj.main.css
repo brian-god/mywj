@@ -109,3 +109,6 @@ body{
 .container-min{
     height: 100%;
 }
+.datetimepicker{
+    width: 230px;
+}
