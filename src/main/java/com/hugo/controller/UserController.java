@@ -110,12 +110,26 @@ public class UserController {
 
     @PostMapping(value = "checkMsg")
     @ResponseBody
-    public QAResult checkMsg(@RequestBody String data){
-        JSONObject jsonObject = JSONObject.parseObject(data);
-        String username = jsonObject.getString("username");
-        String email = jsonObject.getString("email");
-        String mobile = jsonObject.getString("mobile");
-        return userService.register(username,"1031132178@163.com",mobile);
+    public String checkMsg(@RequestBody String data){
+        String username = null;
+        String email = null;
+        String mobile = null;
+        String[] datas = data.split("=");
+        if("username".equals(datas[0])){
+            username = datas[1];
+        }else if("email".equals(datas[0])){
+            email = datas[1];
+        }else if("mobile".equals(datas[0])){
+            mobile = datas[1];
+        }
+        //返回数据
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.fluentPut("valid",true);
+        QAResult  qaResult = userService.register(username,email,mobile);
+        if (qaResult.getStatus() == 400){
+            jsonObject.fluentPut("valid",false);
+        }
+        return jsonObject.toJSONString();
     }
 
 }

@@ -52,15 +52,12 @@ function FormValidation() {
                         regexp: /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/,
                         message: '邮箱格式不正确'
                     },
-                    callback: {
-                        message: '该邮箱已被注册',
-                        callback: function (value, validator) {
-                            //校验邮箱是否使用过
-                             if (EmailChack(value)) {
-                                return false;
-                            }
-                                return true;
-                        }
+                    remote: {//（应该是所以的验证通过才）发送AJAX请求到后台
+                        type: "post",
+                        url: '/checkMsg',
+                        message: '此邮箱已注册。',
+                        delay: 2000,
+                        contentType: "application/json; charset=utf-8",
                     }
                 }
             },
