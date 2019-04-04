@@ -173,6 +173,12 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.47</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.googlecode.rapid-framework/rapid-core  模板依赖-->
+    <dependency>
+      <groupId>com.googlecode.rapid-framework</groupId>
+      <artifactId>rapid-core</artifactId>
+      <version>4.0.5</version>
+    </dependency>
   </dependencies>
 
   <build>
