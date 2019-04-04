@@ -118,7 +118,7 @@ public class UserController {
         if("username".equals(datas[0])){
             username = datas[1];
         }else if("email".equals(datas[0])){
-            email = datas[1];
+            email = datas[1].replace("%40","@");
         }else if("mobile".equals(datas[0])){
             mobile = datas[1];
         }

@@ -29,17 +29,12 @@ function FormValidation() {
                         regexp: /^[a-zA-Z0-9_]+$/,
                         message: '用户名只能包含大写、小写、数字和下划线'
                     },
-                    callback: {
+                    remote: {//（应该是所以的验证通过才）发送AJAX请求到后台
+                        type: "post",
+                        url: '/checkMsg',
                         message: '用户名已被注册',
-                        callback: function (value, validator) {
-                            if(value.length>5){
-                                //校验用户名是否使用过
-                                if (usernameChack(value)) {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        }
+                        delay: 2000,
+                        contentType: "application/json; charset=utf-8",
                     }
                 }
             },
@@ -79,6 +74,18 @@ function FormValidation() {
                     }
                 }
             },
+            password1:{
+                validators: {
+                    notEmpty: {
+                        message: '验证密码不能为空'
+                    },callback: {
+                        message: '密码不一致',
+                        callback: function (value, validator) {
+                            return passwordChack(value);
+                        }
+                    }
+                },
+            },
             mobile: {
                 validators: {
                     notEmpty: {
@@ -88,15 +95,12 @@ function FormValidation() {
                         regexp: /^1\d{10}$/,
                         message: '手机号格式错误'
                     },
-                    callback: {
-                        message: '该手机号已被注册',
-                        callback: function (value, validator) {
-                            //校验手机号是否使用过
-                            if (mobileChack(value)) {
-                                return false;
-                            }
-                            return true;
-                        }
+                    remote: {//（应该是所以的验证通过才）发送AJAX请求到后台
+                        type: "post",
+                        url: '/checkMsg',
+                        message: '用户名已被注册',
+                        delay: 2000,
+                        contentType: "application/json; charset=utf-8",
                     }
                 }
             },
@@ -112,11 +116,25 @@ function FormValidation() {
 }
 
 /**
+ *
+ * @param password1
+ * @returns {boolean}
+ */
+function passwordChack(password1) {
+    //获取密码
+    var password = $("#password").val()
+    //验证密码是否一致
+    if(password==password1){
+        return true;
+    }
+    return false;
+}
+
+/**
  * 校验邮箱是否已经存在
  * @param email
  * @returns {boolean}
  * @constructor
- */
 function EmailChack(email) {
     //邮箱校验的正则表达式
     var myReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
@@ -143,10 +161,10 @@ function EmailChack(email) {
     return iserror;
 }
 
-/**
+/!**
  * 用户名校验
  * @param username
- */
+ *!/
 function usernameChack(username) {
     var  data = {"username":username};
     var iserror = false;
@@ -169,10 +187,10 @@ function usernameChack(username) {
     return iserror;
 }
 
-/**
+/!**
  * 手机号校验
  * @param mobile
- */
+ *!/
 function mobileChack(mobile) {
     //手机号校验的正则
     var myReg=/^1\d{10}$/
@@ -198,4 +216,4 @@ function mobileChack(mobile) {
         });
     }
     return iserror;
-}
+}*/

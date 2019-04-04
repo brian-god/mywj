@@ -29,13 +29,13 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">密码</label>
                     <div class="col-lg-8">
-                        <input type="password" class="form-control" name="password" placeholder="请输入密码" />
+                        <input  id="password"type="password" class="form-control" name="password" placeholder="请输入密码" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-3 control-label">确认密码</label>
                     <div class="col-lg-8">
-                        <input type="password1" class="form-control" name="password1"  placeholder="请再次输入密码"/>
+                        <input id="password1" type="password" class="form-control" name="password1"  placeholder="请再次输入密码"/>
                     </div>
                 </div>
                 <div class="form-group">
