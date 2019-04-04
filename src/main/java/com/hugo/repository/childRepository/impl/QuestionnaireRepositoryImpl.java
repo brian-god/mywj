@@ -2,6 +2,11 @@ package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
+import com.hugo.utils.Page;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +16,10 @@ import java.util.List;
  */
 @Repository
 public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
+
+    //注入session工厂
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public Questionnaire load(Integer id) {
@@ -50,5 +59,18 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     @Override
     public void flush() {
 
+    }
+
+
+    @Override
+    public List<Questionnaire> getQuestionnaireByUser(int userId, Page page) {
+        String  sql = "SELECT  * from fa_user where user= "+ userId;
+        Session currentSession = sessionFactory.openSession();
+        SQLQuery query = currentSession.createSQLQuery(sql);
+        query.setFirstResult(page.getStart());
+        query.setMaxResults(page.getEnd());
+        query.addEntity(Questionnaire.class);
+        List<Questionnaire> list = query.list();
+        return list;
     }
 }
