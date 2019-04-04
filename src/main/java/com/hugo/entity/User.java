@@ -36,5 +36,6 @@ public class User {
     private String updatetime;
     private Integer status=0;
     private Integer dr =0;
+    private Integer usertype;
 }
 

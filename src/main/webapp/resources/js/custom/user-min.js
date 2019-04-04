@@ -1,6 +1,3 @@
-//引入外部js
-document.write("<script language=javascript src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>");
-
 /**
  * 注册界面表单验证
  * @constructor
