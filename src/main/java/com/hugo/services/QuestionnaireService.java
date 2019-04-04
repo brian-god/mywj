@@ -1,5 +1,6 @@
 package com.hugo.services;
 
+import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 
 /**
@@ -8,5 +9,5 @@ import com.hugo.utils.QAResult;
 
 public interface QuestionnaireService {
 
-    QAResult getQuestionnaireByUser(int id);
+    QAResult getQuestionnaireByUser(int id, Page page);
 }
