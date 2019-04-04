@@ -64,9 +64,10 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
 
     @Override
     public List<Questionnaire> getQuestionnaireByUser(int userId, Page page) {
-        String  sql = "SELECT  * from fa_user where user= "+ userId;
+        String  sql = "SELECT  * from fa_questionnaire where user = ? ORDER BY updatetime DESC";
         Session currentSession = sessionFactory.openSession();
         SQLQuery query = currentSession.createSQLQuery(sql);
+        query.setInteger(1,userId);
         query.setFirstResult(page.getStart());
         query.setMaxResults(page.getEnd());
         query.addEntity(Questionnaire.class);
