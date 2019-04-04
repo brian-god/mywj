@@ -43,13 +43,13 @@ public class UserServiceImpl  implements UserService {
     public QAResult register(String username,String  email,String mobile) {
        if (username != null){
            User userByUsername = getUserByUsername(username);
-           if(userByUsername != userByUsername) {
+           if(null != userByUsername) {
                return QAResult.build(400, "该用户名已被使用");
            }
         }
        if (email != null) {
            User userByEmail = userRepository.getUserByEmail(email);
-           if (userByEmail != null) {
+           if ( null != userByEmail) {
                return QAResult.build(400, "该邮箱已被使用");
            }
        }
