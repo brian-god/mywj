@@ -2,11 +2,10 @@ package com.hugo.services.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
 import com.hugo.services.QuestionnaireService;
-import com.hugo.utils.JsonUtils;
+import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             return QAResult.build(500,"获取数据失败");
         }
         return QAResult.ok();
+    }
+
+    @Override
+    public QAResult getQuestionnaireByUser(int id, Page page) {
+        return  null;
     }
     /**
      * 集合转json数组

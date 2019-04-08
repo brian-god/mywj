@@ -10,4 +10,5 @@ import com.hugo.utils.QAResult;
 public interface QuestionnaireService {
 
     QAResult getQuestionnaireByUser(int id, Page page);
+    QAResult getQuestionnaireByUser(int id);
 }
