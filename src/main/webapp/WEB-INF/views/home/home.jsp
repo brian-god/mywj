@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.hugo.entity.User" %><%--
   Created by IntelliJ IDEA.
   User: Txk
   Date: 2019/4/1
@@ -7,8 +7,17 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.rapid-framework.org.cn/rapid" prefix="rapid" %>
+<%
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+
+            request.getServerPort()+request.getContextPath()+"/";
+    //获取用户
+    User  user = (User)session.getAttribute("user");
+%>
 <rapid:override name="pagecss">
     <link rel="stylesheet" href="/css/wj.main.css">
+    <rapid:block name="childcss">
+        <!--子页面的CSS-->
+    </rapid:block>
 </rapid:override>
 <rapid:override name="content">
     <!-- /头部信息 -->
@@ -61,7 +70,7 @@
                     <a class="left-child-item" href="#">收集问卷</a>
                 </div>
                 <div class="child-menu">
-                    <a class="left-child-item" href="#">管理问卷</a>
+                    <a class="left-child-item" href="<%=basePath%>qt-manage">管理问卷</a>
                 </div>
                 <div class="child-menu">
                     <a class="left-child-item" href="#">回收问卷</a>
@@ -83,8 +92,10 @@
                 </div>
             </div>
         </div>
-        <div class="center" style="background-color: red;">
-
+        <div class="center" style="background-color: #f5f5f5;">
+            <rapid:block name="childconment">
+                <!--子页面的CSS-->
+            </rapid:block>
         </div>
     </div>
     </div>

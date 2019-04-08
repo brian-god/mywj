@@ -1,8 +1,12 @@
 package com.hugo.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hugo.entity.Questionnaire;
 
 import java.util.List;
 
@@ -66,5 +70,4 @@ public class JsonUtils {
     	
     	return null;
     }
-    
 }
