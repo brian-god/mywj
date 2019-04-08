@@ -5,10 +5,13 @@ import com.hugo.repository.childRepository.QuestionnaireRepository;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lxs on 2019/4/4.
@@ -66,20 +69,20 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     public void flush() {
 
     }
-
     /**
-     * 查询用户的问卷
+     * 返回map数据
      * @param userid
      * @return
      */
+
     @Override
-    public List<Questionnaire> getQuestionnaireByiUserId(Integer userid) {
+    public List<Map<String,Object>> getQuestionnaireByiUserIdResMap(Integer userid){
         String  sql = "SELECT * FROM fa_questionnaire WHERE user = "+userid+" and dr = 0 ";
         Session   session =  sessionFactory.openSession();
         SQLQuery  sqlQuery =  session.createSQLQuery(sql);
-        sqlQuery.addEntity(Questionnaire.class);
+        sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object questionnaireLists = sqlQuery.list();
-        List<Questionnaire> qts = (List<Questionnaire>)questionnaireLists;
+        List<Map<String,Object>> qts = (List<Map<String,Object>>)questionnaireLists;
         return qts;
     }
 }

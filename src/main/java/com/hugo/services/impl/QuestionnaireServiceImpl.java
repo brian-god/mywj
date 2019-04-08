@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lxs on 2019/4/4.
@@ -19,27 +20,20 @@ import java.util.List;
 public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
-
-    @Override
-    public QAResult getQuestionnaireByUser(int id) {
-        try{
-            List<Questionnaire> qts = questionnaireRepository.getQuestionnaireByiUserId(id);
-            if(null != qts && qts.size() > 0) {
-                // List 转 JSONArray
-                String jsonString = JSON.toJSONString(qts);
-                System.out.print(jsonString);
-                return QAResult.build(200,"获取成功",jsonString);
-            }
-        }catch (Exception e){
-            return QAResult.build(500,"获取数据失败");
-        }
-        return QAResult.ok();
+    /**
+     * 返回map数据
+     * @param id
+     * @return
+     */
+    public List<Map<String,Object>> getPageQuestionnaireByUserResMap(int id){
+        return  questionnaireRepository.getQuestionnaireByiUserIdResMap(id);
     }
-
     @Override
     public QAResult getQuestionnaireByUser(int id, Page page) {
+
         return  null;
     }
+
     /**
      * 集合转json数组
      * @param list

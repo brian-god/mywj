@@ -21,6 +21,7 @@
     <script src="/js/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
+    <script src='resources/js/My97DatePicker/WdatePicker.js'></script>
     <rapid:block name="pagescript">
         <!--各个页面不同的js-->
     </rapid:block>

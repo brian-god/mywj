@@ -116,3 +116,9 @@ body{
 .datetimepicker{
     width: 230px;
 }
+.fixed-table-toolbar{
+    display:none
+}
+.form-inline{
+    padding-left:15px
+}
