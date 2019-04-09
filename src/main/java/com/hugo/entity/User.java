@@ -1,5 +1,7 @@
 package com.hugo.entity;
 
+import com.hugo.utils.page.Page;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -19,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 //创建的数据库表名称
 @Table(name = "fa_user")
-public class User {
+public class User{
     @Id
     @GeneratedValue
     private Integer id;

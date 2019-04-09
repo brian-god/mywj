@@ -17,4 +17,17 @@ public interface QuestionnaireRepository extends DomainRepository<Questionnaire,
      * @return
      */
     List<Map<String,Object>> getQuestionnaireByiUserIdResMap(Integer userid);
+    /**
+     * 返回对象集合数据
+     * @param questionnaire
+     * @return
+     */
+    List<Questionnaire> getQuestionnaire(Questionnaire questionnaire);
+
+    /**
+     * 返回数据总数
+     * @param questionnaire
+     * @return
+     */
+    Integer getQuestionnaireNum(Questionnaire questionnaire);
 }

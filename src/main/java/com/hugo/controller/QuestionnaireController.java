@@ -5,6 +5,7 @@ import com.hugo.entity.User;
 import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.PageHelper;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +52,21 @@ public class QuestionnaireController {
     /**
      * 请求数据
      * @param request
-     * @param ksrq
-     * @param jsrq
-     * @return
      */
     @PostMapping("paged-ata")
     @ResponseBody
-    public List<Map<String, Object>> qtManage(HttpServletRequest request ,@RequestParam String ksrq, @RequestParam String jsrq) {
+    public PageHelper<Questionnaire> qtManage(HttpServletRequest request , Questionnaire questionnaire) {
         User user = MywjUtils.getLoginUser(request);
-        List<Map<String, Object>> list = questionnaireService.getPageQuestionnaireByUserResMap(user.getId());//根据业务查询库中数据
-        return list;
+        /*List<Map<String, Object>> list = questionnaireService.getPageQuestionnaireByUserResMap(user.getId());//根据业务查询库中数据
+        return list;*/
+        questionnaire.setUserId(user.getId());
+        PageHelper<Questionnaire> pageHelper = new PageHelper<Questionnaire>();
+        // 统计总记录数;
+        pageHelper.setTotal(questionnaireService.getQuestionnaireNum(questionnaire));
+        // 查询当前页实体对象
+        List<Questionnaire> list = questionnaireService.getQuestionnaire(questionnaire);
+        pageHelper.setRows(list);
+        return pageHelper;
     }
 
     @PostMapping("addQtManage")

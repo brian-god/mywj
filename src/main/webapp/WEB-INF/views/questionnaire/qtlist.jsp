@@ -32,10 +32,10 @@
         <br>
         <div id="result" class="alert alert-dismissable">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">新增</button>
-                <button type="button" class="btn btn-primary">修改</button>
-                <button type="button" class="btn btn-primary">删除</button>
-                <button type="button" class="btn btn-primary">审批</button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;新增</button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改</button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除</button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批</button>
             </div>
             <table id="mytab" class="table table-hover"></table>
         </div>
@@ -55,16 +55,20 @@
                 pageNumber: 1, //初始化加载第一页
                 pagination:true,//是否分页
                 clickToSelect: true,
-                pageSize:10,//单页记录数
+                pageSize:3,//单页记录数
+                paginationShowPageGo: true,
                 pageList:[5,10,20,30],//可选择单页记录数
                 showRefresh:true,//刷新按钮
+                sidePagination:'server',
                 uniqueId: "id",
-                queryParams : function (params) {//上传服务器的参数
-                    var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+                queryParams : function (params) {
+                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    var temp = {
                         limit : params.limit, // 每页显示数量
                         offset : params.offset, // SQL语句起始索引
-                        ksrq : $('#ksrq').val(),
-                        jsrq : $('#jsrq').val()
+                        page: (params.offset / params.limit) + 1,   //当前页码
+                        ksrq:$('#ksrq').val(),
+                        jsrq:$('#jsrq').val()
                     };
                     return temp;
                 },
@@ -98,8 +102,9 @@
                     },
                     {
                         title:'问卷状态',
-                        field:'qtstate',
+                        field:'state',
                         align: 'center',
+                        formatter: stateFormatter
                     },
                     {
                         title:'最后修改时间',
@@ -109,7 +114,26 @@
                 ]
             })
         })
-
+        /**
+         * 格式化状态
+         * @param value
+         */
+        var stateFormatter = function(value){
+            var restr = "";
+            if(value == -1){
+                return "<span class=\"label label-info\">自由态</span>";
+            }
+            if(value == 1){
+               return "<span class=\"label label-warning\">提交状态</span>";
+            }
+            if(value == 2){
+                return "<span class=\"label label-success\">审批通过</span>";
+            }
+            if(value == 3){
+                return "<span class=\"label label-danger\">驳回</span>";
+            }
+            return null;
+        }
         //查询按钮事件
         $('#search_btn').click(function(){
             $('#mytab').bootstrapTable('refresh');

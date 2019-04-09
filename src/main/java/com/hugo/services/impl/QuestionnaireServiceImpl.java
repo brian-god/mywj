@@ -54,6 +54,24 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     /**
+     * 获取问卷
+     * @param questionnaire
+     * @return
+     */
+    @Override
+    public List<Questionnaire> getQuestionnaire(Questionnaire questionnaire){
+        return  questionnaireRepository.getQuestionnaire(questionnaire);
+    }
+    /**
+     * 返回数据总数
+     * @param questionnaire
+     * @return
+     */
+    @Override
+    public Integer getQuestionnaireNum(Questionnaire questionnaire){
+        return questionnaireRepository.getQuestionnaireNum(questionnaire);
+    }
+    /**
      * 集合转json数组
      * @param list
      * @return

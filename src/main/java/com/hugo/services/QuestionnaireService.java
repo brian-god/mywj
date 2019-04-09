@@ -23,4 +23,17 @@ public interface QuestionnaireService {
     List<Map<String,Object>> getPageQuestionnaireByUserResMap(int id);
 
     QAResult addQtManage(Questionnaire questionnaire,int userId,String userName);
+
+    /**
+     * 返回对象集合
+     * @param questionnaire
+     * @return
+     */
+    List<Questionnaire> getQuestionnaire(Questionnaire questionnaire);
+    /**
+     * 返回数据总数
+     * @param questionnaire
+     * @return
+     */
+    Integer getQuestionnaireNum(Questionnaire questionnaire);
 }
