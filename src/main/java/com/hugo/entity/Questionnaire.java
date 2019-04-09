@@ -25,6 +25,6 @@ public class Questionnaire {
     private Integer qtstate;
     private String createtime;
     private String updatetime;
-    private Integer modifier;
+    private String modifier;
     private Integer dr =0;
 }
