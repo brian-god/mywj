@@ -11,7 +11,7 @@ import java.util.Date;
 public class DataUtils {
     public static String getTodayTime() {
         Date date = new Date();
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd mm:dd:ss");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String todayTime = format.format(date);
         return todayTime;
     }

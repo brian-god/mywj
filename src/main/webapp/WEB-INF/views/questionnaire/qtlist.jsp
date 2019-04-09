@@ -185,7 +185,10 @@
         $('#search_btn').click(function () {
             $('#mytab').bootstrapTable('refresh');
         })
-
+        //修改触发
+        var update = function(){
+            EditViewById(id, 'view');
+        }
         //格式化日期
         Date.prototype.Format = function (fmt) {
             var o = {
