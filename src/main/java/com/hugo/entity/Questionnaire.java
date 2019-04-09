@@ -1,6 +1,5 @@
 package com.hugo.entity;
 
-import com.hugo.utils.page.childvo.QuestionnairePage;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -20,7 +19,7 @@ public class Questionnaire{
     @GeneratedValue
     private Integer id;
     private String name;
-    private String describe;
+    private String describes;
     private Integer user;
     private Integer state;
     private Integer qtstate;

@@ -33,7 +33,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public QAResult addQtManage(Questionnaire questionnaire,int userId,String userName) {
         questionnaire.setDr(0);
         questionnaire.setCreatetime(DataUtils.getTodayTime());
-        questionnaire.setDescribe(questionnaire.getDescribe());
+        questionnaire.setDescribes(questionnaire.getDescribes());
         questionnaire.setModifier(userName);
         questionnaire.setName(questionnaire.getName());
         questionnaire.setUser(userId);
