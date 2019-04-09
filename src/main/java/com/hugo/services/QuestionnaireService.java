@@ -1,5 +1,6 @@
 package com.hugo.services;
 
+import com.hugo.entity.Questionnaire;
 import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 
@@ -20,4 +21,6 @@ public interface QuestionnaireService {
      * @return
      */
     List<Map<String,Object>> getPageQuestionnaireByUserResMap(int id);
+
+    QAResult addQtManage(Questionnaire questionnaire,int userId,String userName);
 }

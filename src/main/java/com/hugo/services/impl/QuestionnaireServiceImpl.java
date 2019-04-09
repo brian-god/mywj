@@ -1,10 +1,10 @@
 package com.hugo.services.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
 import com.hugo.services.QuestionnaireService;
+import com.hugo.utils.DataUtils;
 import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,25 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public List<Map<String,Object>> getPageQuestionnaireByUserResMap(int id){
         return  questionnaireRepository.getQuestionnaireByiUserIdResMap(id);
     }
+
+    @Override
+    public QAResult addQtManage(Questionnaire questionnaire,int userId,String userName) {
+        questionnaire.setDr(0);
+        questionnaire.setCreatetime(DataUtils.getTodayTime());
+        questionnaire.setUpdatetime(null);
+        questionnaire.setDescribe(questionnaire.getCreatetime());
+        questionnaire.setModifier(userName);
+        questionnaire.setName(questionnaire.getName());
+        questionnaire.setQtstate(0);
+        questionnaire.setUser(userId);
+        questionnaire.setState(-1);
+        Integer save = questionnaireRepository.save(questionnaire);
+        if (save == 0){
+            return QAResult.ok(400);
+        }
+        return QAResult.build(200,"添加成功");
+    }
+
     @Override
     public QAResult getQuestionnaireByUser(int id, Page page) {
 
