@@ -1,7 +1,6 @@
 package com.hugo.services;
 
 import com.hugo.entity.Questionnaire;
-import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.Map;
  */
 
 public interface QuestionnaireService {
-
-    QAResult getQuestionnaireByUser(int id, Page page);
 
     /**
      * 查询返回map数据

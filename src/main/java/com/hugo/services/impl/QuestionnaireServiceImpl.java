@@ -5,7 +5,6 @@ import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
 import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.DataUtils;
-import com.hugo.utils.Page;
 import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public QAResult addQtManage(Questionnaire questionnaire,int userId,String userName) {
         questionnaire.setDr(0);
         questionnaire.setCreatetime(DataUtils.getTodayTime());
-        questionnaire.setUpdatetime(null);
         questionnaire.setDescribe(questionnaire.getCreatetime());
         questionnaire.setModifier(userName);
         questionnaire.setName(questionnaire.getName());
@@ -47,11 +45,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return QAResult.build(200,"添加成功");
     }
 
-    @Override
-    public QAResult getQuestionnaireByUser(int id, Page page) {
-
-        return  null;
-    }
 
     /**
      * 获取问卷
