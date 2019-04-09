@@ -13,13 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lxs on 2019/4/4.
@@ -31,11 +29,6 @@ public class QuestionnaireController {
 
     @Autowired
     private QuestionnaireService questionnaireService;
-
-    public QAResult getQuestionnaireByUser(int id){
-
-        return QAResult.build(200,"");
-    }
 
     /**
      * 问卷管理节点
