@@ -120,22 +120,27 @@
                         visible: true                  //是否显示复选框
                     },
                     {
+                        title: '问卷编号',
+                        field: 'number',
+                        align: 'center'
+                    },
+                    {
                         title: '问卷名称',
                         field: 'name',
                         align: 'center'
                     },
                     {
-                        title: '问卷描述',
-                        field: 'describe',
+                        title: '问卷名称',
+                        field: 'name',
                         align: 'center'
                     },
                     {
                         title: '创建人',
-                        field: 'user',
+                        field: 'modifier',
                         align: 'center',
-                        formatter: function (value, row, index) {
+                      /*  formatter: function (value, row, index) {
                             return '<a href="#" target="_black" >' + value + '</a>'
-                        }
+                        }*/
                     },
                     {
                         title: '创建时间',

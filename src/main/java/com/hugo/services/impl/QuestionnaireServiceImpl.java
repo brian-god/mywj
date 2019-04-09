@@ -5,6 +5,7 @@ import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
 import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.DataUtils;
+import com.hugo.utils.IDUtils;
 import com.hugo.utils.QAResult;
 import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         questionnaire.setName(questionnaire.getName());
         questionnaire.setUser(userId);
         questionnaire.setState(-1);
+        questionnaire.setNumber(String.valueOf(IDUtils.genItemId()));
         Integer save = questionnaireRepository.save(questionnaire);
         if (save == 0){
             return QAResult.ok(400);
