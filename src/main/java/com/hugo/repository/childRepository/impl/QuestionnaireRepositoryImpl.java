@@ -6,7 +6,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,7 +52,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
 
     @Override
     public Integer save(Questionnaire entity) {
-        return null;
+        return (Integer)getCurrentSession().save(entity);
     }
 
     @Override
