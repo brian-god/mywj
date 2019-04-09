@@ -89,11 +89,11 @@
                     },
                     {
                         title:'创建人',
-                        field:'user',
+                        field:'modifier',
                         align: 'center',
-                        formatter: function (value, row, index){
+                   /*     formatter: function (value, row, index){
                             return '<a href="#" target="_black" >'+value+'</a>'
-                        }
+                        }*/
                     },
                     {
                         title:'创建时间',
