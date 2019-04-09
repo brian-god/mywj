@@ -100,6 +100,19 @@
                 showRefresh: true,//刷新按钮
                 sidePagination: 'server',
                 uniqueId: "id",
+                onDblClickRow: function (row) {//双击触发
+                    console.log(row);
+                    $.ajax({
+                        type:'post',
+                        url:'/tobill',
+                        data: row,
+                        dataType:'html',
+                        success:function(result){
+                            console.log(result)
+                            $("body").html(result);
+                        }
+                    });
+                },
                 queryParams: function (params) {
                     //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                     var temp = {

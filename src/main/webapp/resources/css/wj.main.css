@@ -122,3 +122,14 @@ body{
 .form-inline{
     padding-left:15px
 }
+.bill-title{
+    width: 100%;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: #ccc;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+.header-bill{
+    line-height: 45px;
+}

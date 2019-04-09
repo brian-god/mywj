@@ -77,4 +77,18 @@ public class QuestionnaireController {
         }
         return QAResult.build(400,"添加失败");
     }
+
+    /**
+     * 进入问卷详情的编辑页面
+     * @param questionnaire
+     * @return
+     */
+    @PostMapping("tobill")
+    @ResponseBody
+    public ModelAndView toQTBillDatill(Questionnaire questionnaire){
+        ModelAndView  modelAndView = new ModelAndView();
+        modelAndView.addObject("row",questionnaire);
+        modelAndView.setViewName("questionnaire/qtbilldatil");
+        return  modelAndView;
+    }
 }
