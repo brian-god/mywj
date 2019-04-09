@@ -130,8 +130,8 @@
                         align: 'center'
                     },
                     {
-                        title: '问卷名称',
-                        field: 'name',
+                        title: '问卷描述',
+                        field: 'describes',
                         align: 'center'
                     },
                     {
