@@ -11,11 +11,20 @@ import com.hugo.utils.page.Page;
  * @Version: 1.0
  */
 public class QuestionnairePage extends Page {
-    //每页显示数量
+    //开始时间
     private String ksrq;
-    //页码
+    //结束时间
     private String jsrq;
+    //用户id
+    private int userId;
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
     public String getKsrq() {
         return ksrq;
     }

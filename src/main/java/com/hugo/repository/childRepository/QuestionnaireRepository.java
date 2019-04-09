@@ -2,6 +2,7 @@ package com.hugo.repository.childRepository;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.DomainRepository;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 
 import java.util.List;
 import java.util.Map;
@@ -19,15 +20,15 @@ public interface QuestionnaireRepository extends DomainRepository<Questionnaire,
     List<Map<String,Object>> getQuestionnaireByiUserIdResMap(Integer userid);
     /**
      * 返回对象集合数据
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
-    List<Questionnaire> getQuestionnaire(Questionnaire questionnaire);
+    List<Questionnaire> getQuestionnaire(QuestionnairePage questionnairePage);
 
     /**
      * 返回数据总数
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
-    Integer getQuestionnaireNum(Questionnaire questionnaire);
+    Integer getQuestionnaireNum(QuestionnairePage questionnairePage);
 }

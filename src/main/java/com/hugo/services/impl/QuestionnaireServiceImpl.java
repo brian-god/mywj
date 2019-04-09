@@ -6,6 +6,7 @@ import com.hugo.repository.childRepository.QuestionnaireRepository;
 import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.DataUtils;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,21 +48,21 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     /**
      * 获取问卷
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
     @Override
-    public List<Questionnaire> getQuestionnaire(Questionnaire questionnaire){
-        return  questionnaireRepository.getQuestionnaire(questionnaire);
+    public List<Questionnaire> getQuestionnaire(QuestionnairePage questionnairePage){
+        return  questionnaireRepository.getQuestionnaire(questionnairePage);
     }
     /**
      * 返回数据总数
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
     @Override
-    public Integer getQuestionnaireNum(Questionnaire questionnaire){
-        return questionnaireRepository.getQuestionnaireNum(questionnaire);
+    public Integer getQuestionnaireNum(QuestionnairePage questionnairePage){
+        return questionnaireRepository.getQuestionnaireNum(questionnairePage);
     }
     /**
      * 集合转json数组

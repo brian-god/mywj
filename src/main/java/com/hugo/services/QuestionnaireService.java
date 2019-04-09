@@ -2,6 +2,7 @@ package com.hugo.services;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 
 import java.util.List;
 import java.util.Map;
@@ -23,14 +24,14 @@ public interface QuestionnaireService {
 
     /**
      * 返回对象集合
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
-    List<Questionnaire> getQuestionnaire(Questionnaire questionnaire);
+    List<Questionnaire> getQuestionnaire(QuestionnairePage questionnairePage);
     /**
      * 返回数据总数
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
-    Integer getQuestionnaireNum(Questionnaire questionnaire);
+    Integer getQuestionnaireNum(QuestionnairePage questionnairePage);
 }

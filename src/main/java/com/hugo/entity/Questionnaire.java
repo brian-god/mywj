@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 //创建的数据库表名称
 @Table(name = "fa_questionnaire")
-public class Questionnaire extends QuestionnairePage {
+public class Questionnaire{
     @Id
     @GeneratedValue
     private Integer id;

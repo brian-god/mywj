@@ -15,17 +15,6 @@ public class Page {
     private int page;
     //sql语句起始索引
     private int offset;
-    //用户id
-    private int userId;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public int getLimit() {
         return limit;
     }

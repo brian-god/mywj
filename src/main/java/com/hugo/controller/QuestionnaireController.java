@@ -6,6 +6,7 @@ import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
 import com.hugo.utils.page.PageHelper;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +49,16 @@ public class QuestionnaireController {
      */
     @PostMapping("paged-ata")
     @ResponseBody
-    public PageHelper<Questionnaire> qtManage(HttpServletRequest request , Questionnaire questionnaire) {
+    public PageHelper<Questionnaire> qtManage(HttpServletRequest request , QuestionnairePage questionnairePage) {
         User user = MywjUtils.getLoginUser(request);
         /*List<Map<String, Object>> list = questionnaireService.getPageQuestionnaireByUserResMap(user.getId());//根据业务查询库中数据
         return list;*/
-        questionnaire.setUserId(user.getId());
+        questionnairePage.setUserId(user.getId());
         PageHelper<Questionnaire> pageHelper = new PageHelper<Questionnaire>();
         // 统计总记录数;
-        pageHelper.setTotal(questionnaireService.getQuestionnaireNum(questionnaire));
+        pageHelper.setTotal(questionnaireService.getQuestionnaireNum(questionnairePage));
         // 查询当前页实体对象
-        List<Questionnaire> list = questionnaireService.getQuestionnaire(questionnaire);
+        List<Questionnaire> list = questionnaireService.getQuestionnaire(questionnairePage);
         pageHelper.setRows(list);
         return pageHelper;
     }

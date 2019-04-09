@@ -2,6 +2,7 @@ package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
+import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -91,13 +92,13 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     /**
      * 分页加条件查询
      *
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
     @Override
-    public List<Questionnaire> getQuestionnaire(Questionnaire questionnaire) {
+    public List<Questionnaire> getQuestionnaire(QuestionnairePage questionnairePage) {
         String sql = "SELECT * FROM fa_questionnaire WHERE dr = 0 ";
-        SQLQuery sqlQuery = getSqlQuery(sql,questionnaire,true);
+        SQLQuery sqlQuery = getSqlQuery(sql,questionnairePage,true);
         sqlQuery.addEntity(Questionnaire.class);
         Object questionnaireLists = sqlQuery.list();
         List<Questionnaire> qts = (List<Questionnaire>) questionnaireLists;
@@ -107,13 +108,13 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     /**
      * 返回数量
      *
-     * @param questionnaire
+     * @param questionnairePage
      * @return
      */
     @Override
-    public Integer getQuestionnaireNum(Questionnaire questionnaire) {
+    public Integer getQuestionnaireNum(QuestionnairePage questionnairePage) {
         String sql = "SELECT count(user) FROM fa_questionnaire WHERE  dr = 0 ";
-        SQLQuery sqlQuery = getSqlQuery(sql,questionnaire,false);
+        SQLQuery sqlQuery = getSqlQuery(sql,questionnairePage,false);
         sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object questionnaireLists = sqlQuery.list();
         List<Map<String, Object>> qts = (List<Map<String, Object>>) questionnaireLists;
@@ -124,29 +125,29 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     /**
      * 查询SQL拼接
      * @param oldsql
-     * @param questionnaire
+     * @param questionnairePage
      * @param ispage 是否分页
      * @return
      */
-    private SQLQuery getSqlQuery(String oldsql,Questionnaire questionnaire,boolean ispage){
+    private SQLQuery getSqlQuery(String oldsql,QuestionnairePage questionnairePage,boolean ispage){
         StringBuffer sql = new StringBuffer(oldsql);
-        if (0 != questionnaire.getUserId() && !"".equals(questionnaire.getUserId())) {
-            sql.append(" and user=" + questionnaire.getUserId());
+        if (0 != questionnairePage.getUserId() && !"".equals(questionnairePage.getUserId())) {
+            sql.append(" and user=" + questionnairePage.getUserId());
         }
         //开始时间
-        if (null != questionnaire.getKsrq() && !"".equals(questionnaire.getKsrq())) {
-            sql.append(" and createtime > '" + questionnaire.getKsrq()+"'");
+        if (null != questionnairePage.getKsrq() && !"".equals(questionnairePage.getKsrq())) {
+            sql.append(" and createtime > '" + questionnairePage.getKsrq()+"'");
         }
         //结束时间
-        if (null != questionnaire.getJsrq() && !"".equals(questionnaire.getJsrq())) {
-            sql.append(" and createtime < '" + questionnaire.getJsrq()+"'");
+        if (null != questionnairePage.getJsrq() && !"".equals(questionnairePage.getJsrq())) {
+            sql.append(" and createtime < '" + questionnairePage.getJsrq()+"'");
         }
         //排序
         sql.append(" ORDER BY createtime DESC");
         if(ispage) {
-            if (0 != questionnaire.getLimit()) {
+            if (0 != questionnairePage.getLimit()) {
                 //分页查询
-                sql.append("  LIMIT " + questionnaire.getOffset() + "," + questionnaire.getLimit());
+                sql.append("  LIMIT " + questionnairePage.getOffset() + "," + questionnairePage.getLimit());
             }
         }
         Session session = sessionFactory.openSession();
