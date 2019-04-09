@@ -13,12 +13,16 @@
     <link rel="stylesheet" href="/css/bootstrap-3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/js/toastr/toastr.min.css">
     <rapid:block name="pagecss">
 
     </rapid:block>
 </rapid:override>
 <rapid:override name="script">
     <script src="/js/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="/js/jQuery/jquery-form.js"></script>
+    <script src="/js/toastr/toastr.min.js"></script>
+    <script src='/js/custom/mywj-public.js'></script>
     <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
     <script src='/js/My97DatePicker/WdatePicker.js'></script>

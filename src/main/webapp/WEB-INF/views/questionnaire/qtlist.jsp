@@ -7,10 +7,6 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://www.rapid-framework.org.cn/rapid" prefix="rapid" %>
-<%
-    //获取返回数据
-    QAResult qaResult = (QAResult) request.getAttribute("qaResult");
-%>
 <rapid:override name="childcss">
     <link rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.min.css">
 </rapid:override>
@@ -56,7 +52,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">新增问卷</h4>
                 </div>
-                <form class="form-horizontal" role="form" action="addQtManage" method="post">
+                <form class="form-horizontal" role="form" action="addQtManage" method="post" id="form1">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="firstname" class="col-sm-2 control-label">问卷名称</label>
@@ -75,7 +71,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-primary" >提交更改</button>
+                        <button type="submit" class="btn btn-primary">提交更改</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
@@ -89,6 +85,7 @@
 
     <script type="text/javascript">
         $(function () {
+           initToastr();
             $('#mytab').bootstrapTable({
                 url: "paged-ata",//请求路径
                 method: 'post',
@@ -126,7 +123,7 @@
                     },
                     {
                         title: '问卷描述',
-                        field: 'describe',
+                        field: 'describes',
                         align: 'center'
                     },
                     {
@@ -155,6 +152,16 @@
                     }
                 ]
             })
+            /** 验证数据是否添加成功  */
+            $("#form1").ajaxForm(function(data){
+                $('#mytab').bootstrapTable('refresh');
+                $('#QtAddModal').modal('hide')
+                if(data.status==200){
+                    toastr.success('添加问卷成功请双击表中记录，添加问卷内容');
+                }else{
+                    toastr.error(data.msg);
+                }
+            });
         })
         /**
          * 格式化状态
@@ -181,7 +188,7 @@
             $('#mytab').bootstrapTable('refresh');
         })
         //修改触发
-        var update = function(){
+        var update = function () {
             EditViewById(id, 'view');
         }
         //格式化日期

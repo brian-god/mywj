@@ -65,21 +65,16 @@ public class QuestionnaireController {
 
     @PostMapping("addQtManage")
     @ResponseBody
-    public ModelAndView addQtManage(HttpServletRequest request, Questionnaire questionnaire){
+    public QAResult addQtManage(HttpServletRequest request, Questionnaire questionnaire){
         User user = MywjUtils.getLoginUser(request);
-        //创建一个数据模型
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("");//添加页面
         String name = questionnaire.getName();
         if (StringUtils.isEmpty(name)){
-            modelAndView.addObject("responseData", QAResult.build(400,"问卷名称为空！！！"));
+           return QAResult.build(400,"问卷名称为空！！！");
         }
         QAResult qaResult = questionnaireService.addQtManage(questionnaire, user.getId(), user.getUsername());
         if (qaResult.getStatus() == 200){
-            modelAndView.addObject("responseData", QAResult.build(200,"添加成功"));
-            modelAndView.setViewName("questionnaire/qtlist");
+            return QAResult.build(200,"添加成功");
         }
-        modelAndView.addObject("responseData",  QAResult.build(400,"添加失败"));
-        return modelAndView;
+        return QAResult.build(400,"添加失败");
     }
 }
