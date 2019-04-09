@@ -29,7 +29,7 @@
                     <div class="btn-group">
                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="img-circle headers-img-circle" src="/img/blog.jpeg" alt="头像"/>
-                            <span class="user-name">刘勤敏</span>
+                            <span class="user-name">${user.username}</span>
                         </a>
                         <!-- Single button -->
                         <ul class="dropdown-menu">

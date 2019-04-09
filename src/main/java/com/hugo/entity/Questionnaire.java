@@ -18,6 +18,7 @@ public class Questionnaire{
     @Id
     @GeneratedValue
     private Integer id;
+    private String number;
     private String name;
     private String describes;
     private Integer user;
