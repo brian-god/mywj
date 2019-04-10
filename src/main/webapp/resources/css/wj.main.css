@@ -125,11 +125,23 @@ body{
 .bill-title{
     width: 100%;
     margin-bottom: 15px;
-    text-align: center;
     background-color: #ccc;
-    padding-bottom: 3px;
-    padding-top: 3px;
+    padding-bottom: 2px;
+    padding-top: 2px;
 }
 .header-bill{
     line-height: 45px;
+}
+/*固定和可變宽度的两个div占整个屏幕*/
+.one-line-div{
+    width: 100%;
+    display: flex;
+}
+.one-line-left-div{
+    width: 55px;
+}
+.one-line-right-div{
+    width: 100%;
+    margin-left: 7px;
+    padding-right: 70px;
 }

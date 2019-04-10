@@ -1,5 +1,6 @@
 package com.hugo.entity;
 
+import com.hugo.myenum.ChoiceType;
 import lombok.Data;
 
 import javax.persistence.Entity;

@@ -2,6 +2,8 @@ package com.hugo.controller;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.entity.User;
+import com.hugo.myenum.ChoiceType;
+import com.hugo.myenum.ProblemType;
 import com.hugo.services.QuestionnaireService;
 import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,11 +86,13 @@ public class QuestionnaireController {
      * @param questionnaire
      * @return
      */
-    @PostMapping("tobill")
+    @RequestMapping("tobill")
     @ResponseBody
     public ModelAndView toQTBillDatill(Questionnaire questionnaire){
         ModelAndView  modelAndView = new ModelAndView();
         modelAndView.addObject("row",questionnaire);
+        modelAndView.addObject("ProblemType",ProblemType.values());
+        modelAndView.addObject("ChoiceType",ChoiceType.values());
         modelAndView.setViewName("questionnaire/qtbilldatil");
         return  modelAndView;
     }
