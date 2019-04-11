@@ -4,9 +4,9 @@ package com.hugo.myenum;
  * 问卷题目类型
  */
 public enum ProblemType {
-    XZT(1, "单选题"),
-    TKT(2, "多选题"),
-    JDT(2, "多选题");
+    XZT(1, "选择题"),
+    TKT(2, "填空题"),
+    JDT(3, "简答题");
     private int code;
     private String desc;
 

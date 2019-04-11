@@ -24,7 +24,7 @@
     //获取选中的问卷
     ChoiceType[] choiceType = (ChoiceType[]) request.getAttribute("ChoiceType");
     String zt = "自由态";
-    int state  = questionnaire.getState();
+    int state = questionnaire.getState();
     if (state == -1) {
         zt = "自由态";
     }
@@ -38,7 +38,6 @@
         zt = "驳回";
     }
 %>
-<c:set var="problemTypes" value="<%= problemType%>"/>
 <rapid:override name="childcss">
     <link rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.min.css">
 </rapid:override>
@@ -46,10 +45,11 @@
     <div class="">
         <div class="bill-title">
             <div class="btn-group">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal" onclick="javascrtpt:window.location.href='/qt-manage'"><i
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"
+                        onclick="javascrtpt:window.location.href='/qt-manage'"><i
                         class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
                 </button>
-                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil" ></i>&nbsp;&nbsp;修改
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
                 </button>
                 <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
@@ -91,14 +91,12 @@
                 <div class="one-line-left-div"><label for="describes">问卷描述</label>&nbsp;&nbsp;</div>
                 <div class="one-line-right-div">
                      <textarea class="form-control" rows="2" id="describes" name="describes" value="这是问卷描述"
-                               readonly="readonly" style="width: 100%" >${questionnaire.describes}</textarea>
+                               readonly="readonly" style="width: 100%">${questionnaire.describes}</textarea>
                 </div>
             </div>
         </form>
         <br>
-        <c:forEach var="problemType" items="${problemTypes}">
-            <h2>${problemType.code}|${problemType.desc}</h2>
-        </c:forEach>
+            <table id="mytab" class="table table-hover"></table>
     </div>
 </rapid:override>
 <rapid:override name="pagescript">
@@ -106,6 +104,62 @@
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
 
     <script type="text/javascript">
+        $(function () {
+            initToastr();
+            $('#mytab').bootstrapTable({
+                url: "subject",//请求路径
+                method: 'post',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',//post请求需设置
+                striped: true, //是否显示行间隔色
+                pageNumber: 1, //初始化加载第一页
+                pagination: true,//是否分页
+                clickToSelect: true,
+                pageSize: 3,//单页记录数
+                paginationShowPageGo: true,
+                pageList: [5, 10, 20, 30],//可选择单页记录数
+                showRefresh: true,//刷新按钮
+                sidePagination: 'server',
+                uniqueId: "id",
+                queryParams: function (params) {
+                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    var temp = {
+                        limit: params.limit, // 每页显示数量
+                        offset: params.offset, // SQL语句起始索引
+                        page: (params.offset / params.limit) + 1,   //当前页码
+                    };
+                    return temp;
+                },
+                columns: [
+                    {
+                        checkbox: true,
+                        visible: true                  //是否显示复选框
+                    },
+                    {
+                        title: '题号',
+                        field: 'num',
+                        align: 'center'
+                    },
+                    {
+                        title: '题目',
+                        field: 'subject',
+                        align: 'center'
+                    },
+                    {
+                        title: '题目类型',
+                        field: 'subjecttype',
+                        align: 'center'
+                    },
+                    {
+                        title: '选项类型',
+                        field: 'chosetype',
+                        align: 'center',
+                        /*  formatter: function (value, row, index) {
+                              return '<a href="#" target="_black" >' + value + '</a>'
+                          }*/
+                    }
+                ]
+            })
+        })
     </script>
 </rapid:override>
 <%@ include file="./../home/home.jsp" %>

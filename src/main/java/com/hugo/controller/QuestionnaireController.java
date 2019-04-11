@@ -1,6 +1,7 @@
 package com.hugo.controller;
 
 import com.hugo.entity.Questionnaire;
+import com.hugo.entity.Subject;
 import com.hugo.entity.User;
 import com.hugo.myenum.ChoiceType;
 import com.hugo.myenum.ProblemType;
@@ -95,5 +96,9 @@ public class QuestionnaireController {
         modelAndView.addObject("ChoiceType",ChoiceType.values());
         modelAndView.setViewName("questionnaire/qtbilldatil");
         return  modelAndView;
+    }
+    @PostMapping("subject")
+    public  PageHelper<Subject> subject( HttpServletRequest request, Subject subject){
+        return null;
     }
 }
