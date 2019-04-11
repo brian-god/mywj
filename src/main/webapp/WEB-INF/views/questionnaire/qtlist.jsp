@@ -96,7 +96,6 @@
                 clickToSelect: true,
                 pageSize: 3,//单页记录数
                 paginationShowPageGo: true,
-                pageList: [5, 10, 20, 30],//可选择单页记录数
                 showRefresh: true,//刷新按钮
                 sidePagination: 'server',
                 uniqueId: "id",

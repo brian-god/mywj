@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/js/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/js/bootstrap-editable/bootstrap-editable.css">
     <rapid:block name="pagecss">
 
     </rapid:block>
@@ -26,6 +27,7 @@
     <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
     <script src='/js/My97DatePicker/WdatePicker.js'></script>
+    <script src='/js/bootstrap-editable/bootstrap-editable.min.js'></script>
     <rapid:block name="pagescript">
         <!--各个页面不同的js-->
     </rapid:block>

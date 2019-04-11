@@ -95,8 +95,26 @@
                 </div>
             </div>
         </form>
-        <br>
-            <table id="mytab" class="table table-hover"></table>
+        <%--<div class="btn-group">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"
+                    onclick="javascrtpt:window.location.href='/qt-manage'"><i
+                    class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
+            </button>
+            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
+            </button>
+            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
+            </button>
+            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批
+            </button>
+        </div>
+            <table id="mytab" class="table table-hover"></table>--%>
+        <div class="btn-group btn-group-sm" style="text-align: right;">
+            <button type="button" class="btn btn-success" id="addRowbtn"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;增加</button>
+            <button type="button" class="btn btn-danger" id="delRowbtn"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除</button>
+        </div>
+        <div>
+            <table class="table table-striped table-hover" id="reportTable"></table>
+        </div>
     </div>
 </rapid:override>
 <rapid:override name="pagescript">
@@ -104,7 +122,7 @@
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
 
     <script type="text/javascript">
-        $(function () {
+        /*$(function () {
             initToastr();
             $('#mytab').bootstrapTable({
                 url: "subject",//请求路径
@@ -126,7 +144,7 @@
                         limit: params.limit, // 每页显示数量
                         offset: params.offset, // SQL语句起始索引
                         page: (params.offset / params.limit) + 1,   //当前页码
-                        qtId: ${questionnaire.number},//问卷编号
+                        qtId: questionnaire.number,//问卷编号
                     };
                     return temp;
                 },
@@ -154,13 +172,84 @@
                         title: '选项类型',
                         field: 'chosetype',
                         align: 'center',
-                        /*  formatter: function (value, row, index) {
+                        /!*  formatter: function (value, row, index) {
                               return '<a href="#" target="_black" >' + value + '</a>'
-                          }*/
+                          }*!/
                     }
                 ]
             })
-        })
+        })*/
+            $(function(){
+                //编辑表格
+                $('#reportTable').bootstrapTable({
+                    //数据来源的网址
+                    url:'/index.xhtml',
+                    method: 'post',
+                    editable:true,//开启编辑模式
+                    clickToSelect: true,
+                    showPaginationSwitch:true, //显示分页切换按钮
+                    search: true,  //显示检索框
+                    showRefresh: true,  //显示刷新按钮
+                    showToggle:true, //显示切换按钮来切换列表/卡片视图
+                    pagination: true,
+                    pageList: [5,25],
+                    pageSize:5,
+                    pageNumber:1,
+                    columns: [[
+                        {field:"num",edit:false,title:"编号",align:"center"},
+                        {field:"subject",edit:true,title:"题目",align:"center",},
+                        {field:"subjecttype",edit:true,title:"题目类型",align:"center",editable: {
+                                type: 'select',
+                                title: '性别',
+                                source:[{id:1,text:'男'},{id:2,text:'女'}],
+                            }},
+                        {field:"chosetype",edit:true,title:"选项",align:"center",editable: {
+                                type: 'date',
+                                title: '生日'
+                            }},
+                    ]]
+                });
+                $('#addRowbtn').click(function(){
+                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    var data = {"num":length+1,"subjecttype":1};
+                    $('#reportTable').bootstrapTable('append',data);
+                });
+                $('#delRowbtn').click(function(){
+                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    if(length>1){//保留一行数据
+                        $('#reportTable').bootstrapTable('remove', {
+                            field:'num',
+                            values: [parseInt(length)]
+                        })
+                    }
+                });
+                $('sava').onClickCell(function(){
+
+                });
+
+
+            });
+
+
+        function removeRow(row){
+            console.log(row);
+        }
+        function update(){
+            var row = $('#reportTable').bootstrapTable('getSelections')
+            console.log(row)
+            location.href="delete.action?uid="+row.uid
+            var row = $('#dg').datagrid('reload');
+        }
+        function sava(){
+            var row = $('#reportTable').bootstrapTable('getSelections');
+            if(row.length==1){
+                console.log(a[0].id);
+            }else{
+                console.log(row.name);
+                alert("请选中一行")
+            }
+        }
     </script>
+
 </rapid:override>
 <%@ include file="./../home/home.jsp" %>
