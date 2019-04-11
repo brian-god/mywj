@@ -126,6 +126,7 @@
                         limit: params.limit, // 每页显示数量
                         offset: params.offset, // SQL语句起始索引
                         page: (params.offset / params.limit) + 1,   //当前页码
+                        qtId: ${questionnaire.number},//问卷编号
                     };
                     return temp;
                 },

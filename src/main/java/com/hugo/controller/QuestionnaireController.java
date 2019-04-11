@@ -10,6 +10,7 @@ import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
 import com.hugo.utils.page.PageHelper;
 import com.hugo.utils.page.childvo.QuestionnairePage;
+import com.hugo.utils.page.childvo.SubjectPage;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,8 @@ public class QuestionnaireController {
         return  modelAndView;
     }
     @PostMapping("subject")
-    public  PageHelper<Subject> subject( HttpServletRequest request, Subject subject){
+    public  PageHelper<Subject> subject( HttpServletRequest request, SubjectPage subjectPage){
+        System.out.print(subjectPage.getQtId());
         return null;
     }
 }
