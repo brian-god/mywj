@@ -1,6 +1,9 @@
 package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Subject;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +17,19 @@ import java.util.List;
  */
 @Repository
 public class SubjectRepository implements com.hugo.repository.childRepository.SubjectRepository {
+    //注入session工厂
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    /**
+     * 打开session
+     *
+     * @return
+     */
+    private Session getCurrentSession() {
+        return this.sessionFactory.openSession();
+    }
+
     @Override
     public Subject load(Integer id) {
         return null;
@@ -36,7 +52,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
 
     @Override
     public Integer save(Subject entity) {
-        return null;
+        return (Integer)getCurrentSession().save(entity);
     }
 
     @Override

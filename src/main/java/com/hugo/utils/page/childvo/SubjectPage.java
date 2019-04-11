@@ -1,6 +1,7 @@
 package com.hugo.utils.page.childvo;
 
-import com.hugo.utils.Page;
+
+import com.hugo.utils.page.Page;
 
 /**
  * @ClassName: SubjectPage
