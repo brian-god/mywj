@@ -95,22 +95,24 @@
                 </div>
             </div>
         </form>
-        <%--<div class="btn-group">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"
-                    onclick="javascrtpt:window.location.href='/qt-manage'"><i
-                    class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
-            </button>
-            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
-            </button>
-            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
-            </button>
-            <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批
-            </button>
-        </div>
-            <table id="mytab" class="table table-hover"></table>--%>
+            <%--<div class="btn-group">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"
+                        onclick="javascrtpt:window.location.href='/qt-manage'"><i
+                        class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
+                </button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
+                </button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
+                </button>
+                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批
+                </button>
+            </div>
+                <table id="mytab" class="table table-hover"></table>--%>
         <div class="btn-group btn-group-sm" style="text-align: right;">
-            <button type="button" class="btn btn-success" id="addRowbtn"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;增加</button>
-            <button type="button" class="btn btn-danger" id="delRowbtn"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除</button>
+            <button type="button" class="btn btn-success" id="addRowbtn"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;增加
+            </button>
+            <button type="button" class="btn btn-danger" id="delRowbtn"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
+            </button>
         </div>
         <div>
             <table class="table table-striped table-hover" id="reportTable"></table>
@@ -120,7 +122,6 @@
 <rapid:override name="pagescript">
     <script src='/js/bootstrap-table/bootstrap-table.min.js'></script>
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
-
     <script type="text/javascript">
         /*$(function () {
             initToastr();
@@ -179,72 +180,140 @@
                 ]
             })
         })*/
-            $(function(){
-                //编辑表格
-                $('#reportTable').bootstrapTable({
-                    //数据来源的网址
-                    url:'/index.xhtml',
-                    method: 'post',
-                    editable:true,//开启编辑模式
-                    clickToSelect: true,
-                    showPaginationSwitch:true, //显示分页切换按钮
-                    search: true,  //显示检索框
-                    showRefresh: true,  //显示刷新按钮
-                    showToggle:true, //显示切换按钮来切换列表/卡片视图
-                    pagination: true,
-                    pageList: [5,25],
-                    pageSize:5,
-                    pageNumber:1,
-                    columns: [[
-                        {field:"num",edit:false,title:"编号",align:"center"},
-                        {field:"subject",edit:true,title:"题目",align:"center",},
-                        {field:"subjecttype",edit:true,title:"题目类型",align:"center",editable: {
-                                type: 'select',
-                                title: '性别',
-                                source:[{id:1,text:'男'},{id:2,text:'女'}],
-                            }},
-                        {field:"chosetype",edit:true,title:"选项",align:"center",editable: {
-                                type: 'date',
-                                title: '生日'
-                            }},
-                    ]]
-                });
-                $('#addRowbtn').click(function(){
-                    var length = $('#reportTable').bootstrapTable('getData').length;
-                    var data = {"num":length+1,"subjecttype":1};
-                    $('#reportTable').bootstrapTable('append',data);
-                });
-                $('#delRowbtn').click(function(){
-                    var length = $('#reportTable').bootstrapTable('getData').length;
-                    if(length>1){//保留一行数据
-                        $('#reportTable').bootstrapTable('remove', {
-                            field:'num',
-                            values: [parseInt(length)]
-                        })
-                    }
-                });
-                $('sava').onClickCell(function(){
-
-                });
-
+        $(function () {
+            //编辑表格
+            $('#reportTable').bootstrapTable({
+                //数据来源的网址
+                url: '/index.xhtml',
+                method: 'post',
+                editable: true,//开启编辑模式
+                clickToSelect: true,
+                showPaginationSwitch: true, //显示分页切换按钮
+                search: true,  //显示检索框
+                showRefresh: true,  //显示刷新按钮
+                showToggle: true, //显示切换按钮来切换列表/卡片视图
+                pagination: true,
+                pageList: [5, 25],
+                pageSize: 5,
+                pageNumber: 1,
+                columns: [[
+                    {field: "num", edit: false, title: "编号", align: "center"},
+                    {field: "subject", edit: true, title: "题目", align: "center",},
+                    {field: "subjecttype", edit: true, title: "题目类型", align: "center"
+                    },
+                    {field: "chosetype", edit: true, title: "选项", align: "center"},
+                ]],
+                /**
+                 * @param {点击列的 field 名称} field
+                 * @param {点击列的 value 值} value
+                 * @param {点击列的整行数据} row
+                 * @param {td 元素} $element
+                 */
+                //onClickCell
+                onDblClickCell:function(field, value, row, $element){
+                    cellOnClocke(field, value, row, $element);
+                }
+            });
+            $('#addRowbtn').click(function () {
+                var length = $('#reportTable').bootstrapTable('getData').length;
+                var data = {"num": length + 1, "subjecttype": '', "subject": '', "chosetype": ''};
+                $('#reportTable').bootstrapTable('append', data);
+            });
+            $('#delRowbtn').click(function () {
+                var length = $('#reportTable').bootstrapTable('getData').length;
+                if (length > 0) {//保留一行数据
+                    $('#reportTable').bootstrapTable('remove', {
+                        field: 'num',
+                        values: [parseInt(length)]
+                    })
+                }
+            });
+            $('sava').onClickCell(function () {
 
             });
+            $("[data-toggle='popover']").popover();
+        });
+        //按钮点击事件but按钮本身,index编号
+        var btclock = function (but) {
+            console.log(but);
+            var index = but.id.split("-")[2]; //字符分割
+            var value = '<select class="form-control" data-rownum="'+index+'" onchange="selectChange(this)">\n' +
+                '      <option value="0"></option>\n' +
+                '      <option value="选择题">选择题</option>\n' +
+                '      <option value="选择题">填空题</option>\n' +
+                '      <option value="选择题">简答题</option>\n' +
+                '    </select>';
+                saveData(index, "subjecttype", value)
+        }
+        function selectChange(select) {
+            var index = select.getAttribute("data-rownum");
+            var value =  select.options[select.selectedIndex].value
+            saveData(index, "subjecttype", value)
+        }
+        /**
+         * 单元格点击触发
+         * @param field
+         * @param value
+         * @param row
+         * @param $element
+         */
+        function cellOnClocke(field, value, row, $element) {
+            var index = row.num;
+            if ("subject" == field) {
+                $element.attr('contenteditable', true);
+                $element.attr('id', field);
+                $element.blur(function () {
+                    var elid = "#" + field;
+                    var vale = $(elid)[0].innerHTML;
+                    console.log(vale);
+                    $element.attr('id', "");
+                    $element.attr('contenteditable', false);
+                    var tdValue = $element.html();
+                    saveData(index, field, vale)
+                })
+            }else if("subjecttype" == field){//题目类型
+                //var vale ='<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-zoom-in"></i></button>';
+                var vale ='<button type="button" class="btn btn-primary " id="cell-but-'+index+'" onclick="btclock(this)"><i class="glyphicon glyphicon-zoom-in"></i></button>';
+                saveData(index, field, vale)
+            }else if("chosetype" == field){
+                var subjecttype = row.subjecttype;
+                if(null==subjecttype||""==subjecttype){
+                    alert("只能给选择题增加选项")
+                    return;
+                }
+            }
+        }
 
+        /**
+         * 修改指定元素的值
+         * @param index
+         * @param field
+         * @param value
+         */
+        function saveData(index, field, value) {
+            $('#reportTable').bootstrapTable('updateCell', {
+                index: index - 1,       //行索引
+                field: field,       //列名
+                value: value        //cell值
+            })
+        }
 
-        function removeRow(row){
+        function removeRow(row) {
             console.log(row);
         }
-        function update(){
+
+        function update() {
             var row = $('#reportTable').bootstrapTable('getSelections')
             console.log(row)
-            location.href="delete.action?uid="+row.uid
+            location.href = "delete.action?uid=" + row.uid
             var row = $('#dg').datagrid('reload');
         }
-        function sava(){
+
+        function sava() {
             var row = $('#reportTable').bootstrapTable('getSelections');
-            if(row.length==1){
+            if (row.length == 1) {
                 console.log(a[0].id);
-            }else{
+            } else {
                 console.log(row.name);
                 alert("请选中一行")
             }
