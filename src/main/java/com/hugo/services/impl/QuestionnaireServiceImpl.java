@@ -32,19 +32,32 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public QAResult addQtManage(Questionnaire questionnaire,int userId,String userName) {
-        questionnaire.setDr(0);
-        questionnaire.setCreatetime(DataUtils.getTodayTime());
-        questionnaire.setDescribes(questionnaire.getDescribes());
-        questionnaire.setModifier(userName);
-        questionnaire.setName(questionnaire.getName());
-        questionnaire.setUser(userId);
-        questionnaire.setState(-1);
-        questionnaire.setNumber(String.valueOf(IDUtils.genItemId()));
-        Integer save = questionnaireRepository.save(questionnaire);
-        if (save == 0){
-            return QAResult.ok(400);
+        //主键
+        Integer id =  questionnaire.getId();
+        if(null == id) {//添加
+            questionnaire.setDr(0);
+            questionnaire.setCreatetime(DataUtils.getTodayTime());
+            questionnaire.setDescribes(questionnaire.getDescribes());
+            questionnaire.setModifier(userName);
+            questionnaire.setName(questionnaire.getName());
+            questionnaire.setUser(userId);
+            questionnaire.setState(-1);
+            questionnaire.setNumber(String.valueOf(IDUtils.genItemId()));
+            Integer save = questionnaireRepository.save(questionnaire);
+            if (save == 0) {
+                return QAResult.ok(400);
+            }
+            return QAResult.build(200, "添加成功");
+        }else{//修改
+           try{
+               questionnaire.setUpdatetime(DataUtils.getTodayTime());//修改时间
+               questionnaireRepository.saveOrUpdate(questionnaire);//修改
+               return QAResult.build(300, "修改成功");
+           }catch (Exception e){
+               QAResult.build(500, "修改失败");
+           }
         }
-        return QAResult.build(200,"添加成功");
+        return QAResult.build(200, "添加成功");
     }
 
 

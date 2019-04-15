@@ -33,7 +33,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"><i
                         class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;新增
                 </button>
-                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
+                <button type="button" class="btn btn-primary" onclick="updateQT()"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
                 </button>
                 <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
@@ -61,6 +61,36 @@
                                        placeholder="请输入问卷名字">
                             </div>
                         </div>
+                        <div class="form-group"  style="display:none">
+                            <label for="qtID" class="col-sm-2 control-label">主键</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="id" id="qtID">
+                            </div>
+                        </div>
+                        <div class="form-group"  style="display:none">
+                            <label for="qtnumber" class="col-sm-2 control-label">问卷编号</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="number" id="qtnumber">
+                            </div>
+                        </div>
+                        <div class="form-group"  style="display:none">
+                            <label for="qtcreatetime" class="col-sm-2 control-label">创建时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="createtime" id="qtcreatetime">
+                            </div>
+                        </div>
+                        <div class="form-group"  style="display:none">
+                            <label for="qtstate" class="col-sm-2 control-label">问卷状态</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="state" id="qtstate">
+                            </div>
+                        </div>
+                        <div class="form-group"  style="display:none">
+                            <label for="qtmodifier" class="col-sm-2 control-label">创建人</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="modifier" id="qtmodifier">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="lastname" class="col-sm-2 control-label">描述</label>
                             <div class="col-sm-10">
@@ -84,6 +114,42 @@
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
 
     <script type="text/javascript">
+        /**
+         * 修改的方法
+         */
+        function updateQT(){
+            var rows= $('#mytab').bootstrapTable('getSelections');
+            if(rows.length >0){
+                alert(rows.length)
+                if(rows.length == 1){
+                    if(rows[0].state == -1){
+                        $('#QtAddModal').modal('show')
+                    }else{
+                        toastr.warning("单据已提交不能够修改");
+                    }
+                }else{
+                    toastr.warning("一次只能修改一条数据");
+                }
+            }else{
+                toastr.warning("请先选中一条数据");
+            }
+        }
+
+        /**
+         * 调用模态框的展示方法触发
+         */
+        $('#QtAddModal').on('show.bs.modal', function () {
+            var rows= $('#mytab').bootstrapTable('getSelections');
+            // 执行一些动作...
+            var rows= $('#mytab').bootstrapTable('getSelections');
+            $("#firstname").val(rows[0].name);//名称
+            $("#lastname").val(rows[0].describes);//描述
+            $("#qtID").val(rows[0].id);//主键
+            $("#qtnumber").val(rows[0].number);//问卷编号
+            $("#qtcreatetime").val(rows[0].createtime);//创建时间
+            $("#qtstate").val(rows[0].state);//问卷状态
+            $("#qtmodifier").val(rows[0].modifier);//创建人
+        })
         $(function () {
            initToastr();
             $('#mytab').bootstrapTable({
@@ -127,6 +193,12 @@
                     {
                         checkbox: true,
                         visible: true                  //是否显示复选框
+                    },
+                    {
+                        title: '主键',
+                        field: 'id',
+                        align: 'center',
+                        visible: false
                     },
                     {
                         title: '问卷编号',
@@ -175,6 +247,8 @@
                 $('#QtAddModal').modal('hide')
                 if(data.status==200){
                     toastr.success('添加问卷成功请双击表中记录，添加问卷内容');
+                }else if(data.status==300){
+                    toastr.success(data.msg);
                 }else{
                     toastr.error(data.msg);
                 }
