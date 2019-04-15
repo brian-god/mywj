@@ -35,11 +35,11 @@ public class Subject {
     /**
      * 题目类型
      */
-    private Integer subjecttype;
+    private String subjecttype;
     /**
      * 选项类型
      */
-    private Integer chosetype;
+    private String chosetype;
     private Integer dr;
 
     public Integer getId() {
@@ -74,19 +74,19 @@ public class Subject {
         this.questionnaire = questionnaire;
     }
 
-    public Integer getSubjecttype() {
+    public String getSubjecttype() {
         return subjecttype;
     }
 
-    public void setSubjecttype(Integer subjecttype) {
+    public void setSubjecttype(String subjecttype) {
         this.subjecttype = subjecttype;
     }
 
-    public Integer getChosetype() {
+    public String getChosetype() {
         return chosetype;
     }
 
-    public void setChosetype(Integer chosetype) {
+    public void setChosetype(String chosetype) {
         this.chosetype = chosetype;
     }
 

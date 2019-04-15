@@ -49,7 +49,11 @@
                         onclick="javascrtpt:window.location.href='/qt-manage'"><i
                         class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
                 </button>
-                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
+                <button type="button" class="btn btn-primary" id="saveTableBody"><i
+                        class="glyphicon glyphicon-floppy-disk"></i>&nbsp;&nbsp;保存
+                </button>
+                <button type="button" class="btn btn-primary" id="editTableBody"><i
+                        class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
                 </button>
                 <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
@@ -117,70 +121,92 @@
         <div>
             <table class="table table-striped table-hover" id="reportTable"></table>
         </div>
+        <!-- 模态框（Modal） -->
+        <div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">选择题选项</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="choseOptionModel()"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-group btn-group-sm" style="text-align: right;">
+                            <button type="button" class="btn btn-success" id="addOptionRowbtn"><i
+                                    class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;增加
+                            </button>
+                            <button type="button" class="btn btn-danger" id="delOptionRowbtn"><i
+                                    class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
+                            </button>
+                        </div>
+                        <table id="optionTable"
+                            <%--  data-toggle="table"
+                              data-height="299"
+                              data-url="json/data1.json"--%>>
+                                <%--<thead>
+                                <tr>
+                                    <th data-field="id">ID</th>
+                                    <th data-field="name">Item Name</th>
+                                    <th data-field="price">Item Price</th>
+                                </tr>
+                                </thead>--%>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="choseOptionModel()">确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </rapid:override>
 <rapid:override name="pagescript">
     <script src='/js/bootstrap-table/bootstrap-table.min.js'></script>
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
     <script type="text/javascript">
-        /*$(function () {
-            initToastr();
-            $('#mytab').bootstrapTable({
-                url: "subject",//请求路径
-                method: 'post',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',//post请求需设置
-                striped: true, //是否显示行间隔色
-                pageNumber: 1, //初始化加载第一页
-                pagination: true,//是否分页
-                clickToSelect: true,
-                pageSize: 3,//单页记录数
-                paginationShowPageGo: true,
-                pageList: [5, 10, 20, 30],//可选择单页记录数
-                showRefresh: true,//刷新按钮
-                sidePagination: 'server',
-                uniqueId: "id",
-                queryParams: function (params) {
-                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                    var temp = {
-                        limit: params.limit, // 每页显示数量
-                        offset: params.offset, // SQL语句起始索引
-                        page: (params.offset / params.limit) + 1,   //当前页码
-                        qtId: questionnaire.number,//问卷编号
-                    };
-                    return temp;
-                },
-                columns: [
-                    {
-                        checkbox: true,
-                        visible: true                  //是否显示复选框
-                    },
-                    {
-                        title: '题号',
-                        field: 'num',
-                        align: 'center'
-                    },
-                    {
-                        title: '题目',
-                        field: 'subject',
-                        align: 'center'
-                    },
-                    {
-                        title: '题目类型',
-                        field: 'subjecttype',
-                        align: 'center'
-                    },
-                    {
-                        title: '选项类型',
-                        field: 'chosetype',
-                        align: 'center',
-                        /!*  formatter: function (value, row, index) {
-                              return '<a href="#" target="_black" >' + value + '</a>'
-                          }*!/
-                    }
-                ]
-            })
-        })*/
+        var $table = $('#optionTable')
+        //控制表单能否编辑
+        var isedter = false;
+        //定义选项数字
+        var choses = new Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
         $(function () {
+            initToastr();
+            //保存数据
+            $("#saveTableBody").click(function () {
+                isedter = false;
+                //获取表格数据
+                var datas = $('#reportTable').bootstrapTable('getData');
+                if (datas.length > 0) {
+                    var json_data = JSON.stringify(datas);
+                    console.log(json_data);
+                    $.ajax({
+                        url: "addSubjectAndOption",
+                        data: {"data": json_data, "subID":${questionnaire.id}},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            $('#reportTable').bootstrapTable('refresh');
+                            if(data.status == 200){//成功
+                                toastr.success(data.msg);
+                            }else{
+                                toastr.error(data.msg)
+                            }
+                        }
+                    });
+                } else {
+                    alert("保存失败表体不能为空");
+                }
+            });
+            //表体可编辑
+            $("#editTableBody").click(function () {
+                isedter = true;
+                toastr.success('已进入编辑模式，请双击表体进行编辑');
+            });
+            var subRum = 0;
             //编辑表格
             $('#reportTable').bootstrapTable({
                 //数据来源的网址
@@ -199,9 +225,10 @@
                 columns: [[
                     {field: "num", edit: false, title: "编号", align: "center"},
                     {field: "subject", edit: true, title: "题目", align: "center",},
-                    {field: "subjecttype", edit: true, title: "题目类型", align: "center"
-                    },
-                    {field: "chosetype", edit: true, title: "选项", align: "center"},
+                    {field: "subjecttype", edit: true, title: "题目类型", align: "center"},
+                    {field: "chosetype", edit: true, title: "选择题类型", align: "center"},
+                    {field: "chosebutton", edit: true, title: "选项", align: "center"},
+                    {field: "detailsofoptions", edit: true, title: "选项明细", align: "center", visible: false},
                 ]],
                 /**
                  * @param {点击列的 field 名称} field
@@ -210,8 +237,10 @@
                  * @param {td 元素} $element
                  */
                 //onClickCell
-                onDblClickCell:function(field, value, row, $element){
-                    cellOnClocke(field, value, row, $element);
+                onDblClickCell: function (field, value, row, $element) {
+                    if (isedter) {//控制表体编辑
+                        cellOnClocke(field, value, row, $element);
+                    }
                 }
             });
             $('#addRowbtn').click(function () {
@@ -231,25 +260,20 @@
             $('sava').onClickCell(function () {
 
             });
-            $("[data-toggle='popover']").popover();
         });
-        //按钮点击事件but按钮本身,index编号
-        var btclock = function (but) {
-            console.log(but);
-            var index = but.id.split("-")[2]; //字符分割
-            var value = '<select class="form-control" data-rownum="'+index+'" onchange="selectChange(this)">\n' +
-                '      <option value="0"></option>\n' +
-                '      <option value="选择题">选择题</option>\n' +
-                '      <option value="选择题">填空题</option>\n' +
-                '      <option value="选择题">简答题</option>\n' +
-                '    </select>';
-                saveData(index, "subjecttype", value)
-        }
+       //题目类型
         function selectChange(select) {
             var index = select.getAttribute("data-rownum");
-            var value =  select.options[select.selectedIndex].value
+            var value = select.options[select.selectedIndex].value
             saveData(index, "subjecttype", value)
         }
+        //选择题类型类型
+        function selectChoseChange(select) {
+            var index = select.getAttribute("data-rownum");
+            var value = select.options[select.selectedIndex].value
+            saveData(index, "chosetype", value)
+        }
+
         /**
          * 单元格点击触发
          * @param field
@@ -271,17 +295,155 @@
                     var tdValue = $element.html();
                     saveData(index, field, vale)
                 })
-            }else if("subjecttype" == field){//题目类型
+            } else if ("subjecttype" == field) {//题目类型
                 //var vale ='<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-zoom-in"></i></button>';
-                var vale ='<button type="button" class="btn btn-primary " id="cell-but-'+index+'" onclick="btclock(this)"><i class="glyphicon glyphicon-zoom-in"></i></button>';
-                saveData(index, field, vale)
-            }else if("chosetype" == field){
+                //var vale ='<button type="button" class="btn btn-primary " id="cell-but-'+index+'" onclick="btclock(this)"><i class="glyphicon glyphicon-zoom-in"></i></button>';
+                var value = '<select class="form-control" data-rownum="' + index + '" onchange="selectChange(this)">\n' +
+                    '      <option value="0"></option>\n' +
+                    '      <option value="选择题">选择题</option>\n' +
+                    '      <option value="填空题">填空题</option>\n' +
+                    '      <option value="简答题">简答题</option>\n' +
+                    '    </select>';
+                saveData(index, field, value)
+            } else if ("chosebutton" == field) {
                 var subjecttype = row.subjecttype;
-                if(null==subjecttype||""==subjecttype){
+                if (null == subjecttype || "" == subjecttype) {
                     alert("只能给选择题增加选项")
                     return;
                 }
+                /* var value = '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\n' +
+                     '\t开始演示模态框\n' +
+                     '</button>';*/
+                <!--data-target="#modalTable"-->
+                var vale = '<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalTable" onclick="showOptionModel(' + index + ');" data-subject="' + index + '"><i class="glyphicon glyphicon-plus"></i></button>'
+                saveData(index, field, vale)
+            } else if ("chosetype" == field) {
+                var subjecttype = row.subjecttype
+                console.log("题目类型"+subjecttype);
+                if ("选择题" == subjecttype) {
+                    var value = '<select class="form-control" data-rownum="' + index + '" onchange="selectChoseChange(this)">\n' +
+                        '      <option value="0"></option>\n' +
+                        '      <option value="单选">单选</option>\n' +
+                        '      <option value="多选">多选</option>\n' +
+                        '    </select>';
+                    saveData(index, field, value)
+                }else{
+                    alert("该项只针对选择题！！")
+                    return;
+                }
             }
+        }
+
+        //关闭选项弹框
+        function choseOptionModel() {
+            //alert("关闭选项弹框")
+            //获取表格数据
+            var datas = $('#optionTable').bootstrapTable('getData');
+            if (datas.length > 0) {
+                console.log("选项数据：" + datas[0]);
+                console.log(datas[0]);
+                var Cellvalue = JSON.stringify(datas);
+                console.log("str:" + Cellvalue);
+                //获取题题号
+                var rowNum = datas[0].rowNum;
+                saveData(rowNum, "detailsofoptions", datas);
+            } else {
+                alert("选项不能为空！！")
+            }
+            $('#optionTable').bootstrapTable('destroy');
+        }
+
+        /**
+         * 展示选项添加
+         * @param index
+         */
+        function showOptionModel(index) {
+            subRum = index;
+            //jeialert(index);
+            $('#modalTable').on('shown.bs.modal', function () {
+                $table.bootstrapTable('resetView')
+            })
+            //编辑表格
+            $('#optionTable').bootstrapTable({
+                //数据来源的网址
+                url: '/index.xhtml',
+                method: 'post',
+                editable: true,//开启编辑模式
+                clickToSelect: true,
+                showPaginationSwitch: true, //显示分页切换按钮
+                search: true,  //显示检索框
+                showRefresh: true,  //显示刷新按钮
+                showToggle: true, //显示切换按钮来切换列表/卡片视图
+                pagination: true,
+                pageList: [5, 25],
+                pageSize: 8,
+                pageNumber: 1,
+                columns: [[
+                    {field: "rowNum", edit: false, title: "行号", align: "center", visible: false},
+                    {field: "option", edit: false, title: "选项", align: "center"},
+                    {field: "name", edit: true, title: "选项描述", align: "center",},
+                    {field: "id", edit: true, title: "主键", align: "center", visible: false},
+                    {field: "dr", edit: true, title: "逻辑", align: "center", visible: false},
+                    {field: "subject", edit: true, title: "属于哪个题", align: "center", visible: false},
+                    {field: "num", edit: true, title: "题号", align: "center", visible: true},
+                ]],
+                /**
+                 * @param {点击列的 field 名称} field
+                 * @param {点击列的 value 值} value
+                 * @param {点击列的整行数据} row
+                 * @param {td 元素} $element
+                 */
+                //onClickCell
+                onDblClickCell: function (field, value, row, $element) {
+                    var rowNum = row.rowNum;
+                    //alert(rowNum)
+                    if ("name" == field) {//判断是否点击的是选项描述
+                        $element.attr('contenteditable', true);
+                        $element.attr('id', "option-name");
+                        $element.blur(function () {
+                            var vale = $("#option-name")[0].innerHTML;
+                            console.log(vale);
+                            $element.attr('id', "");
+                            $element.attr('contenteditable', false);
+                            saveOptionData(rowNum, field, vale)
+                        })
+                    }
+                },
+            })
+        }
+
+        $('#addOptionRowbtn').click(function () {
+            var length = $('#optionTable').bootstrapTable('getData').length;
+            console.log("数据长度：" + length);
+            if (length < 8) {
+                //var data = {"option": '',"num":index,"rowNum":length+1,"option":choses[length]};
+                var data = {"option": '', "num": subRum, "rowNum": length + 1, "option": choses[length]};
+                $('#optionTable').bootstrapTable('append', data);
+            } else {
+                alert("选项不能超过八项！！")
+            }
+        });
+        $('#delOptionRowbtn').click(function () {
+            var length = $('#optionTable').bootstrapTable('getData').length;
+            if (length > 0) {//保留一行数据
+                $('#optionTable').bootstrapTable('remove', {
+                    field: 'rowNum',
+                    values: [parseInt(length)]
+                })
+            }
+        });//
+        /**
+         * 修改选项元素的值
+         * @param index
+         * @param field
+         * @param value
+         */
+        function saveOptionData(index, field, value) {
+            $('#optionTable').bootstrapTable('updateCell', {
+                index: index - 1,       //行索引
+                field: field,       //列名
+                value: value        //cell值
+            })
         }
 
         /**

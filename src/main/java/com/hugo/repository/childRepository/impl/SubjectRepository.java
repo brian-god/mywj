@@ -69,4 +69,5 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
     public void flush() {
 
     }
+
 }

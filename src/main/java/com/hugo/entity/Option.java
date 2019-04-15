@@ -1,5 +1,10 @@
 package com.hugo.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 选择题的选项
  * @ClassName: Option
@@ -8,7 +13,12 @@ package com.hugo.entity;
  * @CreateDate: 2019/4/11$ 9:26$
  * @Version: 1.0
  */
+@Entity
+//创建的数据库表名称
+@Table(name = "fa_option")
 public class Option {
+    @Id
+    @GeneratedValue
     private Integer id;
     /**
      * 选项
