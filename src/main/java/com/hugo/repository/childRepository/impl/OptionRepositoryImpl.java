@@ -97,7 +97,7 @@ public class OptionRepositoryImpl  implements OptionRepository {
                 iserror = true;
             } finally {
                 if (session != null)
-                    session.close();
+                    session.clear();
             }
             tx.commit();
         return iserror;
