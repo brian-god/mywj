@@ -68,6 +68,37 @@ public class QuestionnaireController {
         return pageHelper;
     }
 
+    /**
+     * 删除数据
+     * @param data
+     * @return
+     */
+    @PostMapping("deleteQtManage")
+    @ResponseBody
+    public QAResult deleteQtManage(String data){
+        return questionnaireService.deleteQt(data);
+    }
+    /**
+     * 提交数据
+     * @param data
+     * @return
+     */
+    @PostMapping("submissionQTManage")
+    @ResponseBody
+    public QAResult submissionQTManage(String data){
+        return questionnaireService.submissionQT(data);
+    }
+    /**
+     * 审批数据
+     * @param data
+     * @return
+     */
+    @PostMapping("approvalQtManage")
+    @ResponseBody
+    public QAResult approvalQtManage(String data){
+        return questionnaireService.approvalQt(data);
+    }
+
     @PostMapping("addQtManage")
     @ResponseBody
     public QAResult addQtManage(HttpServletRequest request, Questionnaire questionnaire){
@@ -77,10 +108,7 @@ public class QuestionnaireController {
            return QAResult.build(400,"问卷名称为空！！！");
         }
         QAResult qaResult = questionnaireService.addQtManage(questionnaire, user.getId(), user.getUsername());
-        if (qaResult.getStatus() == 200){
-            return QAResult.build(200,"添加成功");
-        }
-        return QAResult.build(400,"添加失败");
+        return qaResult;
     }
 
     /**
