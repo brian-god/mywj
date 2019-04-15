@@ -45,6 +45,14 @@
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>   <!--指定数据库方言-->
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>     <!--在控制台显示执行的数据库操作语句-->
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>     <!--在控制台显示执行的数据哭操作语句（格式）-->
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+                <prop key="jdbc.use_scrollable_resultset">false</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.autoReconnect">true</prop>
+                <prop key="hibernate.max_fech_depth">5</prop>
+                <prop key="hibernate.jdbc.batch_size">50</prop>
+                <prop key="hibernate.jdbc.fetch_size">100</prop>
+
             </props>
         </property>
     </bean>
