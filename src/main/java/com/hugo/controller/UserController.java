@@ -3,13 +3,19 @@ package com.hugo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hugo.entity.User;
 import com.hugo.services.UserService;
+import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.PageHelper;
+import com.hugo.utils.page.childvo.UserPage;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -132,4 +138,52 @@ public class UserController {
         return jsonObject.toJSONString();
     }
 
+    /**
+     * 管理员查询所有用户
+     * @param request
+     * @param userPage
+     * @return
+     */
+    @PostMapping("/getAllUser")
+    @ResponseBody
+    public PageHelper<User> getAllUser(HttpServletRequest request, UserPage userPage){
+        User user = MywjUtils.getLoginUser(request);
+        userPage.setMobile(user.getMobile());
+        userPage.setUsername(user.getUsername());
+        PageHelper<User> userPageHelper = new PageHelper<>();
+        userPageHelper.setTotal(userService.getUserNum(userPage));
+        userPageHelper.setRows(userService.getAllUser(userPage));
+        return  userPageHelper;
+    }
+
+    /**
+     * 查询个人信息
+     * @param request
+     * @return
+     */
+    @GetMapping("/getUserByUserId")
+    @ResponseBody
+    public QAResult getUserByUserId(HttpServletRequest request){
+        User user = MywjUtils.getLoginUser(request);
+        if (StringUtils.isEmpty(user)){
+            return QAResult.build(400,"请先登录");
+        }
+        User userByUserId = userService.getUserByUserId(user.getId());
+        if (StringUtils.isEmpty(userByUserId)){
+            return QAResult.build(400,"查询失败");
+        }
+        return  QAResult.build(200,"查询成功",userByUserId);
+    }
+
+
+    /**
+     * 删除用户
+     * @param data
+     * @return
+     */
+    @PostMapping("deleteUser")
+    @ResponseBody
+    public QAResult deleteUser(String data){
+      return userService.deleteUser(data);
+    }
 }
