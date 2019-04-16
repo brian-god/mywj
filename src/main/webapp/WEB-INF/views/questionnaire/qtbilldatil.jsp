@@ -55,7 +55,7 @@
                 <button type="button" class="btn btn-primary" id="editTableBody"><i
                         class="glyphicon glyphicon-pencil"></i>&nbsp;&nbsp;修改
                 </button>
-                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
+                <button type="button" class="btn btn-primary" id="deleteTable"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
                 <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批
                 </button>
@@ -175,6 +175,10 @@
         var choses = new Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
         $(function () {
             initToastr();
+            //删除处理的方法
+            $("deleteTable").click(function () {
+                
+            });
             //保存数据
             $("#saveTableBody").click(function () {
                 var state = <%=state%>;
