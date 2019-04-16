@@ -107,11 +107,10 @@ public class OptionRepositoryImpl  implements OptionRepository {
     @Override
     public List<Option> getOptionBySubject(int subjectId) {
         String sql = "select * from fa_option  where dr =0 and subject = "+subjectId+ "";
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         SQLQuery query = session.createSQLQuery(sql);
         query.addEntity(Option.class);
         List<Option> option = query.list();
-        session.clear();
         return option;
     }
     /* @Override

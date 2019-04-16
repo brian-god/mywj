@@ -5,7 +5,7 @@ import com.hugo.services.OptionService;
 import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class OptionController {
     private OptionService optionService;
 
 
-    @PostMapping("/getOptionBySubject")
+    @RequestMapping("getOptionBySubject")
     @ResponseBody
     public QAResult  getOptionBySubject(int subjectId){
         List<Option> optionBySubject = optionService.getOptionBySubject(subjectId);
