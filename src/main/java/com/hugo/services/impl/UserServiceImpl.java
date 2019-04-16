@@ -1,13 +1,17 @@
 package com.hugo.services.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.hugo.entity.User;
 import com.hugo.repository.childRepository.UserRepository;
 import com.hugo.services.UserService;
 import com.hugo.utils.DataUtils;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.childvo.UserPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *用户服务层
@@ -73,6 +77,39 @@ public class UserServiceImpl  implements UserService {
             return QAResult.ok(400);
         }
         return QAResult.build(200,"添加成功",save);
+    }
+
+    @Override
+    public List<User> getAllUser(UserPage userPage) {
+        return userRepository.getAllUser(userPage);
+    }
+
+    @Override
+    public Integer getUserNum(UserPage userPage) {
+        return userRepository.getUserNum(userPage);
+    }
+
+    @Override
+    public User getUserByUserId(int id) {
+        return userRepository.getUserByUserId(id);
+    }
+
+    @Override
+    public QAResult deleteUser(String data) {
+        try {
+            //字符串数组转对象集合
+            List<User> list =  JSONArray.parseArray(data,User.class);
+            for (int i= 0;i<list.size();i++){
+                list.get(i).setDr(1);//删除
+                list.get(i).setUpdatetime(DataUtils.getTodayTime());//修改时间
+            }
+            if(userRepository.updateUsers(list)){
+                return QAResult.build(500,"删除失败");
+            }
+        }catch (Exception e){
+            return QAResult.build(500,"删除数据失败");
+        }
+        return QAResult.build(200,"删除数据成功");
     }
 
 
