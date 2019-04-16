@@ -137,7 +137,7 @@
         console.log(rows)
         if(rows.length >0){
             for(i=0;i<rows.length;i++){//遍历并检查数据
-                var row = rows[0];
+                var row = rows[i];
                 console.log(row)
                 //获取单据状态
                 var state = row.state;
@@ -174,7 +174,7 @@
             console.log(rows)
             if(rows.length >0){
                 for(i=0;i<rows.length;i++){//遍历并检查数据
-                    var row = rows[0];
+                    var row = rows[i];
                     console.log(row)
                     //获取单据状态
                     var state = row.state;
@@ -211,7 +211,7 @@
             console.log(rows)
             if(rows.length >0){
                 for(i=0;i<rows.length;i++){//遍历并检查数据
-                    var row = rows[0];
+                    var row = rows[i];
                     console.log(row)
                     //获取单据状态
                     var state = row.state;
