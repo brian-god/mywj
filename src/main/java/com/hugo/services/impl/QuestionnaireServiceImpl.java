@@ -91,8 +91,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         try {
             //字符串数组转对象集合
             List<Questionnaire> list =  JSONArray.parseArray(data,Questionnaire.class);
-            if(questionnaireRepository.deleteQt(list)){
-                return QAResult.build(500,"删除数据失败");
+            for (int i= 0;i<list.size();i++){
+                list.get(i).setDr(1);//删除
+                list.get(i).setUpdatetime(DataUtils.getTodayTime());//修改时间
+            }
+            if(questionnaireRepository.updateQts(list)){
+                return QAResult.build(500,"删除失败");
             }
         }catch (Exception e){
             return QAResult.build(500,"删除数据失败");

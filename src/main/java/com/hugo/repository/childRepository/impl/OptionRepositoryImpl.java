@@ -80,10 +80,8 @@ public class OptionRepositoryImpl  implements OptionRepository {
     @Override
     public boolean saveList(List<Option> list) {
             boolean iserror = false;
-            Transaction tx = null;
              Session  session = getCurrentSession(); //获取session
             try {
-                tx = session.beginTransaction();
                 int i = 0;
                 for (Option c : list) {
                     session.save(c);
@@ -92,16 +90,15 @@ public class OptionRepositoryImpl  implements OptionRepository {
                         session.flush();
                         session.clear();
                     }
-                    //flush
-                      session.flush();
+                    session.flush();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 iserror = true;
             } finally {
                 if (session != null)
                     session.clear();
             }
-            tx.commit();
         return iserror;
     }
 

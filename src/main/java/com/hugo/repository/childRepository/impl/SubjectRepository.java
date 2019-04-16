@@ -87,15 +87,20 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
 
     @Override
     public Integer getSubjectNum(SubjectPage subjectPage) {
-        String sql = "SELECT count(user) FROM fa_subject WHERE  dr = 0 ";
+        String sql = "SELECT count(*) FROM fa_subject WHERE  dr = 0 ";
         SQLQuery sqlQuery = getSqlQuery(sql,subjectPage,false);
         sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object questionnaireLists = sqlQuery.list();
         List<Map<String, Object>> qts = (List<Map<String, Object>>) questionnaireLists;
-        String count = qts.get(0).get("count(user)").toString();
+        String count = qts.get(0).get("count(*)").toString();
         return Integer.valueOf(count);
     }
 
+    /**
+     * 获取分页
+     * @param subjectPage
+     * @return
+     */
     @Override
     public List<Subject> getSubject(SubjectPage subjectPage) {
         String sql = "SELECT * FROM fa_subject WHERE dr = 0 ";

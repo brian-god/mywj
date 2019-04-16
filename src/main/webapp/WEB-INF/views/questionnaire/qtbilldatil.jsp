@@ -177,40 +177,51 @@
             initToastr();
             //保存数据
             $("#saveTableBody").click(function () {
-                isedter = false;
-                //获取表格数据
-                var datas = $('#reportTable').bootstrapTable('getData');
-                if (datas.length > 0) {
-                    var json_data = JSON.stringify(datas);
-                    console.log(json_data);
-                    $.ajax({
-                        url: "addSubjectAndOption",
-                        data: {"data": json_data, "subID":${questionnaire.id}},
-                        dataType: "json",
-                        type: "POST",
-                        success: function (data) {
-                            $('#reportTable').bootstrapTable('refresh');
-                            if(data.status == 200){//成功
-                                toastr.success(data.msg);
-                            }else{
-                                toastr.error(data.msg)
+                var state = <%=state%>;
+                if (state == -1) {
+                    isedter = false;
+                    //获取表格数据
+                    var datas = $('#reportTable').bootstrapTable('getData');
+                    if (datas.length > 0) {
+                        var json_data = JSON.stringify(datas);
+                        console.log(json_data);
+                        $.ajax({
+                            url: "addSubjectAndOption",
+                            data: {"data": json_data, "subID":${questionnaire.id}},
+                            dataType: "json",
+                            type: "POST",
+                            success: function (data) {
+                                $('#reportTable').bootstrapTable('refresh');
+                                if (data.status == 200) {//成功
+                                    toastr.success(data.msg);
+                                } else {
+                                    toastr.error(data.msg)
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        toastr.error('保存失败表体不能为空');
+                    }
                 } else {
-                    alert("保存失败表体不能为空");
+                    toastr.warning('问卷未修改');
                 }
+
             });
             //表体可编辑
             $("#editTableBody").click(function () {
-                isedter = true;
-                toastr.success('已进入编辑模式，请双击表体进行编辑');
+                var state = <%=state%>;
+                if (state == -1) {
+                    isedter = true;
+                    toastr.success('已进入编辑模式，请双击表体进行编辑');
+                } else {
+                    toastr.warning('问卷不是自由态不能够修改');
+                }
             });
             var subRum = 0;
             //编辑表格
             $('#reportTable').bootstrapTable({
                 //数据来源的网址
-                url: '/index.xhtml',
+                url: 'getSubjectAndOption',
                 method: 'post',
                 editable: true,//开启编辑模式
                 clickToSelect: true,
@@ -230,6 +241,16 @@
                     {field: "chosebutton", edit: true, title: "选项", align: "center"},
                     {field: "detailsofoptions", edit: true, title: "选项明细", align: "center", visible: false},
                 ]],
+                queryParams: function (params) {
+                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    var temp = {
+                        limit: params.limit, // 每页显示数量
+                        offset: params.offset, // SQL语句起始索引
+                        page: (params.offset / params.limit) + 1,   //当前页码
+                        qtId: ${questionnaire.id}
+                    };
+                    return temp;
+                },
                 /**
                  * @param {点击列的 field 名称} field
                  * @param {点击列的 value 值} value
@@ -244,29 +265,40 @@
                 }
             });
             $('#addRowbtn').click(function () {
-                var length = $('#reportTable').bootstrapTable('getData').length;
-                var data = {"num": length + 1, "subjecttype": '', "subject": '', "chosetype": ''};
-                $('#reportTable').bootstrapTable('append', data);
+                if(isedter) {
+                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    var data = {"num": length + 1, "subjecttype": '', "subject": '', "chosetype": ''};
+                    $('#reportTable').bootstrapTable('append', data);
+                }else {
+                    toastr.warning("非编辑状态不能增行");
+                    return;
+                }
             });
             $('#delRowbtn').click(function () {
-                var length = $('#reportTable').bootstrapTable('getData').length;
-                if (length > 0) {//保留一行数据
-                    $('#reportTable').bootstrapTable('remove', {
-                        field: 'num',
-                        values: [parseInt(length)]
-                    })
+                if(isedter) {
+                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    if (length > 0) {//保留一行数据
+                        $('#reportTable').bootstrapTable('remove', {
+                            field: 'num',
+                            values: [parseInt(length)]
+                        })
+                    }
+                }else {
+                    toastr.warning("非编辑状态不能删除行");
                 }
             });
             $('sava').onClickCell(function () {
 
             });
         });
-       //题目类型
+
+        //题目类型
         function selectChange(select) {
             var index = select.getAttribute("data-rownum");
             var value = select.options[select.selectedIndex].value
             saveData(index, "subjecttype", value)
         }
+
         //选择题类型类型
         function selectChoseChange(select) {
             var index = select.getAttribute("data-rownum");
@@ -307,8 +339,8 @@
                 saveData(index, field, value)
             } else if ("chosebutton" == field) {
                 var subjecttype = row.subjecttype;
-                if (null == subjecttype || "" == subjecttype) {
-                    alert("只能给选择题增加选项")
+                if ( "选择题" != subjecttype) {
+                    toastr.warning("只能给选择题增加选项")
                     return;
                 }
                 /* var value = '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\n' +
@@ -319,7 +351,7 @@
                 saveData(index, field, vale)
             } else if ("chosetype" == field) {
                 var subjecttype = row.subjecttype
-                console.log("题目类型"+subjecttype);
+                console.log("题目类型" + subjecttype);
                 if ("选择题" == subjecttype) {
                     var value = '<select class="form-control" data-rownum="' + index + '" onchange="selectChoseChange(this)">\n' +
                         '      <option value="0"></option>\n' +
@@ -327,8 +359,8 @@
                         '      <option value="多选">多选</option>\n' +
                         '    </select>';
                     saveData(index, field, value)
-                }else{
-                    alert("该项只针对选择题！！")
+                } else {
+                    toastr.warning("该项只针对选择题！！");
                     return;
                 }
             }
@@ -348,7 +380,7 @@
                 var rowNum = datas[0].rowNum;
                 saveData(rowNum, "detailsofoptions", datas);
             } else {
-                alert("选项不能为空！！")
+                toastr.error("选项不能为空！！");
             }
             $('#optionTable').bootstrapTable('destroy');
         }
@@ -380,7 +412,7 @@
                 pageNumber: 1,
                 columns: [[
                     {field: "rowNum", edit: false, title: "行号", align: "center", visible: false},
-                    {field: "option", edit: false, title: "选项", align: "center"},
+                    {field: "subopt", edit: false, title: "选项", align: "center"},
                     {field: "name", edit: true, title: "选项描述", align: "center",},
                     {field: "id", edit: true, title: "主键", align: "center", visible: false},
                     {field: "dr", edit: true, title: "逻辑", align: "center", visible: false},
@@ -417,10 +449,10 @@
             console.log("数据长度：" + length);
             if (length < 8) {
                 //var data = {"option": '',"num":index,"rowNum":length+1,"option":choses[length]};
-                var data = {"option": '', "num": subRum, "rowNum": length + 1, "option": choses[length]};
+                var data = {"num": subRum, "rowNum": length + 1, "subopt": choses[length]};
                 $('#optionTable').bootstrapTable('append', data);
             } else {
-                alert("选项不能超过八项！！")
+                toastr.warning("选项不能超过八项！！")
             }
         });
         $('#delOptionRowbtn').click(function () {

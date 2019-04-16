@@ -23,7 +23,7 @@ public class Option {
     /**
      * 选项
      */
-    private String option;
+    private String subopt;
     /**
      * 选项描述
      */
@@ -34,6 +34,14 @@ public class Option {
     private Integer subject;
     private Integer dr;
 
+    public String getSubopt() {
+        return subopt;
+    }
+
+    public void setSubopt(String subopt) {
+        this.subopt = subopt;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -42,13 +50,6 @@ public class Option {
         this.id = id;
     }
 
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
 
     public String getName() {
         return name;

@@ -100,6 +100,7 @@ public class SubjectServiceImpl implements SubjectService {
                 subject1.setSubjecttype(subjecttype);//题目类型
                 subject1.setSubject(subject);//题目描述
                 subject1.setQuestionnaire(Integer.valueOf(subID));//属于哪一张问卷
+                subject1.setDr(0);//逻辑标志
                 if ("选择题".equals(subjecttype.trim())) {//是否是选择题
                     if (null == chosetype || "".equals(chosetype)) {
                         //题目描述不能为空
@@ -118,15 +119,16 @@ public class SubjectServiceImpl implements SubjectService {
                             for (int j = 0; j < jsonOptionArray.size(); j++) {
                                 JSONObject jobop = jsonOptionArray.getJSONObject(j);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
                                 String name = jobop.getString("name");//获取name
-                                String option = jobop.getString("option");//获取选项
+                                String option = jobop.getString("subopt");//获取选项
                                 if (null == name || "".equals(name)) {
                                     //选项为空
                                     return QAResult.build(500, "选项为空");
                                 } else {
                                     Option optionVO = new Option();
                                     optionVO.setName(name);
-                                    optionVO.setOption(option);
+                                    optionVO.setSubopt(option);
                                     optionVO.setSubject(pk);
+                                    optionVO.setDr(0);
                                     options.add(optionVO);
                                 }
                             }
