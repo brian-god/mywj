@@ -2,6 +2,7 @@ package com.hugo.repository.childRepository;
 
 import com.hugo.entity.Option;
 import com.hugo.repository.DomainRepository;
+import com.hugo.utils.page.childvo.OptionPage;
 
 import java.util.List;
 
@@ -13,5 +14,17 @@ public interface OptionRepository extends DomainRepository<Option,Integer> {
      */
     boolean saveList(List<Option> list);
 
-    List<Option> getOptionBySubject(int subjectId);
+    /**
+     * 获取分页数据
+     * @param optionPage
+     * @return
+     */
+    List<Option> getOptions(OptionPage optionPage);
+
+    /**
+     * 获取总数
+     * @param optionPage
+     * @return
+     */
+    Integer getOptionNum(OptionPage optionPage);
 }

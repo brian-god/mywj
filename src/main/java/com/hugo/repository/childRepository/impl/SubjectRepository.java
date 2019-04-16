@@ -1,6 +1,7 @@
 package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Subject;
+import com.hugo.utils.MywjUtils;
 import com.hugo.utils.page.childvo.SubjectPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -76,7 +77,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
 
     @Override
     public List<Subject> getSubjectAndOption(int questionnaireId) {
-        String sql = "select * from fa_subject  where questionnaire = "+questionnaireId+ "";
+        String sql = "select * from fa_subject  where questionnaire = "+questionnaireId;
         Session session = sessionFactory.getCurrentSession();
         SQLQuery query = session.createSQLQuery(sql);
         query.addEntity(Subject.class);
@@ -85,10 +86,15 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
         return subject;
     }
 
+    /**
+     * 查询总数
+     * @param subjectPage
+     * @return
+     */
     @Override
     public Integer getSubjectNum(SubjectPage subjectPage) {
-        String sql = "SELECT count(*) FROM fa_subject WHERE  dr = 0 ";
-        SQLQuery sqlQuery = getSqlQuery(sql,subjectPage,false);
+        String sql = "SELECT count(*) FROM fa_subject WHERE  dr = 0 and questionnaire="+subjectPage.getQtId();
+        SQLQuery sqlQuery = MywjUtils.getSqlQuery(sql,subjectPage,false,this.getCurrentSession());
         sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object questionnaireLists = sqlQuery.list();
         List<Map<String, Object>> qts = (List<Map<String, Object>>) questionnaireLists;
@@ -103,8 +109,8 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
      */
     @Override
     public List<Subject> getSubject(SubjectPage subjectPage) {
-        String sql = "SELECT * FROM fa_subject WHERE dr = 0 ";
-        SQLQuery sqlQuery = getSqlQuery(sql,subjectPage,true);
+        String sql = "SELECT * FROM fa_subject WHERE dr = 0 and questionnaire='"+subjectPage.getQtId()+"'  ";
+        SQLQuery sqlQuery = MywjUtils.getSqlQuery(sql,subjectPage,true,this.getCurrentSession());
         sqlQuery.addEntity(Subject.class);
         Object sub = sqlQuery.list();
         List<Subject> subjects = (List<Subject>) sub;
@@ -117,9 +123,9 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
      * @param subjectPage
      * @param ispage 是否分页
      * @return
-     */
+     *//*
     private SQLQuery getSqlQuery(String oldsql,SubjectPage subjectPage,boolean ispage){
-        StringBuffer sql = new StringBuffer(oldsql);
+         StringBuffer sql = new StringBuffer(oldsql);
         if(ispage) {
             if (0 != subjectPage.getLimit()) {
                 //分页查询
@@ -129,5 +135,5 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
         Session session = sessionFactory.openSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
         return  sqlQuery;
-    }
+    }*/
 }

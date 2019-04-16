@@ -120,6 +120,7 @@ public class SubjectServiceImpl implements SubjectService {
                                 JSONObject jobop = jsonOptionArray.getJSONObject(j);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
                                 String name = jobop.getString("name");//获取name
                                 String option = jobop.getString("subopt");//获取选项
+                                String subNum = jobop.getString("num");//获取选项//
                                 if (null == name || "".equals(name)) {
                                     //选项为空
                                     return QAResult.build(500, "选项为空");
@@ -128,6 +129,7 @@ public class SubjectServiceImpl implements SubjectService {
                                     optionVO.setName(name);
                                     optionVO.setSubopt(option);
                                     optionVO.setSubject(pk);
+                                    optionVO.setNum(Integer.valueOf(subNum));//题号
                                     optionVO.setDr(0);
                                     options.add(optionVO);
                                 }

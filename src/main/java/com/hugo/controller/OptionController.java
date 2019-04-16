@@ -1,13 +1,19 @@
 package com.hugo.controller;
 
 import com.hugo.entity.Option;
+import com.hugo.entity.Subject;
+import com.hugo.entity.User;
 import com.hugo.services.OptionService;
+import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.PageHelper;
+import com.hugo.utils.page.childvo.OptionPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,15 +25,18 @@ public class OptionController {
     @Autowired
     private OptionService optionService;
 
-
-    @RequestMapping("getOptionBySubject")
+    /**
+     * 按规则查询
+     * @param optionPage
+     * @return
+     */
+    @RequestMapping("getOptions")
     @ResponseBody
-    public QAResult  getOptionBySubject(int subjectId){
-        List<Option> optionBySubject = optionService.getOptionBySubject(subjectId);
-        if (optionBySubject.size() > 0){
-            return QAResult.build(200,"查询成功",optionBySubject);
-        }
-        return QAResult.build(400,"该题目没有答案");
+    public PageHelper<Option>  getOptions(OptionPage optionPage){
+        PageHelper<Option> pageHelper = new PageHelper<Option>();
+        pageHelper.setTotal(optionService.getOptionNum(optionPage));
+        pageHelper.setRows(optionService.getOptions(optionPage));
+        return pageHelper;
     }
 
 

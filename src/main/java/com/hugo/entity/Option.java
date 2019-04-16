@@ -33,6 +33,18 @@ public class Option {
      */
     private Integer subject;
     private Integer dr;
+    /**
+     * 题号
+     */
+    private  Integer num;
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
 
     public String getSubopt() {
         return subopt;

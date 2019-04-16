@@ -223,16 +223,16 @@
                 //数据来源的网址
                 url: 'getSubjectAndOption',
                 method: 'post',
-                editable: true,//开启编辑模式
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',//post请求需设置
+                striped: true, //是否显示行间隔色
+                pageNumber: 1, //初始化加载第一页
+                pagination: true,//是否分页
                 clickToSelect: true,
-                showPaginationSwitch: true, //显示分页切换按钮
-                search: true,  //显示检索框
-                showRefresh: true,  //显示刷新按钮
-                showToggle: true, //显示切换按钮来切换列表/卡片视图
-                pagination: true,
-                pageList: [5, 25],
-                pageSize: 5,
-                pageNumber: 1,
+                pageSize: 5,//单页记录数
+                paginationShowPageGo: true,
+                showRefresh: true,//刷新按钮
+                sidePagination: 'server',
+                uniqueId: "id",
                 columns: [[
                     {field: "num", edit: false, title: "编号", align: "center"},
                     {field: "subject", edit: true, title: "题目", align: "center",},
@@ -240,6 +240,7 @@
                     {field: "chosetype", edit: true, title: "选择题类型", align: "center"},
                     {field: "chosebutton", edit: true, title: "选项", align: "center"},
                     {field: "detailsofoptions", edit: true, title: "选项明细", align: "center", visible: false},
+                    {field: "id", edit: true, title: "主键", align: "center", visible: false},
                 ]],
                 queryParams: function (params) {
                     //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
@@ -249,6 +250,7 @@
                         page: (params.offset / params.limit) + 1,   //当前页码
                         qtId: ${questionnaire.id}
                     };
+                    console.log(params)
                     return temp;
                 },
                 /**
@@ -343,11 +345,13 @@
                     toastr.warning("只能给选择题增加选项")
                     return;
                 }
+                var subjectID = row.id;
+                //alert("id:"+subjectID);
                 /* var value = '<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">\n' +
                      '\t开始演示模态框\n' +
                      '</button>';*/
                 <!--data-target="#modalTable"-->
-                var vale = '<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalTable" onclick="showOptionModel(' + index + ');" data-subject="' + index + '"><i class="glyphicon glyphicon-plus"></i></button>'
+                var vale = '<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modalTable" onclick="showOptionModel(' + index + ','+subjectID+');" data-subject="' + index + '"><i class="glyphicon glyphicon-plus"></i></button>'
                 saveData(index, field, vale)
             } else if ("chosetype" == field) {
                 var subjecttype = row.subjecttype
@@ -389,27 +393,27 @@
          * 展示选项添加
          * @param index
          */
-        function showOptionModel(index) {
+        function showOptionModel(index,subjectID) {
             subRum = index;
-            //jeialert(index);
+            //alert(subjectID);
             $('#modalTable').on('shown.bs.modal', function () {
                 $table.bootstrapTable('resetView')
             })
             //编辑表格
             $('#optionTable').bootstrapTable({
                 //数据来源的网址
-                url: '/index.xhtml',
+                url: 'getOptions',
                 method: 'post',
-                editable: true,//开启编辑模式
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',//post请求需设置
+                striped: true, //是否显示行间隔色
+                pageNumber: 1, //初始化加载第一页
+                pagination: true,//是否分页
                 clickToSelect: true,
-                showPaginationSwitch: true, //显示分页切换按钮
-                search: true,  //显示检索框
-                showRefresh: true,  //显示刷新按钮
-                showToggle: true, //显示切换按钮来切换列表/卡片视图
-                pagination: true,
-                pageList: [5, 25],
-                pageSize: 8,
-                pageNumber: 1,
+                pageSize: 8,//单页记录数
+                paginationShowPageGo: true,
+                showRefresh: true,//刷新按钮
+                sidePagination: 'server',
+                uniqueId: "id",
                 columns: [[
                     {field: "rowNum", edit: false, title: "行号", align: "center", visible: false},
                     {field: "subopt", edit: false, title: "选项", align: "center"},
@@ -419,6 +423,18 @@
                     {field: "subject", edit: true, title: "属于哪个题", align: "center", visible: false},
                     {field: "num", edit: true, title: "题号", align: "center", visible: true},
                 ]],
+                queryParams: function (params) {
+                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    console.log(params)
+                    var temp = {
+                        limit: params.limit, // 每页显示数量
+                        offset: params.offset, // SQL语句起始索引
+                        page: (params.offset / params.limit) + 1,   //当前页码
+                        subjectId:subjectID
+                    };
+                    console.log(temp);
+                    return temp;
+                },
                 /**
                  * @param {点击列的 field 名称} field
                  * @param {点击列的 value 值} value

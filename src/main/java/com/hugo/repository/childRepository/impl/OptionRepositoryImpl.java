@@ -2,14 +2,18 @@ package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Option;
 import com.hugo.repository.childRepository.OptionRepository;
+import com.hugo.utils.MywjUtils;
+import com.hugo.utils.page.childvo.OptionPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: OptionRepositoryImpl
@@ -102,25 +106,34 @@ public class OptionRepositoryImpl  implements OptionRepository {
         return iserror;
     }
 
+    /**
+     * 获取分页数据
+     * @param optionPage
+     * @return
+     */
     @Override
-    public List<Option> getOptionBySubject(int subjectId) {
-        String sql = "select * from fa_option  where dr =0 and subject = "+subjectId+ "";
-        Session session = sessionFactory.openSession();
-        SQLQuery query = session.createSQLQuery(sql);
-        query.addEntity(Option.class);
-        List<Option> option = query.list();
+    public List<Option> getOptions(OptionPage optionPage) {
+        String sql = "select * from fa_option  where dr =0 and subject = "+optionPage.getSubjectId();
+        SQLQuery  sqlQuery = MywjUtils.getSqlQuery(sql,optionPage,true,getCurrentSession());
+        sqlQuery.addEntity(Option.class);
+        Object sub = sqlQuery.list();
+        List<Option> option = (List<Option>) sub;
         return option;
     }
-    /* @Override
-    public boolean saveList(List<Option> list) {
-        boolean iserror = false;
-        try {
-            for (Option c : list) {
-                save(c);
-            }
-        }catch (Exception e){
-            iserror = true;
-        }
-        return iserror;
-    }*/
+
+    /**
+     * 数量查询
+     * @param optionPage
+     * @return
+     */
+    @Override
+    public Integer getOptionNum(OptionPage optionPage) {
+        String sql = "select count(*) from fa_option  where dr =0 and subject = "+optionPage.getSubjectId();
+        SQLQuery sqlQuery =MywjUtils.getSqlQuery(sql,optionPage,false,getCurrentSession());
+        sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
+        Object questionnaireLists = sqlQuery.list();
+        List<Map<String, Object>> qts = (List<Map<String, Object>>) questionnaireLists;
+        String count = qts.get(0).get("count(*)").toString();
+        return Integer.valueOf(count);
+    }
 }
