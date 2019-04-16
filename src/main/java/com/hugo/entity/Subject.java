@@ -40,7 +40,16 @@ public class Subject {
      * 选项类型
      */
     private String chosetype;
+    private String detailsofoptions;
+
     private Integer dr;
+    public String getDetailsofoptions() {
+        return detailsofoptions;
+    }
+
+    public void setDetailsofoptions(String detailsofoptions) {
+        this.detailsofoptions = detailsofoptions;
+    }
 
     public Integer getId() {
         return id;

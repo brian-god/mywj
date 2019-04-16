@@ -82,13 +82,13 @@ public class OptionRepositoryImpl  implements OptionRepository {
      * @return
      */
     @Override
-    public boolean saveList(List<Option> list) {
+    public boolean saveOrupdateList(List<Option> list) {
             boolean iserror = false;
              Session  session = getCurrentSession(); //获取session
             try {
                 int i = 0;
                 for (Option c : list) {
-                    session.save(c);
+                    session.saveOrUpdate(c);
                     i++;
                     if (i % 100 == 0) {
                         session.flush();

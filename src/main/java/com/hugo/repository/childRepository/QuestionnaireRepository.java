@@ -38,15 +38,11 @@ public interface QuestionnaireRepository extends DomainRepository<Questionnaire,
      * @return
      */
     void updateQt(Questionnaire questionnaire);
-
-    /**
-     * 批量删除数据
-     * @param list
-     */
-    boolean deleteQt(List<Questionnaire> list);
     /**
      * 批量xiugai
      * @param list
      */
     boolean updateQts(List<Questionnaire> list);
+
+    Integer updateById(Integer id);
 }

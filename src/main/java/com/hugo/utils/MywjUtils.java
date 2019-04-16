@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 问卷项目工具类

@@ -6,6 +6,7 @@ import com.hugo.utils.page.childvo.SubjectPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -117,6 +118,28 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
         return subjects;
     }
 
+    /**
+     * 修改
+     * @param list
+     * @return
+     */
+    public boolean updateSubjects(List<Subject> list){
+        boolean iserror = false;
+        return iserror;
+    }
+
+    /**
+     * 保存或修改
+     * @param entity
+     * @return
+     */
+    @Override
+    public void saveOrupdate(Subject entity){
+        Session session= this.getCurrentSession();
+        Transaction tran=session.beginTransaction();
+        session.saveOrUpdate(entity);
+        tran.commit();
+    }
     /**
      * 查询SQL拼接
      * @param oldsql

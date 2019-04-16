@@ -23,7 +23,7 @@ public interface SubjectService {
      * @param subID
      * @return
      */
-    QAResult addSubjectAndOption(String data,String subID);
+    QAResult subjectAndOptionAction(String data,String subID,String operation);
 
 
     Integer getSubjectPageNum(SubjectPage subjectPage);

@@ -57,8 +57,6 @@
                 </button>
                 <button type="button" class="btn btn-primary" id="deleteTable"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
-                <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-lock"></i>&nbsp;&nbsp;审批
-                </button>
             </div>
         </div>
         <form class="form-inline header-bill">
@@ -176,13 +174,36 @@
         $(function () {
             initToastr();
             //删除处理的方法
-            $("deleteTable").click(function () {
-                
+            $("#deleteTable").click(function () {
+                //获取状态
+                var state =  ${questionnaire.state};
+                if(state != -1){
+                    toastr.warning("无法删除非自由态的单据")
+                }else {
+                    //获取表格数据
+                    var datas = $('#reportTable').bootstrapTable('getData');
+                    var json_data = JSON.stringify(datas);
+                    $.ajax({
+                        url: "subjectAndOptionAction",
+                        data: {"data": json_data, "subID":${questionnaire.id},"operation":"delete"},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            $('#reportTable').bootstrapTable('refresh');
+                            if (data.status == 200) {//成功
+                                toastr.success("删除成功")
+                                window.location.href="qt-manage";
+                            } else {
+                                toastr.error(data.msg)
+                            }
+                        }
+                    });
+                }
             });
             //保存数据
             $("#saveTableBody").click(function () {
                 var state = <%=state%>;
-                if (state == -1) {
+                if (state == -1 && isedter) {
                     isedter = false;
                     //获取表格数据
                     var datas = $('#reportTable').bootstrapTable('getData');
@@ -190,8 +211,8 @@
                         var json_data = JSON.stringify(datas);
                         console.log(json_data);
                         $.ajax({
-                            url: "addSubjectAndOption",
-                            data: {"data": json_data, "subID":${questionnaire.id}},
+                            url: "subjectAndOptionAction",
+                            data: {"data": json_data, "subID":${questionnaire.id},"operation":"save"},
                             dataType: "json",
                             type: "POST",
                             success: function (data) {
@@ -381,7 +402,7 @@
             var datas = $('#optionTable').bootstrapTable('getData');
             if (datas.length > 0) {
                 console.log("选项数据：" + datas[0]);
-                console.log(datas[0]);
+                console.log(datas);
                 var Cellvalue = JSON.stringify(datas);
                 console.log("str:" + Cellvalue);
                 //获取题题号

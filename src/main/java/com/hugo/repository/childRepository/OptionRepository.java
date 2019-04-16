@@ -12,7 +12,7 @@ public interface OptionRepository extends DomainRepository<Option,Integer> {
      * @param list
      * @return
      */
-    boolean saveList(List<Option> list);
+    boolean saveOrupdateList(List<Option> list);
 
     /**
      * 获取分页数据

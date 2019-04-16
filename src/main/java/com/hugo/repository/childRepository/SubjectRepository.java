@@ -16,4 +16,18 @@ public interface SubjectRepository extends DomainRepository<Subject,Integer> {
     Integer getSubjectNum(SubjectPage subjectPage);
 
     List<Subject> getSubject(SubjectPage subjectPage);
+
+    /**
+     * 修改数据
+     * @param list
+     * @return
+     */
+    boolean updateSubjects(List<Subject> list);
+
+    /**
+     * 保存或修改
+     * @param subject
+     * @return
+     */
+    void saveOrupdate(Subject subject);
 }

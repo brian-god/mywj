@@ -2,6 +2,7 @@ package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.Questionnaire;
 import com.hugo.repository.childRepository.QuestionnaireRepository;
+import com.hugo.utils.DataUtils;
 import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -51,7 +52,14 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     public void persist(Questionnaire entity) {
 
     }
-
+    @Override
+    public Integer updateById(Integer id){
+        String sql = "update fa_questionnaire set dr = 1,updatetime='"+DataUtils.getTodayTime()+"' where id="+id;
+        int result ;
+        SQLQuery query = sessionFactory.openSession().createSQLQuery(sql);
+        result = query.executeUpdate();
+        return result;
+    }
     @Override
     public Integer save(Questionnaire entity) {
         return (Integer)getCurrentSession().save(entity);
@@ -167,16 +175,6 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
         session.saveOrUpdate(questionnaire);
         tran.commit();
     }
-
-    /**
-     * 批量删除数据
-     * @param list
-     */
-    @Override
-    public boolean deleteQt(List<Questionnaire> list) {
-        return  BatchOperation(list,0);
-    }
-
     /**
      * 批量修改
      * @param list
@@ -184,16 +182,15 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
      */
     @Override
     public boolean updateQts(List<Questionnaire> list) {
-        return  BatchOperation(list,1);
+        return  BatchOperation(list);
     }
 
     /**
      * 数据批量操作
      * @param list
-     * @param in
      * @return
      */
-    private boolean BatchOperation(List<Questionnaire> list ,int in){
+    private boolean BatchOperation(List<Questionnaire> list){
         boolean iserror = false;
         Transaction tx = null;
         Session  session = getCurrentSession(); //获取session
@@ -201,11 +198,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
             tx = session.beginTransaction();
             int i = 0;
             for (Questionnaire c : list) {
-                if(in ==0 ) {//删除
-                    session.delete(c);
-                }else if(in == 1){//修改
-                    session.saveOrUpdate(c);
-                }
+                session.saveOrUpdate(c);
                 i++;
                 if (i % 100 == 0) {
                     session.flush();
