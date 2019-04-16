@@ -6,6 +6,7 @@ import com.hugo.utils.page.childvo.QuestionnairePage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -153,6 +154,73 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
         Session session = sessionFactory.openSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
         return  sqlQuery;
+    }
+
+    /**
+     * 修改数据
+     * @param questionnaire
+     */
+    @Override
+    public  void updateQt(Questionnaire questionnaire){
+        Session session= this.getCurrentSession();
+        Transaction tran=session.beginTransaction();
+        session.saveOrUpdate(questionnaire);
+        tran.commit();
+    }
+
+    /**
+     * 批量删除数据
+     * @param list
+     */
+    @Override
+    public boolean deleteQt(List<Questionnaire> list) {
+        return  BatchOperation(list,0);
+    }
+
+    /**
+     * 批量修改
+     * @param list
+     * @return
+     */
+    @Override
+    public boolean updateQts(List<Questionnaire> list) {
+        return  BatchOperation(list,1);
+    }
+
+    /**
+     * 数据批量操作
+     * @param list
+     * @param in
+     * @return
+     */
+    private boolean BatchOperation(List<Questionnaire> list ,int in){
+        boolean iserror = false;
+        Transaction tx = null;
+        Session  session = getCurrentSession(); //获取session
+        try {
+            tx = session.beginTransaction();
+            int i = 0;
+            for (Questionnaire c : list) {
+                if(in ==0 ) {//删除
+                    session.delete(c);
+                }else if(in == 1){//修改
+                    session.saveOrUpdate(c);
+                }
+                i++;
+                if (i % 100 == 0) {
+                    session.flush();
+                    session.clear();
+                }
+                session.flush();
+            }
+        } catch (Exception e) {
+            iserror = true;
+        } finally {
+            if (session != null)
+                session.clear();
+        }
+        tx.commit();
+        return iserror;
     }
 
 }

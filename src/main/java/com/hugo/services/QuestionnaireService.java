@@ -34,4 +34,24 @@ public interface QuestionnaireService {
      * @return
      */
     Integer getQuestionnaireNum(QuestionnairePage questionnairePage);
+
+    /**
+     * 删除数据
+     * @param data
+     * @return
+     */
+    QAResult deleteQt(String data);
+    /**
+     * 删除数据
+     * @param data
+     * @return
+     */
+    QAResult approvalQt(String data);
+    /**
+     * 提交数据
+     * @param data
+     * @return
+     */
+    QAResult submissionQT(String data);
+
 }
