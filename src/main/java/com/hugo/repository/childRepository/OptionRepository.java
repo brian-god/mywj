@@ -12,4 +12,6 @@ public interface OptionRepository extends DomainRepository<Option,Integer> {
      * @return
      */
     boolean saveList(List<Option> list);
+
+    List<Option> getOptionBySubject(int subjectId);
 }

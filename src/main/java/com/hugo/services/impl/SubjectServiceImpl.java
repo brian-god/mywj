@@ -9,6 +9,7 @@ import com.hugo.repository.childRepository.OptionRepository;
 import com.hugo.repository.childRepository.SubjectRepository;
 import com.hugo.services.SubjectService;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.childvo.SubjectPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,16 @@ public class SubjectServiceImpl implements SubjectService {
         //将获取的数据转成json数组
         JSONArray jsonArray = JSON.parseArray(data);
         return addSubjectAndOptionDtil(jsonArray,subID);
+    }
+
+    @Override
+    public Integer getSubjectPageNum(SubjectPage subjectPage) {
+        return subjectRepository.getSubjectNum(subjectPage);
+    }
+
+    @Override
+    public List<Subject> getSubject(SubjectPage subjectPage) {
+        return subjectRepository.getSubject(subjectPage);
     }
 
     /**
