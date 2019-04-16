@@ -2,6 +2,9 @@ package com.hugo.services;
 
 import com.hugo.entity.Subject;
 import com.hugo.utils.QAResult;
+import com.hugo.utils.page.childvo.SubjectPage;
+
+import java.util.List;
 
 /**
  * Created by lxs on 2019/4/11.
@@ -22,4 +25,8 @@ public interface SubjectService {
      */
     QAResult addSubjectAndOption(String data,String subID);
 
+
+    Integer getSubjectPageNum(SubjectPage subjectPage);
+
+    List<Subject> getSubject(SubjectPage subjectPage);
 }
