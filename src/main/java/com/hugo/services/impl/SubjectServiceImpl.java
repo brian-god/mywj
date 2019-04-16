@@ -150,7 +150,7 @@ public class SubjectServiceImpl implements SubjectService {
                 }else {
                     subject1.setDr(1);//逻辑标志
                 }
-                if ("选择题".equals(subjecttype.trim())&&isCheck) {//是否是选择题
+                if ("选择题".equals(subjecttype.trim())) {//是否是选择题
                     if(isCheck) {
                         if ((null == chosetype || "".equals(chosetype)) && isCheck) {
                             //题目描述不能为空
