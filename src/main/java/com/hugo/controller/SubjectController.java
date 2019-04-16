@@ -37,7 +37,7 @@ public class SubjectController {
     /**
      * 对问卷和明细进行操作
      * @param data
-     * @param subID
+     * @param subID 问卷ID
      * @param operation 操作 delete--删除，save--保存
      * @return
      */

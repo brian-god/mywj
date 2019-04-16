@@ -140,6 +140,31 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
         session.saveOrUpdate(entity);
         tran.commit();
     }
+
+    /**
+     * 界面删除的处理
+     * @param list
+     * @param questionnaireId
+     * @return
+     */
+    public boolean deleteSubByids(List<Integer> list,Integer questionnaireId){
+        int result =0 ;
+        if(list.size()>0) {
+            StringBuffer sql = new StringBuffer("delete from fa_subject where questionnaire=");
+            sql.append(questionnaireId);
+            sql.append(" and id NOT IN (");
+            for (int i = 0; i < list.size(); i++) {
+                if (i == list.size() - 1) {
+                    sql.append(list.get(i) + ")");
+                } else {
+                    sql.append(list.get(i));
+                }
+            }
+            SQLQuery query = sessionFactory.openSession().createSQLQuery(sql);
+            result = query.executeUpdate();
+        }
+        return result>0?true:false;
+    }
     /**
      * 查询SQL拼接
      * @param oldsql

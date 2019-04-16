@@ -30,4 +30,12 @@ public interface SubjectRepository extends DomainRepository<Subject,Integer> {
      * @return
      */
     void saveOrupdate(Subject subject);
+
+    /**
+     * 执行前台删除的题
+     * @param list
+     * @param subId
+     * @return
+     */
+    boolean deleteSubByids(List<Integer> list,Integer subId);
 }

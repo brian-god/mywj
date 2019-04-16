@@ -120,6 +120,8 @@ public class SubjectServiceImpl implements SubjectService {
     private QAResult operationubjectAndOptionQT(JSONArray jsonArray, String subID,boolean isCheck){
         //boolean iserror = false;
         if (jsonArray.size() > 0) {
+            //存放未删除的主键
+            List<Integer> subids = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject job = jsonArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
                 Object num = job.get("num"); //题号
@@ -162,10 +164,13 @@ public class SubjectServiceImpl implements SubjectService {
                         }
                         subject1.setChosetype(chosetype);//选择题类型
                         if(null != suid && !"".equals(suid)) {
-                            subject1.setId(Integer.valueOf(suid));
+                            int pk_sub =Integer.valueOf(suid);
+                            subject1.setId(pk_sub);
                             subjectRepository.saveOrupdate(subject1);
+                            subids.add(pk_sub);
                         }else {
                             Integer pk = subjectRepository.save(subject1);
+                            subids.add(pk);
                             if (null != pk) {
                                 JSONArray jsonOptionArray = JSON.parseArray(detailsofoptions);//选项集合
                                 if (jsonOptionArray.size() > 0) {//遍历选项
@@ -204,14 +209,19 @@ public class SubjectServiceImpl implements SubjectService {
 
                 } else {
                     if(null != suid && !"".equals(suid)) {
-                        subject1.setId(Integer.valueOf(suid));
+                        int pk_sub =Integer.valueOf(suid);
+                        subject1.setId(pk_sub);
                         subjectRepository.saveOrupdate(subject1);
+                        subids.add(pk_sub);
                     }else {
-                        subjectRepository.save(subject1);
+                        Integer pk = subjectRepository.save(subject1);
+                        subids.add(pk);
                     }
                 }
 
             }
+            //执行删除
+            subjectRepository.deleteSubByids(subids,Integer.valueOf(subID));
         } else {
             //数据为空
             return QAResult.build(500, "数据为空");
