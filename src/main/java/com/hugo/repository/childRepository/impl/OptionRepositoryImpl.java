@@ -92,7 +92,8 @@ public class OptionRepositoryImpl  implements OptionRepository {
                         session.flush();
                         session.clear();
                     }
-                    session.flush();
+                    //flush
+                      session.flush();
                 }
             } catch (Exception e) {
                 iserror = true;
