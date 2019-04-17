@@ -150,14 +150,16 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
     public boolean deleteSubByids(List<Integer> list,Integer questionnaireId){
         int result =0 ;
         if(list.size()>0) {
-            StringBuffer sql = new StringBuffer("delete from fa_subject where questionnaire=");
+            StringBuffer sql = new StringBuffer("update  fa_subject set dr = 1 where questionnaire=");
             sql.append(questionnaireId);
             sql.append(" and id NOT IN (");
             for (int i = 0; i < list.size(); i++) {
                 if (i == list.size() - 1) {
-                    sql.append(list.get(i) + ")");
-                } else {
+                    sql.append(","+list.get(i) + ")");
+                } else if(i == 0){
                     sql.append(list.get(i));
+                }else{
+                    sql.append(","+list.get(i));
                 }
             }
             SQLQuery query = sessionFactory.openSession().createSQLQuery(sql.toString());
