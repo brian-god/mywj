@@ -19,4 +19,6 @@ public interface UserService {
     User getUserByUserId(int id);
 
     QAResult deleteUser(String data);
+
+    QAResult doUpdateUser(User user);
 }

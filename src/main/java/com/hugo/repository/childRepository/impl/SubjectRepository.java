@@ -160,7 +160,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
                     sql.append(list.get(i));
                 }
             }
-            SQLQuery query = sessionFactory.openSession().createSQLQuery(sql);
+            SQLQuery query = sessionFactory.openSession().createSQLQuery(sql.toString());
             result = query.executeUpdate();
         }
         return result>0?true:false;

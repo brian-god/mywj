@@ -112,6 +112,14 @@ public class UserServiceImpl  implements UserService {
         return QAResult.build(200,"删除数据成功");
     }
 
+    @Override
+    public QAResult doUpdateUser(User user) {
+        if( userRepository.doUpdateUser(user)){
+            return QAResult.build(400,"修改失败");
+        }
+        return QAResult.build(200,"删除成功");
+    }
+
 
     private User getUserByUsername(String username){
        User user = userRepository.getUserByUsername(username);
