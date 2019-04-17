@@ -128,7 +128,7 @@ public class SubjectServiceImpl implements SubjectService {
                 String subjecttype = job.getString("subjecttype");//题目类型
                 String subject = job.getString("subject");//题目描述
                 String chosetype = job.getString("chosetype");//单选还是多选
-                String detailsofoptions = job.getString("detailsofoptions");//详细选项
+                String opdetail = job.getString("opdetail");//详细选项
                 String suid = job.getString("id");//主键
                 if ((null == subjecttype || "".equals(subjecttype))&&isCheck) {
                     //题目类型不能为空
@@ -146,7 +146,7 @@ public class SubjectServiceImpl implements SubjectService {
                 subject1.setSubjecttype(subjecttype);//题目类型
                 subject1.setSubject(subject);//题目描述
                 subject1.setQuestionnaire(Integer.valueOf(subID));//属于哪一张问卷
-                subject1.setOpdetail(detailsofoptions);
+                subject1.setOpdetail(opdetail);
                 if(isCheck){
                     subject1.setDr(0);//逻辑标志
                 }else {
@@ -158,21 +158,23 @@ public class SubjectServiceImpl implements SubjectService {
                             //题目描述不能为空
                             return QAResult.build(500, "选择题的类型不能为空");
                         }
-                        if ((null == detailsofoptions || "".equals(detailsofoptions)) && isCheck) {
+                        if ((null == opdetail || "".equals(opdetail)) && isCheck) {
                             //选项不能为空
                             return QAResult.build(500, "选项不能为空");
                         }
                         subject1.setChosetype(chosetype);//选择题类型
+                        int pk = -1;
                         if(null != suid && !"".equals(suid)) {
-                            int pk_sub =Integer.valueOf(suid);
-                            subject1.setId(pk_sub);
+                            pk= Integer.valueOf(suid);
+                            subject1.setId(pk);
                             subjectRepository.saveOrupdate(subject1);
-                            subids.add(pk_sub);
-                        }else {
-                            Integer pk = subjectRepository.save(subject1);
                             subids.add(pk);
-                            if (null != pk) {
-                                JSONArray jsonOptionArray = JSON.parseArray(detailsofoptions);//选项集合
+                        }else {
+                            pk = subjectRepository.save(subject1);
+                            subids.add(pk);
+                        }
+                            if (-1 != pk) {
+                                JSONArray jsonOptionArray = JSON.parseArray(opdetail);//选项集合
                                 if (jsonOptionArray.size() > 0) {//遍历选项
                                     List<Option> options = new ArrayList<>();//选项集合
                                     for (int j = 0; j < jsonOptionArray.size(); j++) {
@@ -208,7 +210,7 @@ public class SubjectServiceImpl implements SubjectService {
                             } else {
                                 return QAResult.build(500, "保存失败");
                             }
-                        }
+
                     }
 
                 } else {

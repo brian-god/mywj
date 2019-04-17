@@ -46,7 +46,7 @@
         <div class="bill-title">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#QtAddModal"
-                        onclick="javascrtpt:window.location.href='/qt-manage'"><i
+                        id="retTableheader" ><i
                         class="glyphicon glyphicon-menu-left"></i>&nbsp;&nbsp;返回
                 </button>
                 <button type="button" class="btn btn-primary" id="saveTableBody"><i
@@ -172,8 +172,68 @@
         var isedter = false;
         //定义选项数字
         var choses = new Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+        //保存方法
+        function saveSubAndOption(){
+            var state = <%=state%>;
+            if (state == -1 && isedter) {
+                isedter = false;
+                //获取表格数据
+                var datas = $reportTable.bootstrapTable('getData');
+                if (datas.length > 0) {
+                    var json_data = JSON.stringify(datas);
+                    console.log(json_data);
+                    $.ajax({
+                        url: "subjectAndOptionAction",
+                        data: {"data": json_data, "subID":${questionnaire.id},"operation":"save"},
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            $reportTable.bootstrapTable('refresh');
+                            if (data.status == 200) {//成功
+                                toastr.success(data.msg);
+                            } else {
+                                toastr.error(data.msg)
+                            }
+                        }
+                    });
+                } else {
+                    toastr.error('保存失败表体不能为空');
+                }
+            } else {
+                toastr.warning('问卷未修改');
+            }
+        }
         $(function () {
             initToastr();
+            $("#retTableheader").click(function () {
+                if(isedter){
+                    $.confirm({
+                        title: '确认',
+                        content: '数据未保存是否保存数据',
+                        type: 'green',
+                        icon: 'glyphicon glyphicon-question-sign',
+                        buttons: {
+                            ok: {
+                                text: '确认',
+                                btnClass: 'btn-primary',
+                                action: function() {
+                                    saveSubAndOption();
+                                    window.location.href = '/qt-manage';//指向下载资源（此处为目标文件的输出数据流）
+                                }
+                            },
+                            cancel: {
+                                text: '取消',
+                                btnClass: 'btn-primary',
+                                action: function() {
+                                    window.location.href = '/qt-manage'; //指向下载资源（此处为目标文件的输出数据流）
+                                }
+                            }
+                        }
+                    });
+                }else{//非编辑态直接返回
+                    window.location.href='/qt-manage'
+                }
+            });
             //删除处理的方法
             $("#deleteTable").click(function () {
                 //获取状态
@@ -203,35 +263,7 @@
             });
             //保存数据
             $("#saveTableBody").click(function () {
-                var state = <%=state%>;
-                if (state == -1 && isedter) {
-                    isedter = false;
-                    //获取表格数据
-                    var datas = $reportTable.bootstrapTable('getData');
-                    if (datas.length > 0) {
-                        var json_data = JSON.stringify(datas);
-                        console.log(json_data);
-                        $.ajax({
-                            url: "subjectAndOptionAction",
-                            data: {"data": json_data, "subID":${questionnaire.id},"operation":"save"},
-                            dataType: "json",
-                            type: "POST",
-                            success: function (data) {
-                                $reportTable.bootstrapTable('refresh');
-                                if (data.status == 200) {//成功
-                                    toastr.success(data.msg);
-                                } else {
-                                    toastr.error(data.msg)
-                                }
-                            }
-                        });
-                    } else {
-                        toastr.error('保存失败表体不能为空');
-                    }
-                } else {
-                    toastr.warning('问卷未修改');
-                }
-
+                saveSubAndOption();
             });
             //表体可编辑
             $("#editTableBody").click(function () {
@@ -343,7 +375,7 @@
          * @param $element
          */
         function cellOnClocke(field, value, row, $element) {
-            var index = row.num;
+            var index = $element[0].parentElement.rowIndex;
             if ("subject" == field) {
                 $element.attr('contenteditable', true);
                 $element.attr('id', "subname");
@@ -450,8 +482,10 @@
                  */
                 //onClickCell
                 onDblClickCell: function (field, value, row, $element) {
-                    var rowNum = row.rowNum;
-                    //alert(rowNum)
+                    console.log(row)
+                    //获取index
+                    var index = $element[0].parentElement.rowIndex;
+                    //alert(index)
                     if ("name" == field) {//判断是否点击的是选项描述
                         $element.attr('contenteditable', true);
                         $element.attr('id', "option-name");
@@ -460,7 +494,7 @@
                             console.log(vale);
                             $element.attr('id', "");
                             $element.attr('contenteditable', false);
-                            saveOptionData(rowNum,vale);
+                            saveOptionData(index,vale);
                         })
                     }
                 },
@@ -494,6 +528,7 @@
          * @param value
          */
         function saveOptionData(index,value) {
+            //alert(index)
             $table.bootstrapTable('updateCell', {
                 index: index - 1,       //行索引
                 field: "name",       //列名
@@ -526,7 +561,7 @@
                 console.log("str:" + datas);*/
                 //获取题题号
                 var rowNum = datas[0].num;
-                alert(rowNum);
+                //alert(rowNum);
                 //saveData(rowNum, "opdetail", cellvalue);
                     $reportTable.bootstrapTable('updateRow', {
                         index: rowNum-1,

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
     <link rel="stylesheet" href="/js/toastr/toastr.min.css">
     <link rel="stylesheet" href="/js/bootstrap-editable/bootstrap-editable.css">
+    <link href="js/jquery-confirm-v3.3.4/css/jquery-confirm.min.css" rel="stylesheet" media="screen">
     <rapid:block name="pagecss">
 
     </rapid:block>
@@ -22,6 +23,7 @@
 <rapid:override name="script">
     <script src="/js/jQuery/jquery-3.3.1.min.js"></script>
     <script src="/js/jQuery/jquery-form.js"></script>
+    <script src="js/jquery-confirm-v3.3.4/js/jquery-confirm.js"></script>
     <script src="/js/toastr/toastr.min.js"></script>
     <script src='/js/custom/mywj-public.js'></script>
     <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
