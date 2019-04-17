@@ -24,4 +24,6 @@ public interface UserRepository extends DomainRepository<User,Integer> {
     User  getUserByUserId(int id);
 
     boolean updateUsers(List<User> list);
+
+    boolean doUpdateUser(User user);
 }

@@ -2,6 +2,7 @@ package com.hugo.repository.childRepository.impl;
 
 import com.hugo.entity.User;
 import com.hugo.repository.childRepository.UserRepository;
+import com.hugo.utils.DataUtils;
 import com.hugo.utils.page.childvo.UserPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -145,6 +146,18 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean updateUsers(List<User> list) {
         return BatchUser(list,1);
+    }
+
+    @Override
+    public boolean doUpdateUser(User user) {
+        String sql = "update fa_user set nickname='" + user.getNickname() + "',gender=" + user.getGender()
+                + ",updatetime='" + DataUtils.getTodayTime()+ "' where id=" + user.getId() + ";";
+        Session currentSession = sessionFactory.openSession();
+        SQLQuery query = currentSession.createSQLQuery(sql);
+        if (query.executeUpdate() > 0) {
+            return true;
+        }
+        return false;
     }
 
 

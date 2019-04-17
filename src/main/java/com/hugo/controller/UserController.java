@@ -186,4 +186,31 @@ public class UserController {
     public QAResult deleteUser(String data){
       return userService.deleteUser(data);
     }
+
+
+    /**
+     * toUpdateUser
+     * @param userId
+     * @return
+     */
+    @GetMapping("/toUpdateUser")
+    @ResponseBody
+    public QAResult toUpdateUser(int userId){
+        User user = userService.getUserByUserId(userId);
+        if (StringUtils.isEmpty(user)){
+            return QAResult.build(400,"未查到信息");
+        }
+        return   QAResult.build(200,"查询成功",user);
+    }
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    @PostMapping("doUpdateUser")
+    @ResponseBody
+    public QAResult doUpdateUser(User user){
+        return  userService.doUpdateUser(user);
+    }
 }
