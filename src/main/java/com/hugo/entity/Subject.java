@@ -40,16 +40,12 @@ public class Subject {
      * 选项类型
      */
     private String chosetype;
-    private String detailsofoptions;
+    /**
+     * 选项详情
+     */
+    private String opdetail;
 
     private Integer dr;
-    public String getDetailsofoptions() {
-        return detailsofoptions;
-    }
-
-    public void setDetailsofoptions(String detailsofoptions) {
-        this.detailsofoptions = detailsofoptions;
-    }
 
     public Integer getId() {
         return id;
@@ -97,6 +93,14 @@ public class Subject {
 
     public void setChosetype(String chosetype) {
         this.chosetype = chosetype;
+    }
+
+    public String getOpdetail() {
+        return opdetail;
+    }
+
+    public void setOpdetail(String opdetail) {
+        this.opdetail = opdetail;
     }
 
     public Integer getDr() {

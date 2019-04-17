@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by lxs on 2019/4/11.
@@ -51,11 +52,12 @@ public class SubjectController {
     @PostMapping("getSubjectAndOption")
     @ResponseBody
     public PageHelper<Subject> getSubjectAndOption(HttpServletRequest httpServletRequest, SubjectPage subjectPage) {
-        PageHelper<Subject> pageHelper = new PageHelper<Subject>();
+        PageHelper<Subject> pageHelper = new PageHelper<>();
         User user = MywjUtils.getLoginUser(httpServletRequest);
         subjectPage.setUserId(user.getId());
         pageHelper.setTotal(subjectService.getSubjectPageNum(subjectPage));
-        pageHelper.setRows(subjectService.getSubject(subjectPage));
+        List<Subject>  lsit = subjectService.getSubject(subjectPage);
+        pageHelper.setRows(lsit);
         return pageHelper;
     }
 }

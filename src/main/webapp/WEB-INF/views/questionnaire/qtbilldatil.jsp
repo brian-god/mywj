@@ -167,6 +167,7 @@
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
     <script type="text/javascript">
         var $table = $('#optionTable')
+        var $reportTable =  $('#reportTable');
         //控制表单能否编辑
         var isedter = false;
         //定义选项数字
@@ -181,7 +182,7 @@
                     toastr.warning("无法删除非自由态的单据")
                 }else {
                     //获取表格数据
-                    var datas = $('#reportTable').bootstrapTable('getData');
+                    var datas =$reportTable.bootstrapTable('getData');
                     var json_data = JSON.stringify(datas);
                     $.ajax({
                         url: "subjectAndOptionAction",
@@ -189,7 +190,7 @@
                         dataType: "json",
                         type: "POST",
                         success: function (data) {
-                            $('#reportTable').bootstrapTable('refresh');
+                            $reportTable.bootstrapTable('refresh');
                             if (data.status == 200) {//成功
                                 toastr.success("删除成功")
                                 window.location.href="qt-manage";
@@ -206,7 +207,7 @@
                 if (state == -1 && isedter) {
                     isedter = false;
                     //获取表格数据
-                    var datas = $('#reportTable').bootstrapTable('getData');
+                    var datas = $reportTable.bootstrapTable('getData');
                     if (datas.length > 0) {
                         var json_data = JSON.stringify(datas);
                         console.log(json_data);
@@ -216,7 +217,7 @@
                             dataType: "json",
                             type: "POST",
                             success: function (data) {
-                                $('#reportTable').bootstrapTable('refresh');
+                                $reportTable.bootstrapTable('refresh');
                                 if (data.status == 200) {//成功
                                     toastr.success(data.msg);
                                 } else {
@@ -244,7 +245,7 @@
             });
             var subRum = 0;
             //编辑表格
-            $('#reportTable').bootstrapTable({
+            $reportTable.bootstrapTable({
                 //数据来源的网址
                 url: 'getSubjectAndOption',
                 method: 'post',
@@ -261,10 +262,11 @@
                 columns: [[
                     {field: "num", edit: false, title: "编号", align: "center"},
                     {field: "subject", edit: true, title: "题目", align: "center",},
+                    {field: "questionnaire", edit: true, title: "所属问卷", align: "center", visible: false},
                     {field: "subjecttype", edit: true, title: "题目类型", align: "center"},
                     {field: "chosetype", edit: true, title: "选择题类型", align: "center"},
                     {field: "chosebutton", edit: true, title: "选项", align: "center"},
-                    {field: "detailsofoptions", edit: true, title: "选项明细", align: "center", visible: false},
+                    {field: "opdetail", edit: true, title: "内容", align: "center",visible: false},
                     {field: "id", edit: true, title: "主键", align: "center", visible: false},
                 ]],
                 queryParams: function (params) {
@@ -293,9 +295,9 @@
             });
             $('#addRowbtn').click(function () {
                 if(isedter) {
-                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    var length = $reportTable.bootstrapTable('getData').length;
                     var data = {"num": length + 1, "subjecttype": '', "subject": '', "chosetype": ''};
-                    $('#reportTable').bootstrapTable('append', data);
+                    $reportTable.bootstrapTable('append', data);
                 }else {
                     toastr.warning("非编辑状态不能增行");
                     return;
@@ -303,9 +305,9 @@
             });
             $('#delRowbtn').click(function () {
                 if(isedter) {
-                    var length = $('#reportTable').bootstrapTable('getData').length;
+                    var length = $reportTable.bootstrapTable('getData').length;
                     if (length > 0) {//保留一行数据
-                        $('#reportTable').bootstrapTable('remove', {
+                        $reportTable.bootstrapTable('remove', {
                             field: 'num',
                             values: [parseInt(length)]
                         })
@@ -393,25 +395,6 @@
                     return;
                 }
             }
-        }
-
-        //关闭选项弹框
-        function choseOptionModel() {
-            //alert("关闭选项弹框")
-            //获取表格数据
-            var datas = $('#optionTable').bootstrapTable('getData');
-            if (datas.length > 0) {
-                console.log("选项数据：" + datas[0]);
-                console.log(datas);
-                var Cellvalue = JSON.stringify(datas);
-                console.log("str:" + Cellvalue);
-                //获取题题号
-                var rowNum = datas[0].rowNum;
-                saveData(rowNum, "detailsofoptions", datas);
-            } else {
-                toastr.error("选项不能为空！！");
-            }
-            $('#optionTable').bootstrapTable('destroy');
         }
 
         /**
@@ -526,26 +509,50 @@
          * @param value
          */
         function saveData(index, field, value) {
-            $('#reportTable').bootstrapTable('updateCell', {
+            $reportTable.bootstrapTable('updateCell', {
                 index: index - 1,       //行索引
                 field: field,       //列名
                 value: value        //cell值
             })
         }
-
+        //关闭选项弹框
+        function choseOptionModel() {
+            alert("关闭选项弹框")
+            //获取表格数据
+            var datas = $('#optionTable').bootstrapTable('getData');
+            if (datas.length > 0) {
+                /*console.log("选项数据：" + datas[0]);
+                console.log(datas);
+                var cellvalue = JSON.stringify(datas);
+                console.log("str:" + datas);*/
+                //获取题题号
+                var rowNum = datas[0].rowNum;
+                alert(rowNum);
+                //saveData(rowNum, "opdetail", cellvalue);
+                    $reportTable.bootstrapTable('updateRow', {
+                        index: rowNum,
+                        row: {
+                            opdetail: datas
+                        }
+                    });
+            } else {
+                toastr.error("选项不能为空！！");
+            }
+            $('#optionTable').bootstrapTable('destroy');
+        }
         function removeRow(row) {
             console.log(row);
         }
 
         function update() {
-            var row = $('#reportTable').bootstrapTable('getSelections')
+            var row = $reportTable.bootstrapTable('getSelections')
             console.log(row)
             location.href = "delete.action?uid=" + row.uid
             var row = $('#dg').datagrid('reload');
         }
 
         function sava() {
-            var row = $('#reportTable').bootstrapTable('getSelections');
+            var row = $reportTable.bootstrapTable('getSelections');
             if (row.length == 1) {
                 console.log(a[0].id);
             } else {

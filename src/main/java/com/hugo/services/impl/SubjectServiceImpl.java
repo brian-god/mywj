@@ -146,7 +146,7 @@ public class SubjectServiceImpl implements SubjectService {
                 subject1.setSubjecttype(subjecttype);//题目类型
                 subject1.setSubject(subject);//题目描述
                 subject1.setQuestionnaire(Integer.valueOf(subID));//属于哪一张问卷
-                subject1.setDetailsofoptions(detailsofoptions);
+                subject1.setOpdetail(detailsofoptions);
                 if(isCheck){
                     subject1.setDr(0);//逻辑标志
                 }else {
