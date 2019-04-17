@@ -180,6 +180,7 @@ public class SubjectServiceImpl implements SubjectService {
                                         String name = jobop.getString("name");//获取name
                                         String option = jobop.getString("subopt");//获取选项
                                         String subNum = jobop.getString("num");//获取选项//
+                                        String id = jobop.getString("id");//获取选项//
                                         if ((null == name || "".equals(name)) && isCheck) {
                                             //选项为空
                                             return QAResult.build(500, "选项为空");
@@ -190,6 +191,9 @@ public class SubjectServiceImpl implements SubjectService {
                                             optionVO.setSubject(pk);
                                             optionVO.setNum(Integer.valueOf(subNum));//题号
                                             optionVO.setDr(0);
+                                            if (null != id && !"".equals(id.trim())) {
+                                                optionVO.setId(Integer.valueOf(id));
+                                            }
                                             options.add(optionVO);
                                         }
                                     }

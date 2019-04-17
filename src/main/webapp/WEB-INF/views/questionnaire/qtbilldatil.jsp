@@ -346,10 +346,9 @@
             var index = row.num;
             if ("subject" == field) {
                 $element.attr('contenteditable', true);
-                $element.attr('id', field);
+                $element.attr('id', "subname");
                 $element.blur(function () {
-                    var elid = "#" + field;
-                    var vale = $(elid)[0].innerHTML;
+                    var vale = $("#subname")[0].innerHTML;
                     console.log(vale);
                     $element.attr('id', "");
                     $element.attr('contenteditable', false);
@@ -408,7 +407,7 @@
                 $table.bootstrapTable('resetView')
             })
             //编辑表格
-            $('#optionTable').bootstrapTable({
+            $table.bootstrapTable({
                 //数据来源的网址
                 url: 'getOptions',
                 method: 'post',
@@ -461,7 +460,7 @@
                             console.log(vale);
                             $element.attr('id', "");
                             $element.attr('contenteditable', false);
-                            saveOptionData(rowNum, field, vale)
+                            saveOptionData(rowNum,vale);
                         })
                     }
                 },
@@ -494,10 +493,10 @@
          * @param field
          * @param value
          */
-        function saveOptionData(index, field, value) {
-            $('#optionTable').bootstrapTable('updateCell', {
+        function saveOptionData(index,value) {
+            $table.bootstrapTable('updateCell', {
                 index: index - 1,       //行索引
-                field: field,       //列名
+                field: "name",       //列名
                 value: value        //cell值
             })
         }
@@ -517,7 +516,7 @@
         }
         //关闭选项弹框
         function choseOptionModel() {
-            alert("关闭选项弹框")
+            //alert("关闭选项弹框")
             //获取表格数据
             var datas = $('#optionTable').bootstrapTable('getData');
             if (datas.length > 0) {
@@ -526,13 +525,13 @@
                 var cellvalue = JSON.stringify(datas);
                 console.log("str:" + datas);*/
                 //获取题题号
-                var rowNum = datas[0].rowNum;
+                var rowNum = datas[0].num;
                 alert(rowNum);
                 //saveData(rowNum, "opdetail", cellvalue);
                     $reportTable.bootstrapTable('updateRow', {
-                        index: rowNum,
+                        index: rowNum-1,
                         row: {
-                            opdetail: datas
+                            opdetail: JSON.stringify(datas)
                         }
                     });
             } else {

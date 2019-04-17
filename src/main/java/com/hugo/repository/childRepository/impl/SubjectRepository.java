@@ -110,7 +110,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
      */
     @Override
     public List<Subject> getSubject(SubjectPage subjectPage) {
-        String sql = "SELECT * FROM fa_subject WHERE dr = 0 and questionnaire='"+subjectPage.getQtId()+"'  ";
+        String sql = "SELECT * FROM fa_subject WHERE dr = 0 and questionnaire='"+subjectPage.getQtId()+"'  ORDER BY num ";
         SQLQuery sqlQuery = MywjUtils.getSqlQuery(sql,subjectPage,true,this.getCurrentSession());
         sqlQuery.addEntity(Subject.class);
         Object sub = sqlQuery.list();
