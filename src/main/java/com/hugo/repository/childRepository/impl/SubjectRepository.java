@@ -138,6 +138,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
         Session session= this.getCurrentSession();
         Transaction tran=session.beginTransaction();
         session.saveOrUpdate(entity);
+        session.clear();
         tran.commit();
     }
 
@@ -149,6 +150,7 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
      */
     public boolean deleteSubByids(List<Integer> list,Integer questionnaireId){
         int result =0 ;
+        Session session = sessionFactory.openSession();
         if(list.size()>0) {
             StringBuffer sql = new StringBuffer("update  fa_subject set dr = 1 where questionnaire=");
             sql.append(questionnaireId);
@@ -162,8 +164,9 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
                     sql.append(","+list.get(i));
                 }
             }
-            SQLQuery query = sessionFactory.openSession().createSQLQuery(sql.toString());
+            SQLQuery query =session.createSQLQuery(sql.toString());
             result = query.executeUpdate();
+            session.clear();
         }
         return result>0?true:false;
     }

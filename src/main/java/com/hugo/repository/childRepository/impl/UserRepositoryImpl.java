@@ -89,6 +89,7 @@ public class UserRepositoryImpl implements UserRepository {
         SQLQuery query = currentSession.createSQLQuery(sql);
         query.addEntity(User.class);
         User user = (User)query.uniqueResult();
+        currentSession.clear();
         return user;
     }
 
@@ -99,6 +100,7 @@ public class UserRepositoryImpl implements UserRepository {
         SQLQuery query = currentSession.createSQLQuery(sql);
         query.addEntity(User.class);
         User user = (User)query.uniqueResult();
+        currentSession.clear();
         return user;
     }
 
@@ -109,6 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
         SQLQuery query = currentSession.createSQLQuery(sql);
         query.addEntity(User.class);
         User user = (User)query.uniqueResult();
+        currentSession.clear();
         return user;
     }
 
@@ -140,6 +143,7 @@ public class UserRepositoryImpl implements UserRepository {
         SQLQuery query = currentSession.createSQLQuery(sql);
         query.addEntity(User.class);
         User user = (User)query.uniqueResult();
+        currentSession.clear();
         return user;
     }
 
@@ -155,6 +159,7 @@ public class UserRepositoryImpl implements UserRepository {
         Session currentSession = sessionFactory.openSession();
         SQLQuery query = currentSession.createSQLQuery(sql);
         if (query.executeUpdate() > 0) {
+            currentSession.clear();
             return true;
         }
         return false;
@@ -185,6 +190,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
         Session session = sessionFactory.openSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
+        session.clear();
         return  sqlQuery;
     }
 

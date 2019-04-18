@@ -56,8 +56,10 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
     public Integer updateById(Integer id){
         String sql = "update fa_questionnaire set dr = 1,updatetime='"+DataUtils.getTodayTime()+"' where id="+id;
         int result ;
-        SQLQuery query = sessionFactory.openSession().createSQLQuery(sql);
+        Session session = sessionFactory.openSession();
+        SQLQuery query = session.createSQLQuery(sql);
         result = query.executeUpdate();
+        session.clear();
         return result;
     }
     @Override
@@ -95,6 +97,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
         sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object questionnaireLists = sqlQuery.list();
         List<Map<String, Object>> qts = (List<Map<String, Object>>) questionnaireLists;
+        session.clear();
         return qts;
     }
 
@@ -161,6 +164,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
         }
         Session session = sessionFactory.openSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
+        session.clear();
         return  sqlQuery;
     }
 
@@ -174,6 +178,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
         Transaction tran=session.beginTransaction();
         session.saveOrUpdate(questionnaire);
         tran.commit();
+        session.clear();
     }
     /**
      * 批量修改
