@@ -150,6 +150,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         return QAResult.build(200,"提交成功");
     }
 
+    @Override
+    public Questionnaire getQtById(Integer id) {
+        return questionnaireRepository.get(id);
+    }
+
     /**
      * 集合转json数组
      * @param list

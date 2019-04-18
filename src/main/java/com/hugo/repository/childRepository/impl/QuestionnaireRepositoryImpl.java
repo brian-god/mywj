@@ -40,7 +40,7 @@ public class QuestionnaireRepositoryImpl implements QuestionnaireRepository {
 
     @Override
     public Questionnaire get(Integer id) {
-        return null;
+        return (Questionnaire) getCurrentSession().load(Questionnaire.class,id);
     }
 
     @Override

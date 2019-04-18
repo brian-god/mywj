@@ -27,4 +27,11 @@ public interface OptionRepository extends DomainRepository<Option,Integer> {
      * @return
      */
     Integer getOptionNum(OptionPage optionPage);
+
+    /**
+     * 根据题的id查选项
+     * @param subId
+     * @return
+     */
+    List<Option> getOptionsBySubId(Integer subId);
 }

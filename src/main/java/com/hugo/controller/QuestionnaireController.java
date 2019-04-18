@@ -6,6 +6,7 @@ import com.hugo.entity.User;
 import com.hugo.myenum.ChoiceType;
 import com.hugo.myenum.ProblemType;
 import com.hugo.services.QuestionnaireService;
+import com.hugo.services.SubjectService;
 import com.hugo.utils.MywjUtils;
 import com.hugo.utils.QAResult;
 import com.hugo.utils.page.PageHelper;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lxs on 2019/4/4.
@@ -36,6 +38,8 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
+    @Autowired
+    private SubjectService subjectService;
     /**
      * 问卷管理节点
      * @return
@@ -130,5 +134,25 @@ public class QuestionnaireController {
     public  PageHelper<Subject> subject( HttpServletRequest request, SubjectPage subjectPage){
         System.out.print(subjectPage.getQtId());
         return null;
+    }
+
+    /**
+     * 问卷展示
+     * @param request
+     * @param qtid
+     * @param isedit 预览或者编辑
+     * @return
+     */
+    @GetMapping("showQuestionnaire")
+    @ResponseBody
+    public ModelAndView showQuestionnaire(HttpServletRequest request,String qtid,String isedit){
+        qtid = "54";
+        ModelAndView  modelAndView = new ModelAndView();
+        Questionnaire questionnaire =  questionnaireService.getQtById(Integer.valueOf(qtid));
+        modelAndView.addObject("questionnaire",questionnaire);//问卷信息
+        Map<String,List<Subject>> subjihe = subjectService.getSubjectAndOption(Integer.valueOf(qtid));
+        modelAndView.addObject("subjihe",subjihe);//问卷信息
+        modelAndView.setViewName("questionnaire/qtdisplay");
+        return modelAndView;
     }
 }

@@ -54,4 +54,11 @@ public interface QuestionnaireService {
      */
     QAResult submissionQT(String data);
 
+    /**
+     * 获取问卷
+     * @param id
+     * @return
+     */
+    Questionnaire getQtById(Integer id);
+
 }

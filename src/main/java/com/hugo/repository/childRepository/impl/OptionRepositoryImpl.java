@@ -136,4 +136,15 @@ public class OptionRepositoryImpl  implements OptionRepository {
         String count = qts.get(0).get("count(*)").toString();
         return Integer.valueOf(count);
     }
+
+    @Override
+    public List<Option> getOptionsBySubId(Integer subId) {
+        String sql = "select * from fa_option  where subject = "+subId +" and dr = 0  ORDER BY id";
+        Session session = this.getCurrentSession();
+        SQLQuery query = session.createSQLQuery(sql);
+        query.addEntity(Option.class);
+        List<Option> subject = query.list();
+        session.clear();
+        return subject;
+    }
 }

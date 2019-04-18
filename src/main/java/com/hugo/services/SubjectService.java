@@ -5,6 +5,7 @@ import com.hugo.utils.QAResult;
 import com.hugo.utils.page.childvo.SubjectPage;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lxs on 2019/4/11.
@@ -29,4 +30,11 @@ public interface SubjectService {
     Integer getSubjectPageNum(SubjectPage subjectPage);
 
     List<Subject> getSubject(SubjectPage subjectPage);
+
+    /**
+     * 根据
+     * @param questionnaireId
+     * @return
+     */
+    Map<String,List<Subject>> getSubjectAndOption(int questionnaireId);
 }

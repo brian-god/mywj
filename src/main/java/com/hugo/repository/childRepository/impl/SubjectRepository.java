@@ -78,8 +78,8 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
 
     @Override
     public List<Subject> getSubjectAndOption(int questionnaireId) {
-        String sql = "select * from fa_subject  where questionnaire = "+questionnaireId;
-        Session session = sessionFactory.getCurrentSession();
+        String sql = "select * from fa_subject  where questionnaire = "+questionnaireId +" and dr = 0  ORDER BY num";
+        Session session = this.getCurrentSession();
         SQLQuery query = session.createSQLQuery(sql);
         query.addEntity(Subject.class);
         List<Subject> subject = query.list();

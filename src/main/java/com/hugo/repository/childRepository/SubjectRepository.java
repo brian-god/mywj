@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface SubjectRepository extends DomainRepository<Subject,Integer> {
 
-    List<Subject> getSubjectAndOption(int userId);
+    List<Subject> getSubjectAndOption(int questionnaireId);
 
     Integer getSubjectNum(SubjectPage subjectPage);
 
