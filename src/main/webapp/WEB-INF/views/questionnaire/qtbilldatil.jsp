@@ -208,9 +208,9 @@
             $("#retTableheader").click(function () {
                 if(isedter){
                     $.confirm({
-                        title: '确认',
-                        content: '数据未保存是否保存数据',
-                        type: 'green',
+                        title: '确认提示',
+                        content: '数据未保存是否保存数据？',
+                        type: 'orange',
                         icon: 'glyphicon glyphicon-question-sign',
                         buttons: {
                             ok: {

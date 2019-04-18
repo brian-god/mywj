@@ -122,7 +122,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (jsonArray.size() > 0) {
             //存放未删除的主键
             List<Integer> subids = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i = 0; i < jsonArray.size(); i++ ){
                 JSONObject job = jsonArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
                 Object num = job.get("num"); //题号
                 String subjecttype = job.getString("subjecttype");//题目类型
@@ -146,7 +146,7 @@ public class SubjectServiceImpl implements SubjectService {
                 subject1.setSubjecttype(subjecttype);//题目类型
                 subject1.setSubject(subject);//题目描述
                 subject1.setQuestionnaire(Integer.valueOf(subID));//属于哪一张问卷
-                subject1.setOpdetail(opdetail);
+                //subject1.setOpdetail(opdetail);
                 if(isCheck){
                     subject1.setDr(0);//逻辑标志
                 }else {
@@ -158,10 +158,6 @@ public class SubjectServiceImpl implements SubjectService {
                             //题目描述不能为空
                             return QAResult.build(500, "选择题的类型不能为空");
                         }
-                        if ((null == opdetail || "".equals(opdetail)) && isCheck) {
-                            //选项不能为空
-                            return QAResult.build(500, "选项不能为空");
-                        }
                         subject1.setChosetype(chosetype);//选择题类型
                         int pk = -1;
                         if(null != suid && !"".equals(suid)) {
@@ -170,12 +166,16 @@ public class SubjectServiceImpl implements SubjectService {
                             subjectRepository.saveOrupdate(subject1);
                             subids.add(pk);
                         }else {
+                            if ((null == opdetail || "".equals(opdetail)) && isCheck) {
+                                //选项不能为空
+                                return QAResult.build(500, "选项不能为空");
+                            }
                             pk = subjectRepository.save(subject1);
                             subids.add(pk);
                         }
                             if (-1 != pk) {
                                 JSONArray jsonOptionArray = JSON.parseArray(opdetail);//选项集合
-                                if (jsonOptionArray.size() > 0) {//遍历选项
+                                if (null != jsonOptionArray&&jsonOptionArray.size() > 0) {//遍历选项
                                     List<Option> options = new ArrayList<>();//选项集合
                                     for (int j = 0; j < jsonOptionArray.size(); j++) {
                                         JSONObject jobop = jsonOptionArray.getJSONObject(j);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
