@@ -57,6 +57,8 @@
                 </button>
                 <button type="button" class="btn btn-primary" id="deleteTable"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;删除
                 </button>
+                <button type="button" class="btn btn-primary" id="dpreviewTable" href="#reserveDialogModal"  data-toggle="modal" ><i class="glyphicon glyphicon-eye-open"></i>&nbsp;&nbsp;预览
+                </button>
             </div>
         </div>
         <form class="form-inline header-bill">
@@ -161,10 +163,50 @@
             </div>
         </div>
     </div>
+    <!--预览问卷模态框-->
+    <div class="modal fade"  style="width:auto;" id="reserveDialogModal" tabindex="-1" style="display: none"  aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">问卷预览</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="reserve_top_line">
+
+                    </div>
+                    <div class="modal-body form-horizontal" id="reserveForm">
+                        <!--预定表单-->
+                        <!--end 预定表单-->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="saveBtn" class="btn btn-primary btn-flat md-clos" data-dismiss="modal" >关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </rapid:override>
 <rapid:override name="pagescript">
     <script src='/js/bootstrap-table/bootstrap-table.min.js'></script>
     <script src='/js/bootstrap-table/bootstrap-table-zh-CN.min.js'></script>
+    <script type="text/javascript">
+    </script>
+    <script>
+        $(function () { $('#reserveDialogModal').on('show.bs.modal.bs.modal', function () {
+                $.ajax({
+                    url: "showQuestionnaire?qtid=${questionnaire.id}&isedit=false",
+                    type: "GET",
+                    success: function (data,state) {
+                        $("#reserveForm").html(data);
+                    },
+                    error:function (data) {
+                        toastr.error("请求出错")
+                    }
+                });
+            })
+        });
+    </script>
     <script type="text/javascript">
         var $table = $('#optionTable')
         var $reportTable =  $('#reportTable');

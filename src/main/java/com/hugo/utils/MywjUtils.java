@@ -40,6 +40,7 @@ public class MywjUtils {
             }
         }
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
+        session.clear();
         return  sqlQuery;
     }
 }

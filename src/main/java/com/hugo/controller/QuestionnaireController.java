@@ -17,10 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -143,11 +140,11 @@ public class QuestionnaireController {
      * @param isedit 预览或者编辑
      * @return
      */
-    @GetMapping("showQuestionnaire")
+    @RequestMapping("showQuestionnaire")
     @ResponseBody
-    public ModelAndView showQuestionnaire(HttpServletRequest request,String qtid,String isedit){
-        qtid = "54";
+    public ModelAndView showQuestionnaire(HttpServletRequest request, @RequestParam("qtid") String qtid,@RequestParam("isedit") boolean isedit){
         ModelAndView  modelAndView = new ModelAndView();
+        modelAndView.addObject("isedit",isedit);//是否填写
         Questionnaire questionnaire =  questionnaireService.getQtById(Integer.valueOf(qtid));
         modelAndView.addObject("questionnaire",questionnaire);//问卷信息
         Map<String,List<Subject>> subjihe = subjectService.getSubjectAndOption(Integer.valueOf(qtid));

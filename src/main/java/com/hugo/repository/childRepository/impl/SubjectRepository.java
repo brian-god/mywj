@@ -156,12 +156,16 @@ public class SubjectRepository implements com.hugo.repository.childRepository.Su
             sql.append(questionnaireId);
             sql.append(" and id NOT IN (");
             for (int i = 0; i < list.size(); i++) {
-                if (i == list.size() - 1) {
-                    sql.append(","+list.get(i) + ")");
-                } else if(i == 0){
-                    sql.append(list.get(i));
-                }else{
-                    sql.append(","+list.get(i));
+                if(list.size() !=1){
+                    if (i == list.size() - 1) {
+                        sql.append(","+list.get(i) + ")");
+                    } else if(i == 0){
+                        sql.append(list.get(i));
+                    }else{
+                        sql.append(","+list.get(i));
+                    }
+                }else {
+                    sql.append(list.get(i) + ")");
                 }
             }
             SQLQuery query =session.createSQLQuery(sql.toString());
