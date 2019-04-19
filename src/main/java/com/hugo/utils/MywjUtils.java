@@ -2,13 +2,11 @@ package com.hugo.utils;
 
 import com.hugo.entity.User;
 import com.hugo.utils.page.Page;
-import com.hugo.utils.page.childvo.OptionPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * 问卷项目工具类
