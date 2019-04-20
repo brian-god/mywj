@@ -78,7 +78,8 @@ public class SubjectServiceImpl implements SubjectService {
     public Map<String,List<Subject>> getSubjectAndOption(int questionnaireId) {
         List<Subject> list = subjectRepository.getSubjectAndOption(questionnaireId);//获取问题
         Map<String,List<Subject>> map = new HashMap<>();//数据集合
-        List<Subject>  xzts = new ArrayList<>();//选择题
+        List<Subject>  dxxzts = new ArrayList<>();//单选选择
+        List<Subject>  dxts = new ArrayList<>();//多项选择
         List<Subject>  tkts = new ArrayList<>();//填空题
         List<Subject>  jdts = new ArrayList<>();//简答题
         for (int i = 0; i < list.size(); i++) {
@@ -92,7 +93,11 @@ public class SubjectServiceImpl implements SubjectService {
                     JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(options));
                     subject.setOpdetail(jsonArray.toJSONString());
                 }
-                xzts.add(subject);
+                if("单选".equals(subject.getChosetype())){
+                    dxxzts.add(subject);
+                }else {
+                    dxts.add(subject);
+                }
             }else if("填空题".equals(subjectType.trim())){
                 tkts.add(subject);
             }
@@ -100,9 +105,10 @@ public class SubjectServiceImpl implements SubjectService {
                 jdts.add(subject);
             }
         }
-        map.put("xzts",xzts);
+        map.put("dxxzts",dxxzts);
         map.put("tkts",tkts);
         map.put("jdts",jdts);
+        map.put("dxts",dxts);
         return map;
     }
 

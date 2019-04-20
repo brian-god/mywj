@@ -19,15 +19,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="mobai.com/el-common" prefix="el" %>
 <%
+    int subnum =1;
+    //多选题
+    List<Subject> dxts = (List<Subject> )request.getAttribute("dxts");
+    JSONArray jsonArray = JSON.parseArray(JSON.toJSONString(dxts));
     //获取选中的问卷
     Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
-    //问题列表
-    //Map<String,List<Subject>> subjihe = ( Map<String,List<Subject>>) request.getAttribute("subjihe");
-    //是否填写
-    boolean isedit = (boolean) request.getAttribute("isedit");
-    //List<Subject>  tkts = subjihe.get("tkts");//填空题
-   // List<Subject>  jdts = subjihe.get("jdts");//简答题
-    int subnum =1;
+
+    JSONObject  jsonObject = JSON.parseObject(JSON.toJSONString(questionnaire));
+
 %>
 <html>
 <head>
@@ -39,82 +39,91 @@
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
 </head>
 <body>
-<div class="container-fluid" style="<%=isedit?"padding-top: 20px":"padding-top: 0px"%>">
+<div class="container-fluid" style="padding-top: 0px">
     <div class="row" style="background-color: #1b248529;">
         <div class="col-md-2" style="background-color: #1c7430"></div>
         <div class="col-md-8  container-min" style="background-color: #eee">
-           <div style="text-align: center">
-               <h2>${questionnaire.name}</h2>
-               <br/>
-               <h4>${questionnaire.describes}</h4>
-               <br />
-           </div>
-           <div>
-               <!--选择题-->
-               <c:if test="${fn:length(xzts)>0}">
-               <div>
-                   <h4>一、选择题</h4>
-               </div>
-                   <c:forEach var="sub" items="${xzts}">
-                       <div style="margin-bottom: 10px">
-                           <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h5></p>
-                           <div style="color: #777;font-size: 13px;">
-                               <c:if test="${el:singleElection(sub.chosetype)}">
-                                   <!--单选题-->
-                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
-                                       <div class="radio">
-                                           <label>
-                                               <input type="radio" name="optionsRadios" id="${QToption.id}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}
-                                           </label>
-                                       </div>
-                                   </c:forEach>
-
-                               </c:if>
-                               <c:if test="${el:multipleElection(sub.chosetype)}">
-                                   <!--多选题-->
-                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
-                                       <div class="checkbox">
-                                           <label><input type="checkbox" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}</label>
-                                       </div>
-                                   </c:forEach>
-                               </c:if>
-                           </div>
-                       </div>
-                       <%
-                            subnum++;
-                       %>
-                   </c:forEach>
-               </c:if>
-           </div>
-            <div>
-                <!--填空题-->
-                <c:if test="${fn:length(tkts)>0}">
-                    <div>
-                        <h4>二、填空题</h4>
-                    </div>
-                    <c:forEach var="sub" items="${tkts}">
-                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+            <form class="form-horizontal" role="form">
+                <div style="text-align: center">
+                    <h2>${questionnaire.name}</h2>
+                    <br/>
+                    <h4>${questionnaire.describes}</h4>
+                    <br />
+                </div>
+                <div>
+                        <div>
+                            <h4>一、选择题</h4>
+                        </div>
+                        <c:forEach var="sub" items="${dxxzts}">
+                            <div style="margin-bottom: 10px">
+                                <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h5></p>
+                                <div style="color: #777;font-size: 13px;">
+                                        <!--单选题-->
+                                        <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="${el:fromatElementName(questionnaire.id, sub.id)}" id="${QToption.id}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}
+                                                </label>
+                                            </div>
+                                        </c:forEach>
+                                </div>
+                            </div>
+                            <%
+                                subnum++;
+                            %>
+                        </c:forEach>
+                    <c:forEach var="sub" items="${dxts}">
+                        <div style="margin-bottom: 10px">
+                            <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h5></p>
+                            <div style="color: #777;font-size: 13px;">
+                                <!--多选题-->
+                                <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="${el:fromatElementName(questionnaire.id, sub.id)}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}</label>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
                         <%
                             subnum++;
                         %>
                     </c:forEach>
-                </c:if>
-            </div>
-            <div>
-                <!--简答题-->
-                <c:if test="${fn:length(jdts)>0}">
-                    <div>
-                        <h4>三、简答题</h4>
+                </div>
+                <div>
+                    <!--填空题-->
+                    <c:if test="${fn:length(tkts)>0}">
+                        <div>
+                            <h4>二、填空题</h4>
+                        </div>
+                        <c:forEach var="sub" items="${tkts}">
+                            <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                            <%
+                                subnum++;
+                            %>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <div>
+                    <!--简答题-->
+                    <c:if test="${fn:length(jdts)>0}">
+                        <div>
+                            <h4>三、简答题</h4>
+                        </div>
+                        <c:forEach var="sub" items="${jdts}">
+                            <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                            <textarea class="form-control" name="${el:fromatElementName(questionnaire.id, sub.id)}"></textarea>
+                            <%
+                                subnum++;
+                            %>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <c:if test="${isedit}">
+                    <div class="form-group" style="padding-top: 20px">
+                        <button type="button" id="submit-from" class="btn btn-primary btn-lg btn-block">提交</button>
                     </div>
-                    <c:forEach var="sub" items="${jdts}">
-                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
-                        <textarea class="form-control"></textarea>
-                        <%
-                            subnum++;
-                        %>
-                    </c:forEach>
                 </c:if>
-            </div>
+            </form>
         </div>
         <div class="col-md-2" style="background-color: salmon"></div>
     </div>
@@ -122,5 +131,48 @@
 <script src="/js/jQuery/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
-<script src="/js/custom/user-min.js"></script></body>
+<script src="/js/custom/user-min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#submit-from').click(function() {
+            var questionnaire1 =  <%=jsonObject%>
+            var duoxuan = <%=jsonArray%>
+            console.log(duoxuan);
+            //获取除多选题外的题
+            var d = {};
+            var t = $('form').serializeArray();
+            $.each(t, function() {
+                d[this.name] = this.value;
+            });
+            for(var i=0;i<duoxuan.length;i++){
+                var  jsonobject = duoxuan[i];
+                var suname = 'subject-'+questionnaire1.id+'-'+jsonobject.id;
+                //js获取复选框值
+                var obj = document.getElementsByName(suname);//选择所有name="interest"的对象，返回数组
+                var s='';//如果这样定义var s;变量s中会默认被赋个null值
+                for(var i=0;i<obj.length;i++){
+                    if(obj[i].checked) //取到对象数组后，我们来循环检测它是不是被选中
+                        s+=obj[i].value+',';   //如果选中，将value添加到变量s中
+                }
+                var basic = s.substr(0, s.length - 1);
+                d[suname] =basic;
+            }
+            $.ajax({
+                url: "persionSubmitQt",
+                data: {"data": JSON.stringify(d)},
+                dataType: "json",
+                type: "POST",
+                success: function (data) {
+                    $reportTable.bootstrapTable('refresh');
+                    if (data.status == 200) {//成功
+                        toastr.success(data.msg);
+                    } else {
+                        toastr.error(data.msg)
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
 </html>

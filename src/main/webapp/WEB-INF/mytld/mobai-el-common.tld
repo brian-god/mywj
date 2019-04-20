@@ -29,4 +29,12 @@
         <function-signature>java.lang.Boolean multipleElection(java.lang.String)</function-signature>
         <example>${el:multipleElection(value)}</example>
     </function>
+    <!-- 返回form表单的name -->
+    <function>
+        <name>fromatElementName</name>
+
+        <function-class>com.hugo.utils.myjstl.ElFunctions</function-class>
+        <function-signature>java.lang.String fromatElementName(int,int)</function-signature>
+        <example>${el:fromatElementName(value)}</example>
+    </function>
 </taglib>
