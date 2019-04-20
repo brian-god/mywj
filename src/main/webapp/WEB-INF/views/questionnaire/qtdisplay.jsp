@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/wj.main.css">
     <link rel="stylesheet" href="/css/bootstrapValidator/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/js/toastr/toastr.min.css">
 </head>
 <body>
 <div class="container-fluid" style="padding-top: 0px">
@@ -132,8 +133,11 @@
 <script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
 <script src="/js/custom/user-min.js"></script>
+<script src="/js/toastr/toastr.min.js"></script>
+<script src='/js/custom/mywj-public.js'></script>
 <script type="text/javascript">
     $(function() {
+        initToastr();
         $('#submit-from').click(function() {
             var questionnaire1 =  <%=jsonObject%>
             var duoxuan = <%=jsonArray%>
