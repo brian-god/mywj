@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd" version="2.1">
+
+    <tlib-version>1.0</tlib-version>
+    <short-name>el</short-name>
+
+    <!-- 将字符串转json数组 -->
+    <function>
+        <name>toJsonArray</name>
+
+        <function-class>com.hugo.utils.myjstl.ElFunctions</function-class>
+        <function-signature>com.alibaba.fastjson.JSONArray toJsonArray(java.lang.String)</function-signature>
+        <example>${el:toJsonArray(value)}</example>
+    </function>
+    <!-- 判断是否是单选 -->
+    <function>
+        <name>singleElection</name>
+
+        <function-class>com.hugo.utils.myjstl.ElFunctions</function-class>
+        <function-signature>java.lang.Boolean singleElection(java.lang.String)</function-signature>
+        <example>${el:singleElection(value)}</example>
+    </function>
+    <!-- 判断是否是多选 -->
+    <function>
+        <name>multipleElection</name>
+
+        <function-class>com.hugo.utils.myjstl.ElFunctions</function-class>
+        <function-signature>java.lang.Boolean multipleElection(java.lang.String)</function-signature>
+        <example>${el:multipleElection(value)}</example>
+    </function>
+</taglib>

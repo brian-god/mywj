@@ -152,7 +152,6 @@ public class QuestionnaireController {
         modelAndView.addObject("xzts",subjihe.get("xzts"));
         modelAndView.addObject("tkts",subjihe.get("tkts"));
         modelAndView.addObject("jdts",subjihe.get("jdts"));
-        modelAndView.addObject("xz","单选");
         modelAndView.setViewName("questionnaire/qtdisplay");
         return modelAndView;
     }

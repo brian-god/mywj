@@ -17,6 +17,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="mobai.com/el-common" prefix="el" %>
 <%
     //获取选中的问卷
     Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
@@ -55,26 +56,29 @@
                    <h4>一、选择题</h4>
                </div>
                    <c:forEach var="sub" items="${xzts}">
-                       <div style="margin-bottom: 30px">
-                           <h4> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h4>
-                           <br/>
-                           <c:out value="${'单选' eq sub.chosetype}"/>
-                           <c:if test="${'单选' eq xz}">
-                                <c:forEach var="QToption" items="${sub.opdetail}">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="${QToption.id}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}
-                                        </label>
-                                    </div>
-                                </c:forEach>
-                           </c:if>
-                           <c:if test="${'多选' eq xz} ">
-                               <c:forEach var="QToption" items="${sub.opdetail}">
-                                   <div class="checkbox">
-                                       <label><input type="checkbox" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}</label>
-                                   </div>
-                               </c:forEach>
-                           </c:if>
+                       <div style="margin-bottom: 10px">
+                           <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h5></p>
+                           <div style="color: #777;font-size: 13px;">
+                               <c:if test="${el:singleElection(sub.chosetype)}">
+                                   <!--单选题-->
+                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                       <div class="radio">
+                                           <label>
+                                               <input type="radio" name="optionsRadios" id="${QToption.id}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}
+                                           </label>
+                                       </div>
+                                   </c:forEach>
+
+                               </c:if>
+                               <c:if test="${el:multipleElection(sub.chosetype)}">
+                                   <!--多选题-->
+                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                       <div class="checkbox">
+                                           <label><input type="checkbox" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}</label>
+                                       </div>
+                                   </c:forEach>
+                               </c:if>
+                           </div>
                        </div>
                        <%
                             subnum++;
@@ -82,6 +86,35 @@
                    </c:forEach>
                </c:if>
            </div>
+            <div>
+                <!--填空题-->
+                <c:if test="${fn:length(tkts)>0}">
+                    <div>
+                        <h4>二、填空题</h4>
+                    </div>
+                    <c:forEach var="sub" items="${tkts}">
+                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                        <%
+                            subnum++;
+                        %>
+                    </c:forEach>
+                </c:if>
+            </div>
+            <div>
+                <!--简答题-->
+                <c:if test="${fn:length(jdts)>0}">
+                    <div>
+                        <h4>三、简答题</h4>
+                    </div>
+                    <c:forEach var="sub" items="${jdts}">
+                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                        <textarea class="form-control"></textarea>
+                        <%
+                            subnum++;
+                        %>
+                    </c:forEach>
+                </c:if>
+            </div>
         </div>
         <div class="col-md-2" style="background-color: salmon"></div>
     </div>
