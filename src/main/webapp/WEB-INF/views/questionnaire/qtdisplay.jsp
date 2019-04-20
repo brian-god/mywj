@@ -15,16 +15,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="mobai.com/el-common" prefix="el" %>
 <%
     //获取选中的问卷
     Questionnaire questionnaire = (Questionnaire) request.getAttribute("questionnaire");
     //问题列表
-    Map<String,List<Subject>> subjihe = ( Map<String,List<Subject>>) request.getAttribute("subjihe");
+    //Map<String,List<Subject>> subjihe = ( Map<String,List<Subject>>) request.getAttribute("subjihe");
     //是否填写
     boolean isedit = (boolean) request.getAttribute("isedit");
-    List<Subject>  xzts = subjihe.get("xzts");//选择题
-    List<Subject>  tkts = subjihe.get("tkts");//填空题
-    List<Subject>  jdts = subjihe.get("jdts");//简答题
+    //List<Subject>  tkts = subjihe.get("tkts");//填空题
+   // List<Subject>  jdts = subjihe.get("jdts");//简答题
     int subnum =1;
 %>
 <html>
@@ -48,108 +50,70 @@
                <br />
            </div>
            <div>
-               <%
-                   if(null != tkts && xzts.size()>0){
-               %>
+               <!--选择题-->
+               <c:if test="${fn:length(xzts)>0}">
                <div>
                    <h4>一、选择题</h4>
                </div>
-               <%
-                for(int i=0;i<xzts.size();i++){
-                    Subject  subject = xzts.get(i);
-                    int num = subject.getNum();//题号
-                    String  subname = subject.getSubject();//描述
-                    String  option = subject.getOpdetail();
-                    String  chosetype = subject.getChosetype();//单选还是多选
-                    JSONArray  jsonArray = JSON.parseArray(option);
-                    if(null!= jsonArray && jsonArray.size()>0){
-               %>
-               <div style="margin-bottom: 30px">
-                  <h5> <%=subnum%>、 <%=subname%> <%="单选".equals(chosetype.trim())?"(单选)":"(多选)"%></h5>
-                   <br/>
-                   <%
-                    if("单选".equals(chosetype.trim())){
-                        for (Object jsonobj: jsonArray
-                             ) {
-                            JSONObject  option1 = (JSONObject) jsonobj;
-                   %>
-                       <div class="radio">
-                           <label>
-                               <input type="radio" name="optionsRadios" id="<%= option1.get("id")%>" value="<%=option1.get("subopt")%>" > <%=option1.get("subopt")%>&nbsp;&nbsp;<%=option1.get("name")%>
-                           </label>
+                   <c:forEach var="sub" items="${xzts}">
+                       <div style="margin-bottom: 10px">
+                           <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/> <c:out value="${'单选' eq sub.chosetype?'(单选)':'(多选)'}" /></h5></p>
+                           <div style="color: #777;font-size: 13px;">
+                               <c:if test="${el:singleElection(sub.chosetype)}">
+                                   <!--单选题-->
+                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                       <div class="radio">
+                                           <label>
+                                               <input type="radio" name="optionsRadios" id="${QToption.id}" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}
+                                           </label>
+                                       </div>
+                                   </c:forEach>
+
+                               </c:if>
+                               <c:if test="${el:multipleElection(sub.chosetype)}">
+                                   <!--多选题-->
+                                   <c:forEach var="QToption" items="${el:toJsonArray(sub.opdetail)}">
+                                       <div class="checkbox">
+                                           <label><input type="checkbox" value="${QToption.subopt}" > ${QToption.subopt}&nbsp;&nbsp;${QToption.name}</label>
+                                       </div>
+                                   </c:forEach>
+                               </c:if>
+                           </div>
                        </div>
-                   <%
-                        }
-                       }else {
-                            for (Object jsonobj: jsonArray
-                            ) {
-                                JSONObject  option1 = (JSONObject) jsonobj;
-                   %>
-                       <div class="checkbox">
-                           <label><input type="checkbox" value="<%=option1.get("subopt")%>" ><%=option1.get("subopt")%>&nbsp;&nbsp;<%=option1.get("name")%></label>
-                       </div>
-                   <%
-                       }
-                   %>
-               </div>
-               <%
-                           }
-                       }
-                       subnum++;
-                   }
-                   }
-               %>
+                       <%
+                            subnum++;
+                       %>
+                   </c:forEach>
+               </c:if>
            </div>
             <div>
                 <!--填空题-->
-                <%
-                    if(null != tkts && tkts.size()>0){
-                %>
-                <div>
-                    <h4>二、填空题</h4>
-                </div>
-                <%
-                    for (Subject sub: tkts
-                    ) {
-                %>
-                <div style="margin-bottom: 10px">
-                    <h5> <%=subnum%>、 <%=sub.getSubject()%> </h5>
-                </div>
-                <%
-                            subnum++;
-
-                        }
-
-                    }
-                %>
-            </div>
-            <div style="width: 100%">
-                <!--简答题-->
-                <%
-                    if(null != tkts && tkts.size()>0){
-                %>
-                <div>
-                    <h4>三、简答题</h4>
-                </div>
-                <%
-                    for (Subject sub: jdts
-                    ) {
-                %>
-                <div style="margin-bottom: 10px">
-                    <h5> <%=subnum%>、 <%=sub.getSubject()%> </h5>
-                </div>
-                <div style="width: 100%">
-                    <div class="form-group">
-                        <textarea class="form-control" id="content<%=sub.getId()%>" rows="10"  ></textarea>
+                <c:if test="${fn:length(tkts)>0}">
+                    <div>
+                        <h4>二、填空题</h4>
                     </div>
-                </div>
-                <%
+                    <c:forEach var="sub" items="${tkts}">
+                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                        <%
                             subnum++;
-
-                        }
-
-                    }
-                %>
+                        %>
+                    </c:forEach>
+                </c:if>
+            </div>
+            <div>
+                <!--简答题-->
+                <c:if test="${fn:length(jdts)>0}">
+                    <div>
+                        <h4>三、简答题</h4>
+                    </div>
+                    <c:forEach var="sub" items="${jdts}">
+                        <p><h5> <c:out value="<%=subnum%>"/>、 <c:out value="${sub.subject}"/></h5></p>
+                        <textarea class="form-control"></textarea>
+                        <%
+                            subnum++;
+                        %>
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
         <div class="col-md-2" style="background-color: salmon"></div>
