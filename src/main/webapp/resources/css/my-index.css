@@ -1,0 +1,19 @@
+.hundred-percent-col {
+    height: 90px;
+    width: 100%;
+    margin:0 auto;
+}
+.home-col-title{
+    font-size: 20px;
+    text-align: center;
+    height: 100%;
+    width: 90px;
+    float: left;
+    color: white;
+    padding-top: 30px;
+}
+.home-col-right{
+    overflow:hidden;
+    height: 100%;
+    background:blue;
+}
