@@ -145,13 +145,14 @@ public class QuestionnaireController {
     public ModelAndView showQuestionnaire(HttpServletRequest request){
         //@RequestParam("qtid") String qtid,@RequestParam("isedit") boolean isedit
         ModelAndView  modelAndView = new ModelAndView();
-        modelAndView.addObject("isedit",false);//是否填写
+        modelAndView.addObject("isedit",true);//是否填写
         Questionnaire questionnaire =  questionnaireService.getQtById(Integer.valueOf("53"));
         modelAndView.addObject("questionnaire",questionnaire);//问卷信息
         Map<String,List<Subject>> subjihe = subjectService.getSubjectAndOption(Integer.valueOf("53"));
-        modelAndView.addObject("xzts",subjihe.get("xzts"));
+        modelAndView.addObject("dxxzts",subjihe.get("dxxzts"));
         modelAndView.addObject("tkts",subjihe.get("tkts"));
         modelAndView.addObject("jdts",subjihe.get("jdts"));
+        modelAndView.addObject("dxts",subjihe.get("dxts"));
         modelAndView.setViewName("questionnaire/qtdisplay");
         return modelAndView;
     }

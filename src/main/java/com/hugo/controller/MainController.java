@@ -1,10 +1,12 @@
 package com.hugo.controller;
 
 import com.hugo.services.TestService;
+import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @ClassName: MainController
@@ -52,5 +54,16 @@ public class MainController {
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String register(){
         return "register/register";
+    }
+
+    /**
+     * 提交问卷
+     * @param data
+     * @return
+     */
+    @RequestMapping("persionSubmitQt")
+    @ResponseBody
+    public QAResult submitQt(String data){
+        return QAResult.ok();
     }
 }

@@ -40,4 +40,15 @@ public class ElFunctions {
         }
         return false;
     }
+
+    /**
+     * 答卷界面的ID
+     * @param qtId
+     * @param suId
+     * @return
+     */
+    public static String fromatElementName(int qtId,int suId){
+        String  str =  "subject-"+qtId+"-"+suId;
+        return str;
+    }
 }
