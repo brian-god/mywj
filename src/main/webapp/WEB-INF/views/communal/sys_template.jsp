@@ -30,6 +30,7 @@
     <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
     <script src='/js/My97DatePicker/WdatePicker.js'></script>
     <script src='/js/bootstrap-editable/bootstrap-editable.min.js'></script>
+    <script src='/js/echarts/echarts-all.js'></script>
     <rapid:block name="pagescript">
         <!--各个页面不同的js-->
     </rapid:block>

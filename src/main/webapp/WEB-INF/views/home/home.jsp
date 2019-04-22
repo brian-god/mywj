@@ -94,10 +94,66 @@
         </div>
         <div class="center" style="background-color: #f5f5f5;">
             <rapid:block name="childconment">
-                <!--子页面的CSS-->
+                <!--子页面--->
+                <div class="row" style="margin-left: 13px;margin-right: 12px;padding-top: 6px" >
+                    <div class="col-xs-6 col-sm-3">
+                        <div style="background-color: red;height: 110px;width: 100% "></div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <div style="background-color: green;height: 110px;width: 100% "></div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <div style="background-color: pink;height: 110px;width: 100% "></div>
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <div style="background-color: purple;height: 110px;width: 100% "></div>
+                    </div>
+                </div>
+                <div class="row" style="margin-left: 13px;margin-right: 12px;padding-top: 6px" >
+                    <div class="col-xs-12 col-sm-12">
+                        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                        <div id="echartsmain" style="height:400px"></div>
+                    </div>
+                </div>
             </rapid:block>
         </div>
     </div>
     </div>
+</rapid:override>
+<rapid:override name="pagescript">
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+        var myChart = echarts.init(document.getElementById('echartsmain'));
+
+        var option = {
+            tooltip: {
+                show: true
+            },
+            legend: {
+                data:['销量']
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    "name":"销量",
+                    "type":"bar",
+                    "data":[5, 20, 40, 10, 10, 20]
+                }
+            ]
+        };
+
+        // 为echarts对象加载数据
+        myChart.setOption(option);
+    </script>
 </rapid:override>
 <%@ include file="./../communal/sys_template.jsp" %>
