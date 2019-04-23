@@ -13,11 +13,12 @@ a{
 
     position:relative;
 }
-
 .left{
     position:absolute;
     left:0;
     width:160px;
+    height: 100%;
+    background-color: rgba(29, 46, 37, 0.26);
 }
 .center{
     margin-left:150px;

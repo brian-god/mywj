@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/js/toastr/toastr.min.css">
     <link rel="stylesheet" href="/js/bootstrap-editable/bootstrap-editable.css">
     <link href="/js/jquery-confirm-v3.3.4/dist/jquery-confirm.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/css/wj.main.css">
     <rapid:block name="pagecss">
 
     </rapid:block>
@@ -30,6 +31,7 @@
     <script src='/js/bootstrapValidator/bootstrapValidator.min.js'></script>
     <script src='/js/My97DatePicker/WdatePicker.js'></script>
     <script src='/js/bootstrap-editable/bootstrap-editable.min.js'></script>
+    <script src='/js/echarts/echarts-all.js'></script>
     <rapid:block name="pagescript">
         <!--各个页面不同的js-->
     </rapid:block>
