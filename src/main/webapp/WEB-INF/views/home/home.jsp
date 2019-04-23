@@ -52,13 +52,10 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="child-menu">
-                    <a class="left-child-item" href="#">用户注册</a>
+                    <a class="left-child-item" href="<%=basePath%>userList">用户管理</a>
                 </div>
                 <div class="child-menu">
-                    <a class="left-child-item" href="#">用户登录</a>
-                </div>
-                <div class="child-menu">
-                    <a class="left-child-item" href="#">增删改查</a>
+                    <a class="left-child-item" href="#">个人中心</a>
                 </div>
             </div>
             <div class="panel-heading">

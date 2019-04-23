@@ -43,6 +43,18 @@ public class UserController {
         return  userService.getUserBuID(1);
     }
 
+    /**
+     * 用户列表页
+     * @param request
+     * @return
+     */
+    @GetMapping("/userList")
+    @ResponseBody
+    public ModelAndView toUserListPage(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/user/userlist");
+        return modelAndView;
+    }
     @PostMapping("/login")
     @ResponseBody
     public ModelAndView login(HttpServletRequest request){
