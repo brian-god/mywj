@@ -18,12 +18,12 @@
         </div>
         <div class="row  personal-center-page">
             <ul class="nav nav-tabs nav-justified">
-                <li ><a href="javascript:navTabClick(this);">基本资料</a></li>
-                <li class="active"><a href="#">更新资料</a></li>
-                <li><a href="#">修改密码</a></li>
+                <li  class="active" id="nav-tab1"><a href="javascript:navTabClick(1);">基本资料</a></li>
+                <li  id="nav-tab2"><a href="javascript:navTabClick(2);">更新资料</a></li>
+                <li id="nav-tab3"><a href="javascript:navTabClick(3);" >修改密码</a></li>
             </ul>
         </div>
-        <div class="row  personal-center-page">
+        <div class="row  personal-center-page" id="personal-center-page1">
             <ul class="list-group">
                 <li class="list-group-item" style="text-align: center;padding-top: 30px;padding-bottom: 20px; ">
                     <div>
@@ -92,6 +92,12 @@
                 </li>
             </ul>
         </div>
+        <div class="row  personal-center-page" id="personal-center-page2" style="display: none">
+            <h1>更新资料</h1>
+        </div>
+        <div class="row  personal-center-page" id="personal-center-page3" style="display: none">
+            <h1>修改密码</h1>
+        </div>
     </div>
 </rapid:override>
 <rapid:override name="pagescript">
@@ -101,7 +107,42 @@
          * @param value
          */
        function navTabClick(value){
+           //基本资料
+           var nav_tab1 = $("#nav-tab1");
+           //更新资料
+            var nav_tab2 = $("#nav-tab2");
+            //修改密码
+            var nav_tab3 = $("#nav-tab3");
+            //基本资料页面
+            var personal_center_page1 = $("#personal-center-page1");
+            //更新资料页面
+            var personal_center_page2 = $("#personal-center-page2");
+            //修改密码页面
+            var personal_center_page3 = $("#personal-center-page3");
             console.log(value);
+            if(value ==1){
+                nav_tab1.attr("class","active");
+                nav_tab2.removeAttr("class");
+                nav_tab3.removeAttr("class");
+                personal_center_page1.css("display","");
+                personal_center_page2.css("display","none");
+                personal_center_page3.css("display","none");
+            }else if(value ==2){
+                nav_tab1.removeAttr("class");
+                nav_tab2.attr("class","active");
+                nav_tab3.removeAttr("class");
+                personal_center_page1.css("display","none");
+                personal_center_page2.css("display","");
+                personal_center_page3.css("display","none");
+            }else if(value ==3){
+                nav_tab1.removeAttr("class");
+                nav_tab2.removeAttr("class");
+                nav_tab3.attr("class","active");
+                personal_center_page1.css("display","none");
+                personal_center_page2.css("display","none");
+                personal_center_page3.css("display","");
+            }
+            return;
         }
     </script>
 </rapid:override>
