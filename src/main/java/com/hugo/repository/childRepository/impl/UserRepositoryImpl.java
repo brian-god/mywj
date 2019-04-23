@@ -3,6 +3,7 @@ package com.hugo.repository.childRepository.impl;
 import com.hugo.entity.User;
 import com.hugo.repository.childRepository.UserRepository;
 import com.hugo.utils.DataUtils;
+import com.hugo.utils.MywjUtils;
 import com.hugo.utils.page.childvo.UserPage;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -117,8 +118,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUser(UserPage userPage) {
-        String sql = "SELECT * FROM fa_subject WHERE dr = 0  and usertype=0";
-        SQLQuery sqlQuery = getSqlQuery(sql,userPage,true);
+        String sql = "SELECT * FROM fa_user WHERE dr = 0  and usertype=1";
+        SQLQuery sqlQuery = MywjUtils.getSqlQuery(sql,userPage,false,getCurrentSession());
         sqlQuery.addEntity(User.class);
         Object sub = sqlQuery.list();
         List<User> users = (List<User>) sub;
@@ -127,8 +128,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Integer getUserNum(UserPage userPage) {
-        String sql = "SELECT count(*) FROM fa_user WHERE  dr = 0 ";
-        SQLQuery sqlQuery = getSqlQuery(sql,userPage,false);
+        String sql = "SELECT count(*) FROM fa_user WHERE  dr = 0 and  usertype = 1";
+        SQLQuery sqlQuery = getSqlQuery(sql,userPage,false,getCurrentSession());
         sqlQuery.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);//返回map数据
         Object list = sqlQuery.list();
         List<Map<String, Object>> userList = (List<Map<String, Object>>) list;
@@ -173,14 +174,27 @@ public class UserRepositoryImpl implements UserRepository {
      * @param ispage 是否分页
      * @return
      */
-    private SQLQuery getSqlQuery(String oldsql, UserPage userPage, boolean ispage){
+    private SQLQuery getSqlQuery(String oldsql, UserPage userPage, boolean ispage,Session session){
         StringBuffer sql = new StringBuffer(oldsql);
         if (null != userPage.getUsername() && !"".equals(userPage.getUsername())) {
-            sql.append(" and user=" + userPage.getUsername());
+            sql.append(" and username=" + userPage.getUsername());
         }
 
         if (null != userPage.getMobile() && !"".equals(userPage.getMobile())) {
-            sql.append(" and user=" + userPage.getMobile());
+            sql.append(" and mobile=" + userPage.getMobile());
+        }
+        if (null != userPage.getKsrq() && !"".equals(userPage.getKsrq())) {
+            sql.append(" and createtime > '" + userPage.getKsrq()+"'");
+        }
+        //结束时间
+        if (null != userPage.getJsrq() && !"".equals(userPage.getJsrq())) {
+            sql.append(" and createtime < '" + userPage.getJsrq()+"'");
+        }
+        if (null != userPage.getEmail() && !"".equals(userPage.getEmail())) {
+            sql.append(" and email=" + userPage.getMobile());
+        }
+        if (null != userPage.getStatus() && !"".equals(userPage.getStatus())) {
+            sql.append(" and status=" + userPage.getMobile());
         }
         if(ispage) {
             if (0 != userPage.getLimit()) {
@@ -188,7 +202,6 @@ public class UserRepositoryImpl implements UserRepository {
                 sql.append("  LIMIT " + userPage.getOffset() + "," + userPage.getLimit());
             }
         }
-        Session session = sessionFactory.openSession();
         SQLQuery sqlQuery = session.createSQLQuery(sql.toString());
         session.clear();
         return  sqlQuery;

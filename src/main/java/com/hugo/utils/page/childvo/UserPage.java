@@ -13,6 +13,15 @@ public class UserPage extends Page {
     //手机号
     private String mobile;
 
+    //开始时间
+    private String ksrq;
+    //结束时间
+    private String jsrq;
+
+    private String  email;
+
+    private  String status;
+
     public String getUsername() {
         return username;
     }
@@ -27,5 +36,37 @@ public class UserPage extends Page {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getKsrq() {
+        return ksrq;
+    }
+
+    public void setKsrq(String ksrq) {
+        this.ksrq = ksrq;
+    }
+
+    public String getJsrq() {
+        return jsrq;
+    }
+
+    public void setJsrq(String jsrq) {
+        this.jsrq = jsrq;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
