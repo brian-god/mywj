@@ -96,7 +96,39 @@
             <h1>更新资料</h1>
         </div>
         <div class="row  personal-center-page" id="personal-center-page3" style="display: none">
-            <h1>修改密码</h1>
+
+            <div class="form row">
+                <div class="form-horizontal col-md-offset-3" id="login_form">
+                    <div class="col-md-6" style="margin-top: 80px;padding: 40px;background-color: #318f4596;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div  class="col-md-2">
+                                    <i>密码</i>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="form-control required" type="password" placeholder="请输入密码" id="password" name="password" autofocus="autofocus" maxlength="20" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 40px;">
+                            <div class="row">
+                                <div  class="col-md-2">
+                                    <i>确认密码</i>
+                                </div>
+                                <div class="col-md-8">
+                                    <input class="form-control required" type="password" placeholder="请确认密码" id="password1" name="password1" maxlength="8" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-offset-6">
+                            <div class="row">
+                                <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 25px;padding: 0px;">确认</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </rapid:override>

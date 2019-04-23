@@ -7,11 +7,12 @@
 <html>
 <head>
     <link rel="icon" href="/img/logo.ico">
-    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-4.0.0/css/floating-labels.css">
     <title>网上问卷调查系统</title>
+    <link rel="stylesheet" href="/css/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/loginstyle.css">
 </head>
-<body>
+<body class="background-body">
     <%
         //判断是否有数据绑定
         Object result = request.getAttribute("responseData");
@@ -37,33 +38,55 @@
             }
         }
     %>
-    <form class="form-signin" rel="form" action="<%=basePath%>login" method="post">
-        <div class="text-center mb-4">
-            <h1 class="h3 mb-3 font-weight-normal">网上问卷调查系统</h1>
-            <p>本系统通过问卷调查的方式为，为企业收集数据并能够对数据进行分析</p>
-        </div>
+    <div class="container">
+       <!--<div class="form row">
+            <div class="form-horizontal col-md-offset-3" id="login_form">
+                <h3 class="form-title">LOGIN</h3>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input type="text" id="inputEmail" name="email" class="form-control" placeholder="请输入邮箱/用户名/手机号" required="" autofocus="">
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox">
+                            <input type="checkbox" name="remember" value="1"/>记住我
+                        </label>
+                    </div>
+                    <div class="form-group col-md-offset-9">
+                        <button type="submit" class="btn btn-success pull-right" name="submit">登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <form class="form form-signin" rel="form" action="<%=basePath%>login" method="post">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-normal">网上问卷调查系统</h1>
+                <p>本系统通过问卷调查的方式为，为企业收集数据并能够对数据进行分析</p>
+            </div>
 
-        <div class="form-label-group">
-            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="请输入邮箱" required="" autofocus="">
-            <label for="inputEmail">邮箱地址</label>
-        </div>
+            <div class="form-label-group" style="margin-bottom: 40px">
+                <i class="fa fa-user fa-lg"></i>
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="请输入邮箱" required="" autofocus="">
+            </div>
 
-        <div class="form-label-group">
-            <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required="">
-            <label for="inputPassword">密码</label>
-        </div>
+            <div class="form-label-group">
+                <i class="fa fa-lock fa-lg"></i>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="请输入密码" required="">
+            </div>
 
-        <div class="checkbox mb-3" style="text-align:justify;">
-            <a href="<%=basePath%>register"><label>
-                注册用户
-            </label></a>
-            <a><label>忘记密码</label></a>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        <p class="mt-5 mb-3 text-muted text-center">© 2018-刘勤敏</p>
-    </form>
+            <div class="checkbox mb-3" style="text-align:justify;">
+                <a href="register"><label>
+                    注册用户
+                </label></a>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        </form>
+    </div>
 </body>
 <script src="/js/jQuery/jquery-3.3.1.min.js" />
-<script src="/js/popper/popper.min.js" />
-<script src="/js/bootstrap-4.0.0/js/bootstrap.min.js" />
+<script src="/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </html>
