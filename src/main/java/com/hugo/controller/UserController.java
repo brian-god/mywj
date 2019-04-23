@@ -214,7 +214,17 @@ public class UserController {
         }
         return   QAResult.build(200,"查询成功",user);
     }
-
+    /**
+     * g个人中心
+     * @return
+     */
+    @GetMapping("/personalCenter")
+    @ResponseBody
+    public ModelAndView personalCenter(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/user/personalcenter");
+        return modelAndView;
+    }
     /**
      * 更新用户
      * @param user

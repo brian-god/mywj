@@ -55,7 +55,7 @@
                     <a class="left-child-item" href="<%=basePath%>userList">用户管理</a>
                 </div>
                 <div class="child-menu">
-                    <a class="left-child-item" href="#">个人中心</a>
+                    <a class="left-child-item" href="<%=basePath%>personalCenter">个人中心</a>
                 </div>
             </div>
             <div class="panel-heading">
