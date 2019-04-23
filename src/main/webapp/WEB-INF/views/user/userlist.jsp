@@ -59,7 +59,7 @@
                 striped: true, //是否显示行间隔色
                 pageNumber: 1, //初始化加载第一页
                 pagination: true,//是否分页
-                clickToSelect: true,
+                //clickToSelect: true,
                 pageSize: 3,//单页记录数
                 paginationShowPageGo: true,
                 showRefresh: true,//刷新按钮
@@ -82,10 +82,6 @@
                 },
                 columns: [
                     {
-                        checkbox: true,
-                        visible: true                  //是否显示复选框
-                    },
-                    {
                         title: '主键',
                         field: 'id',
                         align: 'center',
@@ -95,13 +91,16 @@
                         title: '用户名',
                         field: 'username',
                         align: 'center',
-                        visible: false
+                    },
+                    {
+                        title: '昵称',
+                        field: 'nickname',
+                        align: 'center',
                     },
                     {
                         title: '邮箱',
                         field: 'email',
                         align: 'center',
-                        visible: false
                     },
                     {
                         title: '手机号',

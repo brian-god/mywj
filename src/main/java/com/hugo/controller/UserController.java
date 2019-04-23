@@ -217,8 +217,10 @@ public class UserController {
      */
     @GetMapping("/personalCenter")
     @ResponseBody
-    public ModelAndView personalCenter(){
+    public ModelAndView personalCenter(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
+        User user = MywjUtils.getLoginUser(request);
+        modelAndView.addObject("user",user);
         modelAndView.setViewName("/user/personalcenter");
         return modelAndView;
     }
