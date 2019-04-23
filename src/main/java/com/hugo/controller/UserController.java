@@ -12,10 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,7 +153,7 @@ public class UserController {
      * @param userPage
      * @return
      */
-    @PostMapping("/getAllUser")
+    @RequestMapping("/getAllUser")
     @ResponseBody
     public PageHelper<User> getAllUser(HttpServletRequest request, UserPage userPage){
         User user = MywjUtils.getLoginUser(request);
