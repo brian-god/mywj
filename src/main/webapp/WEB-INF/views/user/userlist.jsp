@@ -9,6 +9,7 @@
 <%@taglib uri="http://www.rapid-framework.org.cn/rapid" prefix="rapid" %>
 <rapid:override name="childcss">
     <link rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.min.css">
+    <link rel="stylesheet" href="/css/my-index.css">
 </rapid:override>
 <rapid:override name="childconment">
     <div style="padding-top: 20px;">
@@ -19,6 +20,22 @@
                        onFocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate:'%y-%M-%d %H:%m:%s'});"/>&nbsp;&nbsp;
                 <input type="text" class="form-control" id="jsrq"
                        onFocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss',maxDate:'%y-%M-%d %H:%m:%s'});"/>&nbsp;&nbsp;
+            </div>
+            <div class="form-group">
+                <label for="ksrq">用户名</label>&nbsp;&nbsp;
+                <input type="text" class="form-control" id="squsername"/>&nbsp;&nbsp;
+            </div>
+            <div class="form-group">
+                <label for="ksrq">手机号</label>&nbsp;&nbsp;
+                <input type="text" class="form-control" id="sqmobile"/>&nbsp;&nbsp;
+            </div>
+            <div class="form-group">
+                <label for="ksrq">邮箱</label>&nbsp;&nbsp;
+                <input type="text" class="form-control" id="sqemail"/>&nbsp;&nbsp;
+            </div>
+            <div class="form-group">
+                <label for="ksrq">状态</label>&nbsp;&nbsp;
+                <input type="text" class="form-control" id="sqstatus"/>&nbsp;&nbsp;
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-primary" id="search_btn">查询</button>
@@ -56,8 +73,10 @@
                         page: (params.offset / params.limit) + 1,   //当前页码
                         ksrq: $('#ksrq').val(),
                         jsrq: $('#jsrq').val(),
-                        username: "",//用户名
-                        mobile: ""//手机号
+                        username: $('#squsername').val(),//用户名
+                        mobile:$('#sqmobile').val(),//手机号
+                        email:$('#sqemail').val(),//邮箱
+                        status:$('#sqstatus').val(),//状态
                     };
                     return temp;
                 },
