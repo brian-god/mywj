@@ -33,10 +33,10 @@
                         </a>
                         <!-- Single button -->
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人中心</a></li>
+                            <li><a href="/personalCenter">个人中心</a></li>
                             <li><a href="#">Another</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">退出</a></li>
+                            <li><a href="/loginOut">退出</a></li>
                         </ul>
                     </div>
                 </div>

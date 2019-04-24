@@ -1,5 +1,6 @@
 package com.hugo.controller;
 
+import com.hugo.entity.User;
 import com.hugo.services.TestService;
 import com.hugo.utils.QAResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @ClassName: MainController
@@ -55,6 +59,21 @@ public class MainController {
     public String register(){
         return "register/register";
     }
+
+    /**
+     * 退出
+     * @return
+     */
+    @RequestMapping(value = "loginOut", method = RequestMethod.GET)
+    public String loginOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        System.out.print(user.getBirthday());
+        session.removeAttribute("user");
+        return "login/login";
+    }
+
+
 
     /**
      * 提交问卷
