@@ -115,17 +115,17 @@ public class UserServiceImpl  implements UserService {
     @Override
     public QAResult doUpdateUser(User user) {
         if( userRepository.doUpdateUser(user)){
-            return QAResult.build(400,"修改失败");
+            return QAResult.build(200,"修改成功");
         }
-        return QAResult.build(200,"修改成功");
+        return QAResult.build(400,"修改失败");
     }
 
     @Override
     public QAResult updatePassword(String password, int id) {
         if( userRepository.updatePassword(password,id)){
-            return QAResult.build(400,"修改失败");
+            return QAResult.build(200,"修改成功");
         }
-        return QAResult.build(200,"修改成功");
+        return QAResult.build(400,"修改失败");
     }
 
 

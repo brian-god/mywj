@@ -248,7 +248,8 @@ public class UserController {
             return QAResult.build(400,"密码为空");
         }
         User user = MywjUtils.getLoginUser(request);
-        return userService.updatePassword(password, user.getId());
+        QAResult  qaResult= userService.updatePassword(password, user.getId());
+        return qaResult;
     }
 
 }
