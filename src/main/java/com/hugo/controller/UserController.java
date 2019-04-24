@@ -234,4 +234,21 @@ public class UserController {
     public QAResult doUpdateUser(User user){
         return  userService.doUpdateUser(user);
     }
+
+
+    /**
+     * 修改密码
+     * @param password
+     * @return
+     */
+    @GetMapping("updatePassword")
+    @ResponseBody
+    public QAResult updatePassword(HttpServletRequest request,String password){
+        if (StringUtils.isEmpty(password)){
+            return QAResult.build(400,"密码为空");
+        }
+        User user = MywjUtils.getLoginUser(request);
+        return userService.updatePassword(password, user.getId());
+    }
+
 }
