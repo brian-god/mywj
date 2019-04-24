@@ -21,4 +21,6 @@ public interface UserService {
     QAResult deleteUser(String data);
 
     QAResult doUpdateUser(User user);
+
+    QAResult updatePassword(String password, int id);
 }

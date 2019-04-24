@@ -166,6 +166,18 @@ public class UserRepositoryImpl implements UserRepository {
         return false;
     }
 
+    @Override
+    public boolean updatePassword(String password , int id) {
+        String sql = "update fa_user set password='" + password+ "' where id=" + id + ";";
+        Session currentSession = sessionFactory.openSession();
+        SQLQuery query = currentSession.createSQLQuery(sql);
+        if (query.executeUpdate() > 0) {
+            currentSession.clear();
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * 查询SQL拼接
