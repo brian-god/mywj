@@ -21,10 +21,11 @@ To change this template use File | Settings | File Templates.
 </head>
 </html>
 <body>
-<div class="container-fluid" style="background-color: #1b248529;padding-top: 20px">
-    <div class="row">
-        <div class="col-md-4" style="background-color: #1c7430"></div>
-        <div class="col-md-4  container-min" style="background-color: #eee">
+<div class="container-fluid" style='padding-top: 20px;background:url("../../../resources/img/rigter.jpg") top center no-repeat;
+background-size:cover;'>
+    <div class="row" >
+        <div class="col-md-4"></div>
+        <div class="col-md-4  container-min" style="background-color: #eeeeee42">
             <h4 style="margin-bottom: 60px;">新用户注册</h4>
             <form id="defaultForm" method="post" class="form-horizontal user-form" action="/register">
                 <div class="form-group">
@@ -91,7 +92,7 @@ To change this template use File | Settings | File Templates.
                 </div>
             </form>
         </div>
-        <div class="col-md-4" style="background-color: salmon"></div>
+        <div class="col-md-4"></div>
     </div>
 </div>
 </body>
