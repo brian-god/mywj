@@ -93,10 +93,59 @@
             </ul>
         </div>
         <div class="row  personal-center-page" id="personal-center-page2" style="display: none">
-            <h1>更新资料</h1>
+            <div class="form ">
+                <div class="col-md-6">
+                    <form class="form-horizontal" role="form">  <
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-sm-2 control-label">头像</label>
+                            <div class="col-sm-10" id="inputPassword1">
+                                <img src="http://img5.imgtn.bdimg.com/it/u=3300305952,1328708913&fm=26&gp=0.jpg" class="img-circle" style="width: 110px;height: 90px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword1" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword1" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword2" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword2" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
+                            </div>
+                        </div> <div class="form-group">
+                        <label for="inputPassword4" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="请输入密码">
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label for="inputPassword5" class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword5" placeholder="请输入密码">
+                            </div>
+                        </div> <div class="form-group">
+                        <label for="inputPassword6" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword6" placeholder="请输入密码">
+                        </div>
+                    </div>
+                        <div class="form-group col-md-offset-6">
+                            <div class="row">
+                                <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 25px;padding: 0px;">确认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="row  personal-center-page" id="personal-center-page3" style="display: none">
-
             <div class="form row">
                 <div class="form-horizontal col-md-offset-3" id="login_form">
                     <div class="col-md-6" style="margin-top: 80px;padding: 40px;background-color: #318f4596;">
