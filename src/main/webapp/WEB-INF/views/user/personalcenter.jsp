@@ -94,55 +94,57 @@
         </div>
         <div class="row  personal-center-page" id="personal-center-page2" style="display: none">
             <div class="form ">
-                <div class="col-md-6">
-                    <form class="form-horizontal" role="form">  <
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-sm-2 control-label">头像</label>
-                            <div class="col-sm-10" id="inputPassword1">
-                                <img src="http://img5.imgtn.bdimg.com/it/u=3300305952,1328708913&fm=26&gp=0.jpg" class="img-circle" style="width: 110px;height: 90px">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-sm-2 control-label">密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword1" placeholder="请输入密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword2" class="col-sm-2 control-label">密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword2" placeholder="请输入密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码">
-                            </div>
-                        </div> <div class="form-group">
-                        <label for="inputPassword4" class="col-sm-2 control-label">密码</label>
+                <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputPassword1" class="col-sm-2 control-label">头像</label>
+                                <div class="col-sm-10" id="">
+                                    <img src="http://img5.imgtn.bdimg.com/it/u=3300305952,1328708913&fm=26&gp=0.jpg" id="show-useravatar" class="img-circle" style="width: 110px;height: 90px">
+                                    <label for="user-avatar"><i class="glyphicon glyphicon-open" style="margin-left: 30px;
+                                            font-size: 30px;
+                                            text-align: center;
+                                            /* padding: 20px; */
+                                            padding-left: 30px;
+                                            padding-right: 30px;
+                                            /* padding-top: 15px; */
+                                            margin-top: 20px;
+                                            background-color: #22841773;
+                                            margin-bottom: 3px;"></i></label>
+                                    <input type="file" class="form-control  user-avatar" id="user-avatar" placeholder="请输入昵称" style="display: none">
+                                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword1" class="col-sm-2 control-label">昵称</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="请输入密码">
+                            <input type="text" class="form-control" id="inputPassword1" placeholder="请输入昵称" >
                         </div>
                     </div>
-                        <div class="form-group">
-                            <label for="inputPassword5" class="col-sm-2 control-label">密码</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" id="inputPassword5" placeholder="请输入密码">
-                            </div>
-                        </div> <div class="form-group">
-                        <label for="inputPassword6" class="col-sm-2 control-label">密码</label>
+                    <div class="form-group">
+                        <label for="inputPassword2" class="col-sm-2 control-label">用户名</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword6" placeholder="请输入密码">
+                            <input type="password" class="form-control" id="inputPassword2" disabled="disabled">
                         </div>
                     </div>
-                        <div class="form-group col-md-offset-6">
-                            <div class="row">
-                                <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 25px;padding: 0px;">确认</button>
-                            </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">邮箱</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputPassword3" placeholder="请输入邮箱">
                         </div>
-                    </form>
+                    </div> <div class="form-group">
+                    <label for="inputPassword4" class="col-sm-2 control-label">手机号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPassword4" placeholder="请输入手机号">
+                    </div>
                 </div>
+                <div class="form-group col-md-offset-6">
+                    <div class="row" style="padding-left: 120px;padding-right: 40px;">
+                        <button type="button" class="btn btn-success btn-lg btn-block" id="update-user-infarmation" style="margin-top: 25px;padding: 0px;">确认</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
             </div>
         </div>
         <div class="row  personal-center-page" id="personal-center-page3" style="display: none">
@@ -171,7 +173,7 @@
                         </div>
                         <div class="form-group col-md-offset-6">
                             <div class="row">
-                                <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 25px;padding: 0px;">确认</button>
+                                <button type="button" class="btn btn-success btn-lg btn-block" id="update-password" style="margin-top: 25px;padding: 0px;">确认</button>
                             </div>
                         </div>
                     </div>
@@ -183,6 +185,81 @@
 </rapid:override>
 <rapid:override name="pagescript">
     <script type="text/javascript">
+       $(function () {
+           //初始化消息工具
+           initToastr();
+           document.getElementById('user-avatar').onchange = function() {
+               add();
+               var imgFile = this.files[0];
+               var fr = new FileReader();
+               fr.onload = function() {
+                   var img = document.getElementsByClassName('user-avatar');
+                   var imgpath =  img.value;
+                  console.log(imgpath)
+                   /*document.getElementById('image').getElementsByTagName('img')[0].src = fr.result;*/
+               };
+               fr.readAsDataURL(imgFile);
+           };
+           function add(){
+               var html = "<div class='col-sm-4'><div class='panel panel-info'><div class='panel-heading'><i class='fa fa-times'></i></div><div class='panel-body' style='text-align: center;'><div class='row'><div class='col-sm-12 col-md-12'><img class='updateimg img-responsive' src='img/p_big3.jpg' style='width: inherit;height: 210px;'/></div></div></div></div></div>";
+               $("#updatebox").before(html);
+           }
+           $(".fa-times").click(function(){
+               alert("111");
+               /*alert($(this).parent().parent().parent().html());*/
+               $(this).parent().parent().parent().remove();
+           });
+           //修改用户信息
+           $("#update-user-infarmation").click(function () {
+               var user = ${user}
+                   $.ajax({
+                       url: "doUpdateUser",
+                       data: JSON.stringify(user),
+                       dataType: "json",
+                       type: "GET",
+                       success: function (data) {
+                           if (data.status == 200) {//成功
+                               toastr.success("修改成功");
+                           } else {
+                               toastr.error(data.msg)
+                           }
+                       }
+                   });
+           });
+           //修改密码监听
+           $("#update-password").click(function () {
+               var password = $("#password").val();//密码
+               var password1 = $("#password1").val();//确认密码
+               if(null == password){
+                   toastr.error("密码不能为空");
+                   return;
+               }
+               if(null == password1){
+                   toastr.warning("请确认密码");
+                   return;
+               }
+               if(password != password1){
+                   toastr.error("两次输入不一致，请确认");
+                   return;
+               }
+               $.ajax({
+                   url: "updatePassword",
+                   data: {"password": password},
+                   dataType: "json",
+                   type: "GET",
+                   success: function (data) {
+                       if (data.status == 200) {//成功
+                           toastr.success("修改成功，请重新登陆！！");
+                           //清空session
+                           sessionStorage.clear();
+                           window.location.href = "/";
+                       } else {
+                           toastr.error(data.msg)
+                       }
+                   }
+               });
+           });
+       });
         /**
          * 导航点击
          * @param value

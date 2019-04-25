@@ -232,6 +232,11 @@ public class UserController {
     @PostMapping("doUpdateUser")
     @ResponseBody
     public QAResult doUpdateUser(User user){
+
+        int i =0;
+
+        System.out.print(i);
+
         return  userService.doUpdateUser(user);
     }
 
